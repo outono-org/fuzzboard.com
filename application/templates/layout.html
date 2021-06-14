@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="/static/css/styles.css"/>
+    </head>
+    <body>
+        <header class="header">
+            <a href={{ url_for('main.home') }}>
+                <h2 class="card-header">Startup Jobs</h2>
+            </a>
+            <div>
+                <a href={{ url_for('main.new') }}>
+                    <button class="button">Submit a job</button>
+                </a>
+            </div>
+        </header>
+        
+    {% block main %}
+    {% endblock %}
+    </body>
+</html>

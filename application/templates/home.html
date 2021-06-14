@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block main %}
+
+<main class="main">
+    <div>
+        <h1>🏝️ Join a startup in Portugal.</h1>
+        <span>Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
+    </div>
+
+    <div class="jobs-container">
+
+        {% for job in jobs %}
+
+        <a href={{ job.url }} target="_blank">
+        <div class="card-container">
+
+            <div class="job-card">
+                <h2 class="card-header">{{ job.title }}</h2>
+                <span class="card-header">{{ job.company }}</span>
+            </div>
+
+            <div class="job-card-location">
+                <span class="card-header">{{ job.location }}</span>
+            </div>
+        </div>
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    <aside class="ad"></aside>
+
+</main>
+
+{% endblock %}

@@ -1,0 +1,100 @@
+a {
+  text-decoration: none;
+}
+
+.header {
+  max-width: 800px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.main {
+  max-width: 800px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.new-job-form {
+  display: flex;
+  flex-direction: column;
+  flex: 3 0 50%;
+  padding: 20px 0px;
+  margin-right: 20px;
+  max-width: 500px;
+}
+
+.new-job-form input {
+  padding: 10px 12px;
+  margin-bottom: 15px;
+}
+
+.button {
+  background-color: rgb(41, 116, 81);
+  color: #ffffff;
+  border-radius: 4px;
+  border-style: none;
+}
+
+.recipient {
+  display: flex;
+  flex: 3 0 40%;
+  border-radius: 4px;
+  background-color: #e3f7f1;
+  height: 200px;
+  padding: 20px;
+}
+
+.jobs-container {
+  display: flex;
+  flex-direction: column;
+  flex: 3 0 70%;
+  padding: 20px 0px;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 40px;
+  background-color: #e3f7f1;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.card-container:hover {
+  transform: scale(1.015);
+}
+
+.job-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+/* Change name to something more universal */
+.card-header {
+  margin: 0px;
+  color: #000000;
+}
+
+.job-card-location {
+  margin: 20px;
+}
+
+.ad {
+  display: flex;
+  flex: 0 3 25%;
+  border-radius: 4px;
+  height: 200px;
+  padding: 20px;
+}
