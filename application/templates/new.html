@@ -16,6 +16,9 @@
         {{ form.company.label }}
         {{ form.company(placeholder="Upframe") }}
 
+        {{ form.category.label }}
+        {{ form.category(placeholder="Upframe") }}
+
         {{ form.location.label }}
         {{ form.location(placeholder="Lisbon") }}
 
@@ -29,7 +32,8 @@
     </form>
 
     <aside class="recipient">
-        <span>My name is Malik and I’ll be the one receiving and reviewing your job posting. You can reach me on Twitter or Slack.</span>
+        <span>My name is Malik and I’ll be the one receiving and reviewing your job submission. You can reach me on Twitter or Upframe.</span>
+        <img class="contact-photo" src={{url_for('static', filename="malik.jpeg") }}>
     </aside>
 
 </main>

@@ -26,13 +26,14 @@ button {
 .new-job-form {
   display: flex;
   flex-direction: column;
-  flex: 3 0 50%;
+  flex: 3 0 55%;
   padding: 20px 0px;
   margin-right: 20px;
   max-width: 500px;
 }
 
-.new-job-form input {
+.new-job-form input,
+select {
   padding: 10px 12px;
   margin-bottom: 15px;
 }
@@ -46,12 +47,20 @@ button {
 
 .recipient {
   display: flex;
-  flex: 3 0 40%;
+  flex-direction: column;
+  flex: 3 0 35%;
   border-radius: 4px;
   background-color: #e3f7f1;
   height: 200px;
   padding: 20px;
   font-size: 20px;
+}
+
+.contact-photo {
+  position: relative;
+  max-width: 250px;
+  right: -100px;
+  top: 20px;
 }
 
 .jobs-container {

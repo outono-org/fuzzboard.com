@@ -9,22 +9,106 @@
 
     <div class="jobs-container">
 
+        <h2>Development jobs</h2>
         {% for job in jobs %}
+            {% if job.category == "development" %}
+                <a href={{ job.url }} target="_blank">
+                    <div class="card-container">
 
-        <a href={{ job.url }} target="_blank">
-        <div class="card-container">
+                        <div class="job-card">
+                            <h3 class="card-header">{{ job.title }}</h3>
+                            <span class="card-header">{{ job.company }}</span>
+                        </div>
 
-            <div class="job-card">
-                <h2 class="card-header">{{ job.title }}</h2>
-                <span class="card-header">{{ job.company }}</span>
-            </div>
+                        <div class="job-card-location">
+                            <span class="card-header">{{ job.location }}</span>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
 
-            <div class="job-card-location">
-                <span class="card-header">{{ job.location }}</span>
-            </div>
-        </div>
-        </a>
 
+        <h2>Design jobs</h2>
+        {% for job in jobs %}
+            {% if job.category == "design" %}
+                <a href={{ job.url }} target="_blank">
+                    <div class="card-container">
+
+                        <div class="job-card">
+                            <h3 class="card-header">{{ job.title }}</h3>
+                            <span class="card-header">{{ job.company }}</span>
+                        </div>
+
+                        <div class="job-card-location">
+                            <span class="card-header">{{ job.location }}</span>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        <h2>Marketing jobs</h2>
+        {% for job in jobs %}
+            {% if job.category == "marketing" %}
+            <a href={{ job.url }} target="_blank">
+                <div class="card-container">
+
+                    <div class="job-card">
+                        <h3 class="card-header">{{ job.title }}</h3>
+                        <span class="card-header">{{ job.company }}</span>
+                    </div>
+
+                    <div class="job-card-location">
+                        <span class="card-header">{{ job.location }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        {% endfor %}
+
+        <h2>Business development jobs</h2>
+        {% for job in jobs %}
+            {% if job.category == "business development" %}
+            <a href={{ job.url }} target="_blank">
+                <div class="card-container">
+
+                    <div class="job-card">
+                        <h3 class="card-header">{{ job.title }}</h3>
+                        <span class="card-header">{{ job.company }}</span>
+                    </div>
+
+                    <div class="job-card-location">
+                        <span class="card-header">{{ job.location }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
+        {% endfor %}
+
+        {% for job in jobs %}
+            {% if job.category == "other" %}
+                <h2>Other jobs</h2>
+            {% endif %}
+        {% endfor %}
+
+        {% for job in jobs %}
+            {% if job.category == "other" %}
+
+            <a href={{ job.url }} target="_blank">
+                <div class="card-container">
+
+                    <div class="job-card">
+                        <h3 class="card-header">{{ job.title }}</h3>
+                        <span class="card-header">{{ job.company }}</span>
+                    </div>
+
+                    <div class="job-card-location">
+                        <span class="card-header">{{ job.location }}</span>
+                    </div>
+                </div>
+            </a>
+            {% endif %}
         {% endfor %}
 
     </div>

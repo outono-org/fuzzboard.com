@@ -1,11 +1,12 @@
 from .database import client
 
 
-def post_job(title, company, location, link, email):
+def post_job(title, company, category, location, link, email):
     client.startupjobs.jobs.insert(
         {
             "title": title,
             "company": company,
+            "category": category.lower(),
             "location": location,
             "url": link,
             "email": email,
@@ -19,6 +20,7 @@ def get_jobs():
         {
             "title": job["title"],
             "company": job["company"],
+            "category": job["category"],
             "location": job["location"],
             "url": job["url"],
             "email": job["email"]

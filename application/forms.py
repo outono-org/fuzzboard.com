@@ -8,6 +8,8 @@ from wtforms.validators import DataRequired, Email, EqualTo
 class NewJobSubmission(FlaskForm):
     title = StringField("Job title", validators=[DataRequired()])
     company = StringField("Company", validators=[DataRequired()])
+    category = SelectField("Category", choices=[
+                           ("Pick one"), ("Design"), ("Development"), ("Marketing"), ("Business Development"), ("Other")])
     location = StringField("Location", validators=[DataRequired()])
     link = StringField("Where should I go to apply?",
                        validators=[DataRequired()])

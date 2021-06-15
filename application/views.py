@@ -11,6 +11,7 @@ def new():
     if form.validate_on_submit():
         post_job(form.title.data,
                  form.company.data,
+                 form.category.data,
                  form.location.data,
                  form.link.data,
                  form.email.data)
