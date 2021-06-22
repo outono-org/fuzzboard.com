@@ -18,6 +18,7 @@ def post_job(title, company, category, location, link, email):
 def get_jobs():
     jobs = [
         {
+            "_id": job["_id"],
             "title": job["title"],
             "company": job["company"],
             "category": job["category"],
@@ -31,4 +32,24 @@ def get_jobs():
             }
         )
     ]
+    return jobs
+
+
+def get_jobs2():
+    jobs = []
+    for job in client.startupjobs.jobs.find(
+        {
+            "status": "active"
+        }
+    ):
+        joblist = {
+            "_id": job["_id"],
+            "title": job["title"],
+            "company": job["company"],
+            "category": job["category"],
+            "location": job["location"],
+            "url": job["url"],
+            "email": job["email"]
+        }
+        jobs.append(joblist)
     return jobs

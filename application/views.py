@@ -2,6 +2,9 @@ from application.models import post_job, get_jobs
 from flask import render_template, Blueprint, redirect, url_for
 from .forms import NewJobSubmission
 from .emails import send_email
+from .models import get_jobs, get_jobs2
+from flask import make_response
+from feedgen.feed import FeedGenerator
 
 bp = Blueprint('main', __name__)
 
@@ -37,6 +40,28 @@ def new():
 
 @bp.route('/')
 def home():
-    jobs = get_jobs()
+    jobs = get_jobs2()
 
     return render_template('home.html', jobs=jobs)
+
+
+@bp.route('/feed')
+def rss():
+    fg = FeedGenerator()
+    fg.title('Feed title')
+    fg.description('Feed description')
+    fg.link(href='https://startupjobsportugal.com/')
+
+    for job in get_jobs2():
+        fe = fg.add_entry()
+        fe.title(job['title'])
+        fe.link(href=job['url'])
+        fe.description(job['company'])
+        fe.guid(str(job['_id']), permalink=False)
+        fe.author(name='Startup Jobs Portugal')
+        # fe.pubDate(job.created_at)
+
+    response = make_response(fg.rss_str())
+    response.headers.set('Content-Type', 'application/rss+xml')
+
+    return response
