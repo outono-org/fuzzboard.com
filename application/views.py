@@ -48,9 +48,9 @@ def home():
 @bp.route('/feed')
 def rss():
     fg = FeedGenerator()
-    fg.title('Feed title')
-    fg.description('Feed description')
-    fg.link(href='https://startupjobsportugal.com/')
+    fg.title('Startup Jobs Portugal')
+    fg.description('Real-time feed of jobs at Startup Jobs Portugal.')
+    fg.link(href='https://startup-jobs.herokuapp.com/')
 
     for job in get_jobs2():
         fe = fg.add_entry()
@@ -59,7 +59,7 @@ def rss():
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
         fe.author(name='Startup Jobs Portugal')
-        # fe.pubDate(job.created_at)
+        fe.pubDate(job['timestamp'])
 
     response = make_response(fg.rss_str())
     response.headers.set('Content-Type', 'application/rss+xml')

@@ -24,7 +24,8 @@ def get_jobs():
             "category": job["category"],
             "location": job["location"],
             "url": job["url"],
-            "email": job["email"]
+            "email": job["email"],
+            "timestamp": job["_id"].generation_time
         }
         for job in client.startupjobs.jobs.find(
             {
@@ -49,7 +50,8 @@ def get_jobs2():
             "category": job["category"],
             "location": job["location"],
             "url": job["url"],
-            "email": job["email"]
+            "email": job["email"],
+            "timestamp": job["_id"].generation_time
         }
         jobs.append(joblist)
     return jobs
