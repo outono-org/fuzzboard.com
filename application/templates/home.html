@@ -3,7 +3,7 @@
 
 <main class="main">
     <div>
-        <h1>🏝️ Join a startup in Portugal.</h1>
+        <h1>Join a Startup in Portugal.</h1>
         <span>Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
     </div>
 
@@ -86,12 +86,7 @@
             {% endif %}
         {% endfor %}
 
-        {% for job in jobs %}
-            {% if job.category == "other" %}
-                <h2>Other jobs</h2>
-            {% endif %}
-        {% endfor %}
-
+        <h2>Other jobs</h2>
         {% for job in jobs %}
             {% if job.category == "other" %}
 
