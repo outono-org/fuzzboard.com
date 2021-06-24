@@ -28,14 +28,14 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
+  column-gap: 30px;
 }
 
 .new-job-form {
   display: flex;
   flex-direction: column;
-  flex: 3 0 55%;
+  flex: 3 0 450px;
   padding: 20px 0px;
-  max-width: 500px;
 }
 
 .new-job-form input,
@@ -58,11 +58,10 @@ select {
 .recipient {
   display: flex;
   flex-direction: column;
-  flex: 3 0 35%;
+  flex: 3 0 300px;
   border-radius: 4px;
   background-color: #e3f7f1;
   height: 200px;
-  max-width: 320px;
   padding: 20px;
   font-size: 20px;
 }
