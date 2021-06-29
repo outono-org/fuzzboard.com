@@ -2,7 +2,7 @@ from application.models import post_job, get_jobs
 from flask import render_template, Blueprint, redirect, url_for
 from .forms import NewJobSubmission
 from .emails import send_email
-from .models import get_jobs, get_jobs2
+from .models import get_jobs
 from flask import make_response
 from feedgen.feed import FeedGenerator
 
@@ -40,9 +40,16 @@ def new():
 
 @bp.route('/')
 def home():
-    jobs = get_jobs2()
+    jobs = get_jobs()
 
     return render_template('home.html', jobs=jobs)
+
+
+@bp.route('/<category>')
+def category(category):
+    jobs = get_jobs()
+
+    return render_template('category_page.html', category=category, jobs=jobs)
 
 
 @bp.route('/feed')
@@ -52,7 +59,7 @@ def rss():
     fg.description('Real-time feed of jobs at Startup Jobs Portugal.')
     fg.link(href='https://startup-jobs.herokuapp.com/')
 
-    for job in get_jobs2():
+    for job in get_jobs():
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])

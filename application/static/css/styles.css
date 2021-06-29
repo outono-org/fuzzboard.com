@@ -8,6 +8,10 @@ a {
   text-decoration: none;
 }
 
+.category-header {
+  color: #000000;
+}
+
 .header {
   max-width: 900px;
   margin: 20px auto;
@@ -28,7 +32,7 @@ button {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  column-gap: 30px;
+  column-gap: 50px;
 }
 
 .new-job-form {
@@ -58,7 +62,7 @@ select {
 .recipient {
   display: flex;
   flex-direction: column;
-  flex: 3 0 300px;
+  flex: 3 0 250px;
   border-radius: 4px;
   background-color: #e3f7f1;
   height: 200px;
@@ -89,10 +93,11 @@ select {
   /* background-color: #e3f7f1; */
   border-bottom: 1px solid #f3f3f4;
   border-radius: 8px;
+  transition: ease-in-out 0.2s;
 }
 
 .card-container:hover {
-  transform: scale(1.015);
+  transform: scale(1.03);
   background-color: #fafafb;
 }
 

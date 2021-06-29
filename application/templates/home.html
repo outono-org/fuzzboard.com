@@ -9,7 +9,9 @@
 
     <div class="jobs-container">
 
-        <h2>Development jobs</h2>
+        <!-- For em todas as categorias em vez de fazer o for em todos jobs. -->
+
+        <a class="category-header" href={{ url_for('main.category', category='development') }}><h2>Development jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "development" %}
                 <a href={{ job.url }} target="_blank">
@@ -29,7 +31,7 @@
         {% endfor %}
 
 
-        <h2>Design jobs</h2>
+        <a class="category-header" href={{ url_for('main.category', category='design') }}><h2>Design jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "design" %}
                 <a href={{ job.url }} target="_blank">
@@ -48,7 +50,7 @@
             {% endif %}
         {% endfor %}
 
-        <h2>Marketing jobs</h2>
+        <a class="category-header" href={{ url_for('main.category', category='marketing') }}><h2>Marketing jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "marketing" %}
             <a href={{ job.url }} target="_blank">
@@ -67,7 +69,7 @@
             {% endif %}
         {% endfor %}
 
-        <h2>Business development jobs</h2>
+        <a class="category-header" href={{ url_for('main.category', category='business development') }}><h2>Business Development jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "business development" %}
             <a href={{ job.url }} target="_blank">
@@ -86,7 +88,7 @@
             {% endif %}
         {% endfor %}
 
-        <h2>Other jobs</h2>
+        <a class="category-header" href={{ url_for('main.category', category='other') }}><h2>Other jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "other" %}
 

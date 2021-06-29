@@ -34,24 +34,3 @@ def get_jobs():
         )
     ]
     return jobs
-
-
-def get_jobs2():
-    jobs = []
-    for job in client.startupjobs.jobs.find(
-        {
-            "status": "active"
-        }
-    ):
-        joblist = {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        jobs.append(joblist)
-    return jobs
