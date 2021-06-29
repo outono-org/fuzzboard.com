@@ -4,6 +4,10 @@ body {
     sans-serif, apple color emoji, segoe ui emoji;
 }
 
+.preload-transitions * {
+  transition: none !important;
+}
+
 a {
   text-decoration: none;
 }

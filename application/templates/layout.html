@@ -6,15 +6,15 @@
         <title>Startup Jobs Portugal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/styles.css"/>
-        <link rel="icon" type="image/png" sizes="32x32" href={{ url_for('static', filename="32x32.png") }}>
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
     </head>
-    <body>
+    <body class="preload-transitions">
         <header class="header">
-            <a href={{ url_for('main.home') }}>
+            <a href="{{ url_for('main.home') }}">
                 <h2 class="card-header">Startup Jobs</h2>
             </a>
             <div>
-                <a href={{ url_for('main.new') }}>
+                <a href="{{ url_for('main.new') }}">
                     <button class="button">Submit a job</button>
                 </a>
             </div>
@@ -23,4 +23,5 @@
     {% block main %}
     {% endblock %}
     </body>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </html>
