@@ -49,7 +49,11 @@ def home():
 def category(category):
     jobs = get_jobs()
 
-    return render_template('category_page.html', category=category, jobs=jobs)
+    for job in jobs:
+        if job['category'] == category:
+            return render_template('category_page.html', category=category, jobs=jobs)
+
+    return redirect(url_for('main.home'))
 
 
 @bp.route('/feed')
