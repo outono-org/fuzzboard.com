@@ -37,6 +37,8 @@ button {
   flex-wrap: wrap;
   justify-content: space-between;
   column-gap: 50px;
+  animation: fadeIn;
+  animation-duration: 1s;
 }
 
 .new-job-form {
