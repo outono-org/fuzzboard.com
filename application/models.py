@@ -1,7 +1,10 @@
 from .database import client
+from bson.objectid import ObjectId
+import datetime
+from datetime import timedelta
 
 
-def post_job(title, company, category, location, link, email):
+def post_job(title, company, category, location, link, email, status):
     client.startupjobs.jobs.insert(
         {
             "title": title,
@@ -10,7 +13,32 @@ def post_job(title, company, category, location, link, email):
             "location": location,
             "url": link,
             "email": email,
-            "status": "pending"
+            "status": status,
+            'created_on': datetime.datetime.utcnow(),
+            "last_modified": datetime.datetime.utcnow()
+        }
+    )
+
+
+def update_entry_status(id, status):
+    client.startupjobs.jobs.update_one(
+        {
+            '_id': ObjectId(id)
+        },
+        {
+            '$set': {'status': status, 'last_modified': datetime.datetime.utcnow()}
+        }
+    )
+
+
+def check_entry_timelimit():
+    time_limit = datetime.datetime.utcnow() - timedelta(days=30)
+    client.startupjobs.jobs.update_many(
+        {
+            'status': 'active', 'created_on': {'$lt': time_limit}
+        },
+        {
+            '$set': {'status': 'expired', 'last_modified': datetime.datetime.utcnow()}
         }
     )
 
@@ -34,3 +62,28 @@ def get_jobs():
         )
     ]
     return jobs
+
+
+def get_all_jobs():
+    jobs = []
+    for job in client.startupjobs.jobs.find(
+        {
+            "_id": {"$exists": True}
+        }
+    ):
+        entry = {
+            "_id": job["_id"],
+            "title": job["title"],
+            "company": job["company"],
+            "status": job["status"],
+            "category": job["category"],
+            "location": job["location"],
+            "url": job["url"],
+            "email": job["email"],
+            "timestamp": job["_id"].generation_time,
+            "created_on": job["created_on"],
+            "last_modified": job["last_modified"]
+        }
+
+        jobs.append(entry)
+    return sorted(jobs, key=lambda entry: entry["created_on"], reverse=True)

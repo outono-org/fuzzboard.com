@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Startup Jobs Portugal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/css/styles.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
+    </head>
+    <div class="preload-transitions">
+        <!-- <header class="header">
+            <a href="{{ url_for('main.home') }}">
+                <h2 class="card-header">Startup Jobs</h2>
+            </a>
+            <div>
+                <a href="{{ url_for('main.new') }}">
+                    <button class="button">Submit a job</button>
+                </a>
+            </div>
+        </header> -->
+
+<header class="header-admin animate">
+    <h1 class="m0 admin-header">Manage jobs</h1>
+    <form method="POST">
+        {{ refresh_button.hidden_tag() }}
+        {{ refresh_button.button }}
+    </form>
+</header>
+
+<div class="container-wrapper animate">
+
+    <span class="status status-pending">Pending
+        ({{ jobs|selectattr('status', 'equalto', 'pending') |list|length }})
+    </span>
+
+    <div class="container">
+
+        <div class="dashboard-list-columns">
+
+            <div class="list-grid-header">
+                <div class="list-grid-company-column">Company</div>
+                <div class="list-grid-position-column">Position</div>
+                <div class="list-grid-status-column">Status</div>
+                <div class="list-grid-category-column">Category</div>
+                <div class="list-grid-link-column">Link</div>
+                <div class="list-grid-location-column">Location</div>
+                <div class="list-grid-email-column">Email</div>
+                <div class="list-grid-created-column">Created</div>
+                <div class="list-grid-edited-column">Last Edited</div>
+            </div>
+
+            {% for job in jobs %}
+            {% if job.status == "pending" %}
+                
+            <div class="list-row-wrapper">
+
+                <div class="list-grid-company-column">
+                    {{job.company}}
+                </div>
+
+                <div class="list-grid-position-column">
+                    {{ job.title }}
+                </div>
+
+                <div class="list-grid-status-column">
+                    <form method="POST">
+
+                        {{ form.csrf_token() }}
+
+                        <select class="list-row-input" id="status" name="status">
+                            {% for value,label in form.status.choices %}
+                                <option value={{value}}
+                                {% if job.status == value %}
+                                    selected
+                                {% endif %}
+                                >{{ label }}</option>
+                            {% endfor %}
+                        </select>
+
+                        {{ form.id(value=job._id) }}
+                        {{ form.save(class="button") }}
+                       
+                    </form>
+                </div>
+
+                <div class="list-grid-category-column">
+                    {{ job.category | capitalize }}
+                </div>
+                
+                    <div class="list-grid-link-column">
+                        <a href="{{ job.url }}" target="_blank">
+                            {{ job.url }}
+                        </a>
+                    </div>
+                
+
+                <div class="list-grid-location-column">
+                    {{ job.location }}
+                </div>
+
+                <div class="list-grid-email-column">
+                    {{ job.email }}
+                </div>
+
+                <div class="list-grid-created-column">
+                    {{ job.created_on.strftime("%b %d, %Y %H:%M:%S") }}
+                </div>
+
+                <div class="list-grid-edited-column">
+                    {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
+                </div>
+
+                <div class="list-grid-save-column">
+                    
+                </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    </div>
+
+
+    <!-- NEW SECTION -->
+    <span class="status status-active">Active
+        ({{ jobs|selectattr('status', 'equalto', 'active') |list|length }})
+    </span>
+    <div class="container">
+
+    <div class="dashboard-list-columns">
+
+        <div class="list-grid-header">
+            <div class="list-grid-company-column">Company</div>
+            <div class="list-grid-position-column">Position</div>
+            <div class="list-grid-status-column">Status</div>
+            <div class="list-grid-category-column">Category</div>
+            <div class="list-grid-link-column">Link</div>
+            <div class="list-grid-location-column">Location</div>
+            <div class="list-grid-email-column">Email</div>
+            <div class="list-grid-created-column">Created</div>
+            <div class="list-grid-edited-column">Last Edited</div>
+        </div>
+
+        {% for job in jobs %}
+        {% if job.status == "active" %}
+            
+        <div class="list-row-wrapper">
+
+            <div class="list-grid-company-column">
+                {{job.company}}
+            </div>
+
+            <div class="list-grid-position-column">
+                {{ job.title }}
+            </div>
+
+            <div class="list-grid-status-column">
+                <form method="POST">
+                    {{ form.csrf_token() }}
+
+                    <select class="list-row-input" id="status" name="status">
+                        {% for value,label in form.status.choices %}
+                            <option value={{value}}
+                            {% if job.status == value %}
+                                selected
+                            {% endif %}
+                            >{{ label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    {{ form.id(value=job._id) }}
+                    
+                    {{ form.save(class="button") }}
+                </form>
+            </div>
+
+            <div class="list-grid-category-column">
+                {{ job.category | capitalize }}
+            </div>
+            
+                <div class="list-grid-link-column">
+                    <a href="{{ job.url }}" target="_blank">
+                        {{ job.url }}
+                    </a>
+                </div>
+            
+
+            <div class="list-grid-location-column">
+                {{ job.location }}
+            </div>
+
+            <div class="list-grid-email-column">
+                {{ job.email }}
+            </div>
+
+            <div class="list-grid-created-column">
+                {{ job.created_on.strftime("%b %d, %Y %H:%M:%S") }}
+            </div>
+
+            <div class="list-grid-edited-column">
+                {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
+            </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+
+    
+</div>
+</div>
+
+</body>
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+</html>

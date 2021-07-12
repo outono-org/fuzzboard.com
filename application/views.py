@@ -1,6 +1,6 @@
-from application.models import post_job, get_jobs
+from application.models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit
 from flask import render_template, Blueprint, redirect, url_for
-from .forms import NewJobSubmission
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
 from .emails import send_email
 from .models import get_jobs
 from flask import make_response
@@ -21,7 +21,8 @@ def new():
                  form.category.data,
                  form.location.data,
                  form.link.data,
-                 form.email.data)
+                 form.email.data,
+                 "pending")
         # Notification sent to the person who submitted the job.
         send_email(subject='Your submission | Startup Jobs',
                    to=form.email.data,
@@ -40,6 +41,8 @@ def new():
 
 @bp.route('/')
 def home():
+    # for job in filtered(lambda j:(j.category == 'design'), jobs)
+    #            {% filter_jobs =%}
     jobs = get_jobs()
 
     return render_template('home.html', jobs=jobs)
@@ -76,3 +79,30 @@ def rss():
     response.headers.set('Content-Type', 'application/rss+xml')
 
     return response
+
+
+@bp.route('/admin', methods=["GET", "POST"])
+def admin():
+
+    # form = JobManagement(id="test")
+
+    form = JobManagement()
+    refresh_button = RefreshJobStatus()
+
+    jobs = get_all_jobs()
+
+    if form.validate_on_submit():
+        print("working")
+        update_entry_status(form.id.data, form.status.data)
+        return redirect(url_for('main.admin'))
+
+    if refresh_button.validate_on_submit():
+        print("working2")
+        check_entry_timelimit()
+        return redirect(url_for('main.admin'))
+
+    """ status_display = dict(STATUS_CHOICES).get(form.status.data)
+    print(form.status.data)
+    print(status_display) """
+
+    return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
