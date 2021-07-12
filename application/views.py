@@ -1,9 +1,9 @@
-from application.models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit
-from flask import render_template, Blueprint, redirect, url_for
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
+from .models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit, find_user_by_email, create_user
+from flask import render_template, Blueprint, redirect, url_for, session
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, SignIn, SignUp
 from .emails import send_email
-from .models import get_jobs
 from flask import make_response
+from werkzeug.security import check_password_hash
 from feedgen.feed import FeedGenerator
 
 bp = Blueprint('main', __name__)
@@ -84,6 +84,9 @@ def rss():
 @bp.route('/admin', methods=["GET", "POST"])
 def admin():
 
+    if not session.get("user_id"):
+        return redirect("/login")
+
     # form = JobManagement(id="test")
 
     form = JobManagement()
@@ -101,8 +104,45 @@ def admin():
         check_entry_timelimit()
         return redirect(url_for('main.admin'))
 
-    """ status_display = dict(STATUS_CHOICES).get(form.status.data)
-    print(form.status.data)
-    print(status_display) """
-
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
+
+
+@bp.route("/login", methods=["GET", "POST"])
+def login():
+    form = SignIn()
+
+    if session.get("username"):
+        return redirect(url_for('main.home'))
+
+    if form.validate_on_submit():
+        email = form.email_address.data
+        password = form.password.data
+        user = find_user_by_email(email)
+
+        # If user is found, store the email and id in session.
+        if user:
+            check = check_password_hash(user["password"], password)
+
+            if check:
+                session["username"] = email
+                session["user_id"] = str(user["_id"])
+                return redirect(url_for('main.home'))
+
+    return render_template("auth/login.html", form=form)
+
+
+@bp.route("/signup", methods=["GET", "POST"])
+def signup():
+    form = SignUp()
+
+    if session.get("username"):
+        return redirect(url_for('main.home'))
+
+    if form.validate_on_submit():
+        user_email = form.email_address.data
+        user_name = form.name.data
+        create_user(user_email,
+                    user_name, password=form.password.data)
+
+        return redirect(url_for('main.home'))
+    return render_template("auth/signup.html", form=form)

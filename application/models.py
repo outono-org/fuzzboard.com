@@ -2,6 +2,7 @@ from .database import client
 from bson.objectid import ObjectId
 import datetime
 from datetime import timedelta
+from werkzeug.security import generate_password_hash
 
 
 def post_job(title, company, category, location, link, email, status):
@@ -87,3 +88,25 @@ def get_all_jobs():
 
         jobs.append(entry)
     return sorted(jobs, key=lambda entry: entry["created_on"], reverse=True)
+
+# Authentication
+
+
+def create_user(email_address, name, password):
+    hashed_pass = generate_password_hash(
+        password)
+    client.startupjobs.users.insert(
+        {
+            "email": email_address,
+            "name": name,
+            "password": hashed_pass
+        }
+    )
+
+
+def find_user_by_email(email):
+    return client.startupjobs.users.find_one(
+        {
+            "email": email
+        }
+    )

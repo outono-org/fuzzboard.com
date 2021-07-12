@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen'
+    href='/static/css/styles.css'>
+</head>
+<body>
+    <main class="main">
+        <div class="container">
+            <h1 class="mb50 big-text">Sign in</h1>
+            <form class="block mb15" method="post">
+                {{ form.hidden_tag() }}
+                {{ form.email_address(placeholder="Your email") }}
+                {{ form.password(placeholder="Password") }}
+                {{ form.submit(class="primary") }}
+            </form>
+            <p>
+                Don't have an account yet? <a href="{{ url_for('main.signup') }}">Sign up here</a>.
+            </p>
+        </div>
+    </main>
+</body>
+</html>
