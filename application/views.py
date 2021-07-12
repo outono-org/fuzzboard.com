@@ -131,7 +131,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@bp.route("/signup", methods=["GET", "POST"])
+""" @bp.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUp()
 
@@ -145,4 +145,4 @@ def signup():
                     user_name, password=form.password.data)
 
         return redirect(url_for('main.home'))
-    return render_template("auth/signup.html", form=form)
+    return render_template("auth/signup.html", form=form) """
