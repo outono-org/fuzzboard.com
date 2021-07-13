@@ -1,7 +1,9 @@
 import os
 from dotenv import load_dotenv
 from flask import Flask
+from flask_talisman import Talisman
 from .views import bp
+from .database import client
 from .emails import mail
 
 load_dotenv()
@@ -9,8 +11,25 @@ load_dotenv()
 app = Flask(__name__)
 app.register_blueprint(bp)
 
+csp = {
+    'default-src': [
+        '\'self\'',
+        '*.googleapis.com',
+        '*.gstatic.com',
+        'cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+    ],
+    'img-src': '*',
+}
+Talisman(app, content_security_policy=csp)
+
 # Secret Key config for WTF forms.
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
+
+# Session config. Followed documentation
+app.config["SESSION_TYPE"] = "mongodb"
+app.config["SESSION_MONGODB"] = client
+app.config["SESSION_MONGODB_DB"] = "startupjobs"
+app.config["SESSION_MONGODB_COLLECT"] = "sessions"
 
 # Email setup
 app.config["MAIL_DEFAULT_SENDER"] = "malikpiara@gmail.com"
