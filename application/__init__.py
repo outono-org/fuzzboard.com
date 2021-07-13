@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_talisman import Talisman
 from .views import bp
 from .auth import auth
@@ -43,3 +43,8 @@ app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 
 
 mail.init_app(app)
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return redirect(url_for('main.home'))
