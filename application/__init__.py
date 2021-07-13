@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_talisman import Talisman
 from .views import bp
+from .auth import auth
 from .database import client
 from .emails import mail
 
@@ -10,6 +11,7 @@ load_dotenv()
 
 app = Flask(__name__)
 app.register_blueprint(bp)
+app.register_blueprint(auth)
 
 csp = {
     'default-src': [

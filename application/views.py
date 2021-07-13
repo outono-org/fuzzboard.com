@@ -3,7 +3,6 @@ from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, SignIn, SignUp
 from .emails import send_email
 from flask import make_response
-from werkzeug.security import check_password_hash
 from feedgen.feed import FeedGenerator
 
 bp = Blueprint('main', __name__)
@@ -39,7 +38,7 @@ def new():
     return render_template('new.html', form=form, job_title=job_title, company=company)
 
 
-@bp.route('/')
+@bp.get('/')
 def home():
     # for job in filtered(lambda j:(j.category == 'design'), jobs)
     #            {% filter_jobs =%}
@@ -48,7 +47,7 @@ def home():
     return render_template('home.html', jobs=jobs)
 
 
-@bp.route('/<category>')
+@bp.get('/<category>')
 def category(category):
     jobs = get_jobs()
 
@@ -59,7 +58,7 @@ def category(category):
     return redirect(url_for('main.home'))
 
 
-@bp.route('/feed')
+@bp.get('/feed')
 def rss():
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
@@ -105,44 +104,3 @@ def admin():
         return redirect(url_for('main.admin'))
 
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
-
-
-@bp.route("/login", methods=["GET", "POST"])
-def login():
-    form = SignIn()
-
-    if session.get("username"):
-        return redirect(url_for('main.home'))
-
-    if form.validate_on_submit():
-        email = form.email_address.data
-        password = form.password.data
-        user = find_user_by_email(email)
-
-        # If user is found, store the email and id in session.
-        if user:
-            check = check_password_hash(user["password"], password)
-
-            if check:
-                session["username"] = email
-                session["user_id"] = str(user["_id"])
-                return redirect(url_for('main.home'))
-
-    return render_template("auth/login.html", form=form)
-
-
-""" @bp.route("/signup", methods=["GET", "POST"])
-def signup():
-    form = SignUp()
-
-    if session.get("username"):
-        return redirect(url_for('main.home'))
-
-    if form.validate_on_submit():
-        user_email = form.email_address.data
-        user_name = form.name.data
-        create_user(user_email,
-                    user_name, password=form.password.data)
-
-        return redirect(url_for('main.home'))
-    return render_template("auth/signup.html", form=form) """
