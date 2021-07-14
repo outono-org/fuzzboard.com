@@ -14,7 +14,10 @@
 
         <!-- For em todas as categorias em vez de fazer o for em todos jobs. -->
 
-        <a class="category-header" href={{ url_for('main.category', category='development') }}><h2>Development jobs</h2></a>
+        {% if jobs|selectattr('category', 'equalto', 'development') |list|length %}
+        <a class="category-header" href="{{ url_for('main.category', category='development') }}"><h2>Development jobs</h2></a>
+        {% endif %}
+
         {% for job in jobs %}
             {% if job.category == "development" %}
                 <a href={{ job.url }} target="_blank">
@@ -33,8 +36,10 @@
             {% endif %}
         {% endfor %}
 
+        {% if jobs|selectattr('category', 'equalto', 'design') |list|length %}
+        <a class="category-header" href="{{ url_for('main.category', category='design') }}"><h2>Design jobs</h2></a>
+        {% endif %}
 
-        <a class="category-header" href={{ url_for('main.category', category='design') }}><h2>Design jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "design" %}
                 <a href={{ job.url }} target="_blank">
@@ -52,62 +57,71 @@
                 </a>
             {% endif %}
         {% endfor %}
+        
+        {% if jobs|selectattr('category', 'equalto', 'marketing') |list|length %}
+            <a class="category-header" href="{{ url_for('main.category', category='marketing') }}"><h2>Marketing jobs</h2></a>
+        {% endif %}
 
-        <a class="category-header" href={{ url_for('main.category', category='marketing') }}><h2>Marketing jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "marketing" %}
-            <a href={{ job.url }} target="_blank">
-                <div class="card-container">
+                <a href={{ job.url }} target="_blank">
+                    <div class="card-container">
 
-                    <div class="job-card">
-                        <h3 class="card-header">{{ job.title }}</h3>
-                        <span class="card-header">{{ job.company }}</span>
-                    </div>
+                        <div class="job-card">
+                            <h3 class="card-header">{{ job.title }}</h3>
+                            <span class="card-header">{{ job.company }}</span>
+                        </div>
 
-                    <div class="job-card-location">
-                        <span class="card-header">{{ job.location }}</span>
+                        <div class="job-card-location">
+                            <span class="card-header">{{ job.location }}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
             {% endif %}
         {% endfor %}
 
-        <a class="category-header" href={{ url_for('main.category', category='business development') }}><h2>Business Development jobs</h2></a>
+        {% if jobs|selectattr('category', 'equalto', 'business development') |list|length %}
+        <a class="category-header" href="{{ url_for('main.category', category='business development') }}"><h2>Business Development jobs</h2></a>
+        {% endif %}
+
         {% for job in jobs %}
             {% if job.category == "business development" %}
-            <a href={{ job.url }} target="_blank">
-                <div class="card-container">
+                <a href={{ job.url }} target="_blank">
+                    <div class="card-container">
 
-                    <div class="job-card">
-                        <h3 class="card-header">{{ job.title }}</h3>
-                        <span class="card-header">{{ job.company }}</span>
-                    </div>
+                        <div class="job-card">
+                            <h3 class="card-header">{{ job.title }}</h3>
+                            <span class="card-header">{{ job.company }}</span>
+                        </div>
 
-                    <div class="job-card-location">
-                        <span class="card-header">{{ job.location }}</span>
+                        <div class="job-card-location">
+                            <span class="card-header">{{ job.location }}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
             {% endif %}
         {% endfor %}
+        
+        {% if jobs|selectattr('category', 'equalto', 'other') |list|length %}
+            <a class="category-header" href="{{ url_for('main.category', category='other') }}"><h2>Other jobs</h2></a>
+        {% endif %}
 
-        <a class="category-header" href={{ url_for('main.category', category='other') }}><h2>Other jobs</h2></a>
         {% for job in jobs %}
             {% if job.category == "other" %}
 
-            <a href={{ job.url }} target="_blank">
-                <div class="card-container">
+                <a href={{ job.url }} target="_blank">
+                    <div class="card-container">
 
-                    <div class="job-card">
-                        <h3 class="card-header">{{ job.title }}</h3>
-                        <span class="card-header">{{ job.company }}</span>
-                    </div>
+                        <div class="job-card">
+                            <h3 class="card-header">{{ job.title }}</h3>
+                            <span class="card-header">{{ job.company }}</span>
+                        </div>
 
-                    <div class="job-card-location">
-                        <span class="card-header">{{ job.location }}</span>
+                        <div class="job-card-location">
+                            <span class="card-header">{{ job.location }}</span>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
             {% endif %}
         {% endfor %}
 
