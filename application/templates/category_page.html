@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
+
+{% block title %}{{category |capitalize}} jobs{% endblock %}
+
 {% block main %}
 
 <main class="main">
     <div>
-        <h1>{{ category |capitalize }} Jobs in Portugal.</h1>
+        <h1>{{ category |capitalize }} jobs in Portugal.</h1>
         <span>Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
     </div>
 

@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        {% block head %}
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Startup Jobs Portugal</title>
+        <title>{% block title %}{% endblock %} - Startup Jobs Portugal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="/static/css/styles.css"/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
+        {% endblock %}
     </head>
     <body class="preload-transitions">
+        {% block header %}
         <header class="header">
             <a href="{{ url_for('main.home') }}">
                 <h2 class="card-header">Startup Jobs</h2>
@@ -20,6 +23,7 @@
                 </a>
             </div>
         </header>
+        {% endblock %}
         
     {% block main %}
     {% endblock %}
