@@ -1,9 +1,11 @@
 from .models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
+from .decorators import login_required
 from .emails import send_email
 from flask import make_response
 from feedgen.feed import FeedGenerator
+
 
 bp = Blueprint('main', __name__)
 
@@ -81,10 +83,10 @@ def rss():
 
 
 @bp.route('/admin', methods=["GET", "POST"])
+@login_required
 def admin():
-
-    if not session.get("user_id"):
-        return redirect("/login")
+    """ if not session.get("user_id"):
+        return redirect("/login") """
 
     # form = JobManagement(id="test")
 
