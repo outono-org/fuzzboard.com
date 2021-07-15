@@ -14,18 +14,27 @@
     <body class="preload-transitions">
         {% block header %}
         <header class="header">
-            <a href="{{ url_for('main.home') }}">
-                <h2 class="card-header">Startup Jobs</h2>
-            </a>
+            <div id="logo-wrapper">
+                <a href="{{ url_for('main.home') }}">
+                    <h2 class="card-header">Startup Jobs</h2>
+                </a>
+                <span class="beta-tag">Beta</span>
+            </div>
             <div>
                 <a href="{{ url_for('main.new') }}">
-                    <button class="button-main">Submit a job</button>
+                    <button class="button-main">Post job</button>
                 </a>
             </div>
         </header>
         {% endblock %}
         
     {% block main %}
+    {% endblock %}
+    {% block footer %}
+    <footer>
+        <img id="emoji" src="{{url_for('static', filename='twitter_star.png')}}"/>
+        <span>Only You Know Who You Can Be.</span>
+    </footer>
     {% endblock %}
     </body>
     <script src="{{ url_for('static', filename='main.js') }}"></script>
