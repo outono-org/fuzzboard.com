@@ -26,6 +26,10 @@ select {
   font-size: inherit;
 }
 
+.secondary-text {
+  color: #211e1eab;
+}
+
 .category-header {
   color: #000000;
 }
@@ -117,7 +121,7 @@ select {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 25px;
+  padding: 25px 0px;
   /* background-color: #e3f7f1; */
   border-bottom: 1px solid #f3f3f4;
   border-radius: 8px;
@@ -133,11 +137,13 @@ select {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  margin-left: 20px;
 }
 
 /* Change name to something more universal */
 .card-header {
   margin: 0px;
+  margin-bottom: 5px;
   color: #000000;
 }
 

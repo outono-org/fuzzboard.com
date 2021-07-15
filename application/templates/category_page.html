@@ -7,7 +7,27 @@
 <main class="main">
     <div>
         <h1>{{ category |capitalize }} jobs in Portugal.</h1>
-        <span>Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
+
+        {% if category == "design" %}
+            <span class="secondary-text">Find UX, UI, product design and illustration jobs in Portugal.</span>
+        {% endif %}
+
+        {% if category == "development" %}
+            <span class="secondary-text">From frontend, backend and fullstack to data science jobs. Find software engineering and IT jobs in Portugal.</span>
+        {% endif %}
+
+        {% if category == "marketing" %}
+            <span class="secondary-text">Find brand marketing, product marketing and performance marketing jobs at Portuguese startups.</span>
+        {% endif %}
+
+        {% if category == "business development" %}
+            <span class="secondary-text">Find bizdev, growth and sales jobs in Portugal.</span>
+        {% endif %}
+
+        {% if category == "other" %}
+            <span class="secondary-text">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
+        {% endif %}
+        
     </div>
 
     <div class="jobs-container">
@@ -19,11 +39,11 @@
 
                         <div class="job-card">
                             <h3 class="card-header">{{ job.title }}</h3>
-                            <span class="card-header">{{ job.company }}</span>
+                            <span class="secondary-text">{{ job.company }}</span>
                         </div>
 
                         <div class="job-card-location">
-                            <span class="card-header">{{ job.location }}</span>
+                            <span class="secondary-text">{{ job.location }}</span>
                         </div>
                     </div>
                 </a>
