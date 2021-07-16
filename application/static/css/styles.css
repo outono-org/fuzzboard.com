@@ -1,3 +1,7 @@
+:root {
+  --primary-color: rgb(93 197 120);
+}
+
 #logo-wrapper {
   display: flex;
   column-gap: 10px;
@@ -59,8 +63,11 @@ select {
   justify-content: space-between;
 }
 
+.header-new-job-page {
+  margin-bottom: 30px;
+}
+
 footer {
-  font-style: italic;
   max-width: 900px;
   font-size: 14px;
   color: #211e1eab;
@@ -108,11 +115,16 @@ select {
   margin-bottom: 15px;
   padding: 15px 17px;
   margin-bottom: 15px;
-  background-color: #0000000a;
+  background-color: rgba(57, 56, 86, 0.04);
   border: none;
   border-radius: 4px;
   font-family: inherit;
   font-size: 14px;
+}
+
+.new-job-form input:hover,
+select:hover {
+  background-color: rgba(57, 56, 86, 0.1);
 }
 
 .button {
@@ -125,7 +137,7 @@ select {
 
 .button-main,
 input#submit {
-  background-color: rgb(93 197 120);
+  background-color: var(--primary-color);
   color: rgb(255 255 255);
   font-weight: 700;
   border-radius: 4px;
@@ -147,6 +159,7 @@ input#submit:hover {
   height: 200px;
   padding: 20px;
   font-size: 20px;
+  line-height: 1.2;
 }
 
 .contact-photo {
@@ -204,6 +217,16 @@ input#submit:hover {
   border-radius: 4px;
   height: 200px;
   padding: 20px;
+}
+
+.a_underline {
+  color: inherit;
+  border-bottom: 2px dotted #000;
+  padding-bottom: 2px;
+}
+
+.a_underline:hover {
+  opacity: 50%;
 }
 
 /* ADMIN */
@@ -269,11 +292,11 @@ input#submit:hover {
 }
 
 .list-row-wrapper:nth-child(2n + 1) {
-  background-color: hsla(242, 21%, 28%, 0.04);
+  background-color: rgba(57, 56, 86, 0.04);
 }
 
 .list-row-wrapper:hover {
-  background-color: hsla(242, 21%, 28%, 0.1);
+  background-color: rgba(57, 56, 86, 0.1);
 }
 
 .list-row-wrapper a {

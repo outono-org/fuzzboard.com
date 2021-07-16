@@ -5,10 +5,10 @@
 {% block main %}
 
 <main class="main">
-    <div>
+    <header class="header-new-job-page">
         <h1>Submit a job</h1>
         <span class="secondary-text">Each job is shared across our partner incubators, coworking spaces, email newsletters and our slack workspace in the Portuguese startup community.</span>
-    </div>
+    </header>
 
     <form class="new-job-form" method="POST">
         {{ form.hidden_tag() }}
@@ -35,8 +35,8 @@
     </form>
 
     <aside class="recipient">
-        <span>My name is Malik and I’ll be the one receiving and reviewing your job submission. You can reach me on Twitter or Upframe.</span>
-        <img class="contact-photo" src={{url_for('static', filename="malik.jpg") }}>
+        <span>My name is Malik. I’ll be the one reviewing your job submission. You can reach me on <a class="a_underline" href="https://twitter.com/malikpiara" target="_blank">Twitter</a>, <a class="a_underline" href="https://www.linkedin.com/in/malikpiara/" target="_blank">LinkedIn</a> or <a class="a_underline" href="mailto:malik@hey.com">Email</a>.</span>
+        <img class="contact-photo" src="{{url_for('static', filename='malik.jpg') }}">
     </aside>
 
 </main>
