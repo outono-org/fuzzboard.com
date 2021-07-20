@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, redirect, url_for
+from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman
 from .views import bp
 from .auth import auth
@@ -43,6 +43,12 @@ app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 
 
 mail.init_app(app)
+
+
+@app.route('/robots.txt')
+# @app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 
 @app.errorhandler(404)
