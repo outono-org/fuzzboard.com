@@ -1,3 +1,4 @@
+import os
 from .models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
@@ -32,7 +33,7 @@ def new():
                    company=company)
         # Notification sent to myself.
         send_email(subject='New submission at Startup Jobs',
-                   to='malik@hey.com',
+                   to=os.environ.get('MAIL_DEFAULT_SENDER'),
                    template='mail/submission_notification',
                    job_title=job_title,
                    company=company)
@@ -42,8 +43,7 @@ def new():
 
 @bp.get('/')
 def home():
-    # for job in filtered(lambda j:(j.category == 'design'), jobs)
-    #            {% filter_jobs =%}
+
     jobs = get_jobs()
 
     return render_template('home.html', jobs=jobs)
