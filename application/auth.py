@@ -1,6 +1,6 @@
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import SignIn, SignUp
-from .models import find_user_by_email
+from .models import find_user_by_email, create_user
 from werkzeug.security import check_password_hash
 
 auth = Blueprint('auth', __name__)
@@ -30,7 +30,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-""" @auth.route("/signup", methods=["GET", "POST"])
+@auth.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUp()
 
@@ -44,4 +44,4 @@ def signup():
                     user_name, password=form.password.data)
 
         return redirect(url_for('main.home'))
-    return render_template("auth/signup.html", form=form) """
+    return render_template("auth/signup.html", form=form)
