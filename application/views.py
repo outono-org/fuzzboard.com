@@ -85,9 +85,6 @@ def rss():
 @bp.route('/admin', methods=["GET", "POST"])
 @login_required
 def admin():
-    """ if not session.get("user_id"):
-        return redirect("/login") """
-
     # form = JobManagement(id="test")
 
     form = JobManagement()

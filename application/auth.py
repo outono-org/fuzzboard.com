@@ -30,7 +30,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@auth.route("/signup", methods=["GET", "POST"])
+""" @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUp()
 
@@ -45,3 +45,4 @@ def signup():
 
         return redirect(url_for('main.home'))
     return render_template("auth/signup.html", form=form)
+ """
