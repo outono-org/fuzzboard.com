@@ -17,12 +17,23 @@ csp = {
     'default-src': [
         '\'self\'',
         '*.googleapis.com',
+        '*.googletagmanager.com',
         '*.gstatic.com',
         'cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
     ],
+    'script-src': [
+        '\'self\'',
+        'ajax.googleapis.com',
+        'www.googletagmanager.com',
+        '*.googleanalytics.com',
+        '*.google-analytics.com',
+    ],
     'img-src': '*',
 }
-Talisman(app, content_security_policy=csp)
+Talisman(app,
+         content_security_policy=csp,
+         content_security_policy_nonce_in=[
+             '*.googletagmanager.com'])
 
 # Secret Key config for WTF forms.
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")

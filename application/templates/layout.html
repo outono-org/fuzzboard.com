@@ -12,14 +12,8 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
 
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-NX2FW45HWD');
-        </script>
+        <script async nonce="{{ csp_nonce() }}" src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
+        
         {% endblock %}
     </head>
     <body class="preload-transitions">
