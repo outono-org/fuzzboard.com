@@ -20,19 +20,27 @@
 
         {% for job in jobs %}
             {% if job.category == "development" %}
-                <a href={{ job.url }} target="_blank" rel="noreferrer">
+                
                     <div class="card-container">
 
                         <div class="job-card">
-                            <h3 class="card-header">{{ job.title }}</h3>
-                            <span class="secondary-text">{{ job.company }}</span>
+
+                           
+                                <a href={{ job.url }} target="_blank" rel="noreferrer">
+                                    <h3 class="card-header">{{ job.title }}</h3>
+                                </a>
+                            
+                                <a href="{{ url_for('main.company', company=job.company) }}">
+                                    <span class="secondary-text">{{ job.company }}</span>
+                                </a>
+                       
                         </div>
 
                         <div class="job-card-location">
                             <span class="secondary-text">{{ job.location }}</span>
                         </div>
                     </div>
-                </a>
+               
             {% endif %}
         {% endfor %}
 

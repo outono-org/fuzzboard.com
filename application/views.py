@@ -60,6 +60,17 @@ def category(category):
     return redirect(url_for('main.home'))
 
 
+@bp.get('/company/<company>')
+def company(company):
+    jobs = get_jobs()
+
+    for job in jobs:
+        if job['company'] == company:
+            return render_template('company_page.html', company=company, jobs=jobs)
+
+    return redirect(url_for('main.home'))
+
+
 @bp.get('/feed')
 def rss():
     fg = FeedGenerator()
