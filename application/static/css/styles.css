@@ -72,11 +72,17 @@ footer {
   font-size: 14px;
   color: #211e1eab;
   margin: 30px auto;
+  display: grid;
+  grid-template-columns: 4fr auto;
+  column-gap: 10px;
+  align-items: center;
+}
+
+.upframe-footer {
   display: flex;
   flex-direction: row;
-  column-gap: 10px;
-  justify-content: center;
   align-items: center;
+  column-gap: 5px;
 }
 
 button {

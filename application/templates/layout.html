@@ -46,8 +46,19 @@
     {% endblock %}
     {% block footer %}
     <footer>
-        <img id="emoji" alt="star emoji" src="{{url_for('static', filename='twitter_star.png')}}"/>
-        <span>Only You Know Who You Can Be.</span>
+        <div class="upframe-footer">
+            <img id="emoji" alt="star emoji" src="{{url_for('static', filename='twitter_star.png')}}"/>
+            <span>Only You Know Who You Can Be.</span>
+        </div>
+        <div>
+            <a href="https://twitter.com/StartupJobs__PT" target="_blank" rel="noreferrer">
+                <span class="secondary-text">Twitter</span>
+            </a>
+            |
+            <a href="{{  url_for('main.rss' )}}" target="_blank" rel="noreferrer">
+                <span class="secondary-text">Feed</span>
+            </a>
+        </div>
     </footer>
     {% endblock %}
     </body>
