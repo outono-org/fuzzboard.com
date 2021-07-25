@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
-{% block title %}{{company |capitalize}} jobs{% endblock %}
+{% block title %}Jobs at {{company |capitalize}}{% endblock %}
 
 {% block main %}
 
 <main class="main">
     <div>
-        <h1>{{ company |capitalize }} jobs in Portugal.</h1>
+        <h1>Jobs at {{ company}}</h1>
 
         {% if category == "design" %}
             <span class="secondary-text">Find UX, UI, product design and illustration jobs in Portugal.</span>

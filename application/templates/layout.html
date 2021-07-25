@@ -11,9 +11,18 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
         <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
 
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async nonce="{{ csp_nonce() }}" src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
-        
+        <script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
+        <script nonce="{{ csp_nonce() }}">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-NX2FW45HWD');
+        </script>
+                
         {% endblock %}
     </head>
     <body class="preload-transitions">
@@ -42,5 +51,4 @@
     </footer>
     {% endblock %}
     </body>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </html>

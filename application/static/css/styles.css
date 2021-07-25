@@ -348,3 +348,8 @@ input#submit:hover {
 #emoji {
   max-height: 20px;
 }
+
+.header-image img {
+  display: flex;
+  max-width: 400px;
+}
