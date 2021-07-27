@@ -86,7 +86,8 @@ footer {
 }
 
 button {
-  padding: 10px;
+  padding: 12px 20px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -146,14 +147,14 @@ input#submit {
   background-color: var(--primary-color);
   color: rgb(255 255 255);
   font-weight: 700;
-  border-radius: 4px;
+  border-radius: 6px;
   border-style: none;
   cursor: pointer;
 }
 
 .button-main:hover,
 input#submit:hover {
-  background-color: rgb(93 197 120 / 60%);
+  background-color: rgb(93 197 120 / 90%);
 }
 
 .recipient {
