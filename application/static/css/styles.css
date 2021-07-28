@@ -135,6 +135,15 @@ select:hover {
   background-color: rgba(57, 56, 86, 0.1);
 }
 
+.button-paste-url {
+  position: relative;
+  top: -50px;
+  left: 540px;
+  background-color: #ffe4c4;
+  width: fit-content;
+  cursor: pointer;
+}
+
 .button {
   cursor: pointer;
   background-color: rgb(169, 182, 199);
