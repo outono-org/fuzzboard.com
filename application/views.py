@@ -1,5 +1,5 @@
 import os
-from .models import post_job, get_jobs, get_all_jobs, update_entry_status, check_entry_timelimit
+from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
 from .decorators import login_required
@@ -44,14 +44,24 @@ def new():
 @bp.get('/')
 def home():
 
-    jobs = get_jobs()
+    jobs = get_active_jobs()
+    dev_jobs = get_active_dev_jobs()
+    design_jobs = get_active_design_jobs()
+    marketing_jobs = get_active_marketing_jobs()
+    bizdev_jobs = get_active_bizdev_jobs()
+    other_jobs = get_active_other_jobs()
 
-    return render_template('home.html', jobs=jobs)
+    return render_template('home.html', jobs=jobs,
+                           development=dev_jobs,
+                           design=design_jobs,
+                           marketing=marketing_jobs,
+                           bizdev=bizdev_jobs,
+                           other=other_jobs)
 
 
 @bp.get('/<category>')
 def category(category):
-    jobs = get_jobs()
+    jobs = get_active_jobs()
 
     for job in jobs:
         if job['category'] == category:
@@ -62,7 +72,7 @@ def category(category):
 
 @bp.get('/company/<company>')
 def company(company):
-    jobs = get_jobs()
+    jobs = get_active_jobs()
 
     for job in jobs:
         if job['company'] == company:
@@ -78,7 +88,7 @@ def rss():
     fg.description('Real-time feed of jobs at Startup Jobs Portugal.')
     fg.link(href='https://startup-jobs.herokuapp.com/')
 
-    for job in get_jobs():
+    for job in get_active_jobs():
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
@@ -101,7 +111,7 @@ def admin():
     form = JobManagement()
     refresh_button = RefreshJobStatus()
 
-    jobs = get_all_jobs()
+    jobs = get_jobs()
 
     if form.validate_on_submit():
         update_entry_status(form.id.data, form.status.data)
