@@ -254,11 +254,18 @@ input#submit:hover {
 /* ADMIN */
 
 .header-admin {
+  display: grid;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  width: fit-content;
+}
+
+.header-admin-title-button {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
-  margin-right: 40px;
+  justify-content: flex-start;
 }
 
 .container-wrapper {
@@ -266,24 +273,26 @@ input#submit:hover {
 }
 
 .container {
-  overflow-x: scroll;
-  margin: 40px 20px 40px 20px;
+  margin: 20px 0 20px 20px;
   font-size: 15px;
 }
 
 .dashboard-list-columns {
   grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr;
   width: 1850px;
+  margin: 30px 0px;
 }
 
 .list-grid-header {
   align-items: center;
   display: grid;
   grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr;
-  padding-left: 20px;
   font-weight: 700;
-  margin-bottom: 10px;
   column-gap: 25px;
+  padding: 20px 0px 15px 20px;
+  width: 1850px;
+  margin: 0px 20px 0px 20px;
+  font-size: 15px;
 }
 
 .list-grid-company-column,
@@ -339,7 +348,7 @@ input#submit:hover {
 }
 
 .admin-header {
-  margin: 30px;
+  margin: 20px 30px;
 }
 
 .list-row-input {
@@ -353,8 +362,9 @@ input#submit:hover {
   border-radius: 80px;
   color: #000000ad;
   width: fit-content;
-  padding: 10px 20px;
-  margin-left: 30px;
+  padding: 8px 15px;
+  margin-top: 10px;
+  margin-left: 13px;
   font-weight: 500;
   font-size: 13px;
 }

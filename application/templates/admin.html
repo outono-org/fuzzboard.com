@@ -13,34 +13,38 @@
     <div class="preload-transitions">
 
         <header class="header-admin animate">
-            <h1 class="m0 admin-header">Manage jobs</h1>
-            <form method="POST">
-                {{ refresh_button.hidden_tag() }}
-                {{ refresh_button.button }}
-            </form>
+            <div class="header-admin-title-button">
+                <h1 class="m0 admin-header">Manage jobs</h1>
+                <form method="POST">
+                    {{ refresh_button.hidden_tag() }}
+                    {{ refresh_button.button }}
+                </form>
+            </div>
+
+            <div class="list-grid-header">
+                <div class="list-grid-company-column">Company</div>
+                <div class="list-grid-position-column">Position</div>
+                <div class="list-grid-status-column">Status</div>
+                <div class="list-grid-category-column">Category</div>
+                <div class="list-grid-link-column">Link</div>
+                <div class="list-grid-location-column">Location</div>
+                <div class="list-grid-email-column">Email</div>
+                <div class="list-grid-created-column">Created</div>
+                <div class="list-grid-edited-column">Last Edited</div>
+            </div>
         </header>
 
+        <div>
+
         <div class="container-wrapper animate">
+
+            <div class="container">
 
             <span class="status status-pending">Pending
                 ({{ jobs|selectattr('status', 'equalto', 'pending') |list|length }})
             </span>
 
-            <div class="container">
-
                 <div class="dashboard-list-columns">
-
-                    <div class="list-grid-header">
-                        <div class="list-grid-company-column">Company</div>
-                        <div class="list-grid-position-column">Position</div>
-                        <div class="list-grid-status-column">Status</div>
-                        <div class="list-grid-category-column">Category</div>
-                        <div class="list-grid-link-column">Link</div>
-                        <div class="list-grid-location-column">Location</div>
-                        <div class="list-grid-email-column">Email</div>
-                        <div class="list-grid-created-column">Created</div>
-                        <div class="list-grid-edited-column">Last Edited</div>
-                    </div>
 
                     {% for job in jobs %}
                     {% if job.status == "pending" %}
@@ -110,28 +114,12 @@
                 {% endif %}
                 {% endfor %}
             </div>
-            </div>
-
 
             <!-- NEW SECTION -->
             <span class="status status-active">Active
                 ({{ jobs|selectattr('status', 'equalto', 'active') |list|length }})
             </span>
-            <div class="container">
-
             <div class="dashboard-list-columns">
-
-                <div class="list-grid-header">
-                    <div class="list-grid-company-column">Company</div>
-                    <div class="list-grid-position-column">Position</div>
-                    <div class="list-grid-status-column">Status</div>
-                    <div class="list-grid-category-column">Category</div>
-                    <div class="list-grid-link-column">Link</div>
-                    <div class="list-grid-location-column">Location</div>
-                    <div class="list-grid-email-column">Email</div>
-                    <div class="list-grid-created-column">Created</div>
-                    <div class="list-grid-edited-column">Last Edited</div>
-                </div>
 
                 {% for job in jobs %}
                 {% if job.status == "active" %}
@@ -196,9 +184,14 @@
             {% endif %}
             {% endfor %}
         </div>
-        </div>
+            
+            </div>
+
 
             
+
+            
+        </div>
         </div>
     </div>
 

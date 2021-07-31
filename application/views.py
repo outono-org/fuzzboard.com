@@ -104,12 +104,10 @@ def admin():
     jobs = get_all_jobs()
 
     if form.validate_on_submit():
-        print("working")
         update_entry_status(form.id.data, form.status.data)
         return redirect(url_for('main.admin'))
 
     if refresh_button.validate_on_submit():
-        print("working2")
         check_entry_timelimit()
         return redirect(url_for('main.admin'))
 
