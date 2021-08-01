@@ -1,5 +1,5 @@
 :root {
-  --primary-color: rgb(93 197 120);
+  --primary-color: #69c9ff;
 }
 
 #logo-wrapper {
@@ -14,8 +14,8 @@
   align-self: center;
   width: fit-content;
   padding: 3px 5px;
-  background-color: rgb(93 197 120 / 15%);
-  color: rgb(93 197 120);
+  background-color: rgb(247 247 248);
+  color: #69c9ff;
   border-radius: 3px;
 }
 
@@ -24,6 +24,7 @@ body {
   font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
     sans-serif, apple color emoji, segoe ui emoji;
   line-height: 1.5;
+  color: #2f344f;
 }
 
 body * {
@@ -53,7 +54,7 @@ select {
 }
 
 .category-header {
-  color: #000000;
+  color: #2f344f;
 }
 
 .header {
@@ -155,6 +156,7 @@ select:hover {
 .button-main,
 input#submit {
   background-color: var(--primary-color);
+  transition: ease-in 0.3s;
   color: rgb(255 255 255);
   font-weight: 700;
   border-radius: 6px;
@@ -164,7 +166,7 @@ input#submit {
 
 .button-main:hover,
 input#submit:hover {
-  background-color: rgb(93 197 120 / 90%);
+  background-color: #2f344f;
 }
 
 .recipient {
@@ -174,7 +176,7 @@ input#submit:hover {
 }
 
 .recipient-text {
-  background-color: rgb(93 197 120 / 15%);
+  background-color: #f0f2ff;
   border-radius: 8px;
   height: 240px;
   width: 340px;
@@ -226,7 +228,7 @@ input#submit:hover {
 .card-header {
   margin: 0px;
   margin-bottom: 5px;
-  color: #000000;
+  color: #2f344f;
 }
 
 .job-card-location {
