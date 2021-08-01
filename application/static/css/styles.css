@@ -408,6 +408,19 @@ input#submit:hover {
   padding: 10px 12px;
 }
 
+.partners {
+  display: flex;
+}
+
+.partners-logo {
+  width: 160px;
+  fill: rgba(57, 56, 86, 0.3);
+}
+
+.partners-logo:hover {
+  fill: rgba(57, 56, 86, 0.4);
+}
+
 @media (max-width: 855px) {
   .recipient {
     display: none;
