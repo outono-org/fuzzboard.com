@@ -55,3 +55,8 @@ class SignUp(FlaskForm):
         if find_user_by_email(email=email_address):
             #flash("Email already registered.")
             raise ValidationError('Email already registered.')
+
+
+class NewsletterSubscribe(FlaskForm):
+    MERGE0 = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Keep me posted")

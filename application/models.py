@@ -21,6 +21,15 @@ def post_job(title, company, category, location, link, email, status):
     )
 
 
+def save_email(email):
+    client.startupjobs.subscribers.insert(
+        {
+            "email": email,
+            'created_on': datetime.datetime.utcnow()
+        }
+    )
+
+
 def update_entry_status(id, status):
     client.startupjobs.jobs.update_one(
         {

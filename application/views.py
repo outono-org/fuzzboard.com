@@ -1,7 +1,7 @@
 import os
-from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit
+from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe
 from .decorators import login_required
 from .emails import send_email
 from flask import make_response
@@ -41,8 +41,9 @@ def new():
     return render_template('new.html', form=form, job_title=job_title, company=company)
 
 
-@bp.get('/')
+@bp.route('/', methods=["GET", "POST"])
 def home():
+    subscribe_form = NewsletterSubscribe()
 
     jobs = get_active_jobs()
     dev_jobs = get_active_dev_jobs()
@@ -51,7 +52,13 @@ def home():
     bizdev_jobs = get_active_bizdev_jobs()
     other_jobs = get_active_other_jobs()
 
-    return render_template('home.html', jobs=jobs,
+    if subscribe_form.validate_on_submit():
+        save_email(subscribe_form.MERGE0.data)
+        return redirect(url_for('main.home'))
+
+    return render_template('home.html',
+                           subscribe_form=subscribe_form,
+                           jobs=jobs,
                            development=dev_jobs,
                            design=design_jobs,
                            marketing=marketing_jobs,
