@@ -60,3 +60,9 @@ class SignUp(FlaskForm):
 class NewsletterSubscribe(FlaskForm):
     MERGE0 = EmailField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Keep me posted")
+
+
+class StartupsTestForm(FlaskForm):
+    feedback = TextAreaField("Tell us why this is important to you")
+    email = EmailField("Email*", validators=[DataRequired(), Email()])
+    submit = SubmitField("Keep me posted")

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}Startups{% endblock %}
+
+{% block main %}
+<main class="main">
+        <div>
+            <h1>Startup List</h1>
+            <span class="secondary-text">Here you might be able to find a list with startups that have recently been hiring in Portugal. You might be able to learn about companies you don't know. And you might also be able to turn on email notifications so you can be the first to know when they start hiring again.</span>
+
+            <h2>Be the first one to know when this page goes live</h2>
+            <form class="new-job-form" method="POST">
+                {{ form.hidden_tag() }}
+                
+                {{ form.email.label }}
+                {{ form.email(placeholder="rodrigo@upframe.io") }}
+
+                {{ form.feedback.label }}
+                {{ form.feedback(placeholder="If you don't have anything to say, that's okay too. You can submit the form without filling this field.") }}
+        
+                {{ form.submit(class="button-main") }}
+            </form>
+        </div>
+</main>
+
+{% endblock %}

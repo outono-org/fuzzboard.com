@@ -1,7 +1,7 @@
 import os
-from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email
+from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
 from .emails import send_email
 from flask import make_response
@@ -129,3 +129,14 @@ def admin():
         return redirect(url_for('main.admin'))
 
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
+
+
+@bp.route('/startups', methods=["GET", "POST"])
+def startups():
+    form = StartupsTestForm()
+
+    if form.validate_on_submit():
+        save_email_test_startups(form.email.data)
+        return redirect(url_for('main.home'))
+
+    return render_template('startups.html', form=form)

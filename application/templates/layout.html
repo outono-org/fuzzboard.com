@@ -34,6 +34,19 @@
                 </a>
                 <span class="beta-tag">Beta</span>
             </div>
+            <div class="navigation">
+                <span class="navigation-item">
+                    <a href="{{ url_for('main.startups') }}" id="startups">Startups</a>
+                </span>
+                <span class="navigation-item">
+                    <a href="https://351.community/" target="_blank" rel="noreferrer">Community</a>
+                </span>
+                {% if session.username %}
+                <span class="navigation-item">
+                    <a href="{{ url_for('main.admin') }}" target="_blank" rel="noreferrer">Dashboard</a>
+                </span>
+                {% endif %}
+            </div>
             <div>
                 <a href="{{ url_for('main.new') }}">
                     <button class="button-main">Post job</button>
