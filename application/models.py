@@ -30,10 +30,11 @@ def save_email(email):
     )
 
 
-def save_email_test_startups(email):
+def save_email_test_startups(email, feedback):
     client.startupjobs.test_startups.insert(
         {
             "email": email,
+            "feedback": feedback,
             'created_on': datetime.datetime.utcnow()
         }
     )

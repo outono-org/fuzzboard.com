@@ -444,6 +444,14 @@ input#submit:hover {
   fill: rgba(57, 56, 86, 0.4);
 }
 
+.highlight {
+  background-color: rgba(251, 191, 36, 0.2);
+  color: #211e1ec4;
+  border-radius: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 @media (max-width: 855px) {
   .recipient {
     display: none;

@@ -136,7 +136,7 @@ def startups():
     form = StartupsTestForm()
 
     if form.validate_on_submit():
-        save_email_test_startups(form.email.data)
+        save_email_test_startups(form.email.data, form.feedback.data)
         return redirect(url_for('main.home'))
 
     return render_template('startups.html', form=form)
