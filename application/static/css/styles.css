@@ -210,7 +210,7 @@ input#submit:hover {
   border-radius: 3px;
   position: relative;
   max-width: 250px;
-  top: -70px;
+  top: -50px;
   align-self: flex-end;
 }
 
