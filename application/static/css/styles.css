@@ -53,8 +53,16 @@ select {
   color: #211e1eab;
 }
 
+.job-card .secondary-text {
+  text-decoration: underline;
+}
+
 .category-header {
   color: #2f344f;
+}
+
+.category-header h2 {
+  text-decoration: underline;
 }
 
 .header {
