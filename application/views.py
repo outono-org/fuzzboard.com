@@ -152,7 +152,7 @@ def startups():
     return render_template('startups.html', form=form)
 
 
-@bp.route('/job_submitted', methods=["GET", "POST"])
+@bp.get('/job_submitted')
 def job_submitted():
 
     return render_template('job_submitted.html')
