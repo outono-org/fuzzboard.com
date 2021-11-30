@@ -5,7 +5,11 @@
 {% block main %}
 
 <main class="main">
+
+    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+    
     <header class="header-new-job-page">
+
         <h1>Submit a job for free</h1>
 
         <span class="secondary-text">Each job is shared across our partner incubators, startup hubs, newsletters and <a class="a_underline" href="https://351.community/" target="_blank" rel="noreferrer">351</a>, the Portuguese Startup Community.</span>
@@ -201,7 +205,8 @@
         </div>
     </header>
 
-    <form class="new-job-form" method="POST">
+    <div class="new-job-form" id="replaceMe">
+    <form class="new-job-form" hx-post="/newJob" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
         {{ form.hidden_tag() }}
 
         {{ form.title.label }}
@@ -223,7 +228,10 @@
         {{ form.email(placeholder="jason@upframe.io") }}
 
         {{ form.submit(class="button-main") }}
+
     </form>
+</div>
+    
 
     <aside class="recipient">
         <span class="recipient-text">Hi! My name is Mariana. I’ll be the one reviewing your job submission.<br><br> You can reach me on <a class="a_underline" href="https://twitter.com/StartupJobs__PT" target="_blank" rel="noreferrer">Twitter</a>, <a class="a_underline" href="https://https://www.linkedin.com/in/marianadkobayashi/" target="_blank" rel="noreferrer">LinkedIn</a> or <a class="a_underline" href="mailto:marianadanifk@gmail.com">Email</a>.</span>

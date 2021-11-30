@@ -42,7 +42,7 @@ csp = {
         'www.google-analytics.com',
         'https://ssl.gstatic.com',
         'https://www.gstatic.com',
-    ],
+    ]
 }
 Talisman(app,
          content_security_policy=csp,
