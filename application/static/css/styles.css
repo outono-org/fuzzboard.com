@@ -15,7 +15,7 @@
   width: fit-content;
   padding: 3px 5px;
   background-color: rgb(247 247 248);
-  color: #69c9ff;
+  color: #72daed;
   border-radius: 3px;
 }
 
@@ -54,7 +54,7 @@ select {
 }
 
 .job-card .secondary-text {
-  text-decoration: underline;
+  text-decoration: underline dotted 2px #211e1e71;
 }
 
 .category-header {
@@ -201,9 +201,20 @@ input#submit {
   cursor: pointer;
 }
 
+.button-main-cta {
+  border-radius: 36px;
+  font-size: 14px;
+}
+
 .button-main:hover,
 input#submit:hover {
   background-color: #2f344f;
+}
+
+.success-message {
+  background-color: #72daed24;
+  border-radius: 8px;
+  padding: 20px;
 }
 
 .recipient {
