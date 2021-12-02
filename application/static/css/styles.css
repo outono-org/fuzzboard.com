@@ -276,6 +276,7 @@ input#submit:hover {
   color: inherit;
   border-bottom: 2px dotted #000;
   padding-bottom: 2px;
+  width: fit-content;
 }
 
 .a_underline:hover {

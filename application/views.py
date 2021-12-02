@@ -51,6 +51,13 @@ def new():
     return render_template('new.html', form=form)
 
 
+@bp.get('/new_job_form')
+def new_job_form():
+    form = NewJobSubmission()
+
+    return render_template('new_job_form.html', form=form)
+
+
 @bp.route('/', methods=["GET", "POST"])
 def home():
     subscribe_form = NewsletterSubscribe()
