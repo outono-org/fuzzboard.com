@@ -34,8 +34,9 @@
     {% block header %}
     <header class="header">
         <div id="logo-wrapper">
+            
             <a href="{{ url_for('main.home') }}">
-                <h2 class="card-header">Startup Jobs</h2>
+                <h2 class="card-header logo">Startup Jobs</h2>
             </a>
             
         </div>
@@ -43,6 +44,7 @@
             <span class="navigation-item">
                 <a href="{{ url_for('main.startups') }}" id="startups">Startup List</a>
             </span>
+            <span class="beta-tag">New</span>
             <span class="navigation-item">
                 <a href="https://351.community/" target="_blank" rel="noreferrer">Community</a>
             </span>

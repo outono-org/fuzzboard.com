@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #69c9ff;
+  --primary-color: #72daed;
 }
 
 #logo-wrapper {
@@ -72,6 +72,17 @@ select {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+h1,
+.logo {
+  font-weight: 800;
+  color: #263e59;
+  margin-bottom: 10px;
+}
+
+.main-heading-description {
+  font-size: 20px;
 }
 
 .navigation-item {
@@ -205,7 +216,7 @@ input#submit:hover {
 }
 
 .recipient-text {
-  background-color: #f0f7ff;
+  background-color: #72daed24;
   border-radius: 8px;
   height: 240px;
   width: 340px;
@@ -411,6 +422,7 @@ input#submit:hover {
 
 #emoji {
   max-height: 20px;
+  max-width: 20px;
 }
 
 .header-image img {
