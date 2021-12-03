@@ -227,7 +227,8 @@ input#submit:hover {
 }
 
 .recipient-text {
-  background-color: #72daed24;
+  background-color: #edbc723b;
+  color: #263e59;
   border-radius: 8px;
   height: 240px;
   width: 340px;
@@ -494,4 +495,15 @@ input#submit:hover {
   .navigation {
     display: none;
   }
+}
+
+.oyk {
+  opacity: 20%;
+  position: relative;
+  display: inline;
+  top: -480px;
+  left: 250px;
+  max-width: 200px;
+  max-height: 200px;
+  z-index: 1;
 }
