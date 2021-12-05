@@ -285,6 +285,8 @@ input#submit:hover {
 
 .job-card-location {
   margin: 20px;
+  display: flex;
+  column-gap: 3px;
 }
 
 .ad {
