@@ -1,4 +1,6 @@
 import os
+
+from flask.wrappers import Response
 from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
@@ -11,8 +13,8 @@ from feedgen.feed import FeedGenerator
 bp = Blueprint('main', __name__)
 
 
-@bp.route('/new', methods=["GET", "POST"])
-def new():
+@bp.post('/newJob')
+def newJob():
     form = NewJobSubmission()
     company = form.company.data
     job_title = form.title.data
@@ -37,8 +39,23 @@ def new():
                    template='mail/submission_notification',
                    job_title=job_title,
                    company=company)
-        return redirect(url_for('main.new'))
-    return render_template('new.html', form=form, job_title=job_title, company=company)
+
+        response = job_submitted()
+        return response
+
+
+@bp.get('/new')
+def new():
+    form = NewJobSubmission()
+
+    return render_template('new.html', form=form)
+
+
+@bp.get('/new_job_form')
+def new_job_form():
+    form = NewJobSubmission()
+
+    return render_template('new_job_form.html', form=form)
 
 
 @bp.route('/', methods=["GET", "POST"])
@@ -140,3 +157,9 @@ def startups():
         return redirect(url_for('main.home'))
 
     return render_template('startups.html', form=form)
+
+
+@bp.get('/job_submitted')
+def job_submitted():
+
+    return render_template('job_submitted.html')

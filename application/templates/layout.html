@@ -11,10 +11,11 @@
         content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
     <meta property="og:image" content="{{ url_for('static', filename='preview2.png') }}">
     <link rel="stylesheet" href="/static/css/styles.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
 
     <script src="{{ url_for('static', filename='main.js') }}"></script>
+    
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
@@ -33,15 +34,17 @@
     {% block header %}
     <header class="header">
         <div id="logo-wrapper">
+            
             <a href="{{ url_for('main.home') }}">
-                <h2 class="card-header">Startup Jobs</h2>
+                <h2 class="card-header logo">Startup Jobs</h2>
             </a>
-            <span class="beta-tag">Beta</span>
+            
         </div>
         <div class="navigation">
             <span class="navigation-item">
                 <a href="{{ url_for('main.startups') }}" id="startups">Startup List</a>
             </span>
+            <span class="beta-tag">New</span>
             <span class="navigation-item">
                 <a href="https://351.community/" target="_blank" rel="noreferrer">Community</a>
             </span>
@@ -53,7 +56,7 @@
         </div>
         <div>
             <a href="{{ url_for('main.new') }}">
-                <button class="button-main">Post job</button>
+                <button class="button-main button-main-cta">Add a job</button>
             </a>
         </div>
     </header>
