@@ -1,7 +1,7 @@
 import os
 
 from flask.wrappers import Response
-from .models import post_job, get_active_jobs, get_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -63,6 +63,7 @@ def home():
     subscribe_form = NewsletterSubscribe()
 
     jobs = get_active_jobs()
+    recent_jobs = get_recent_jobs()
     dev_jobs = get_active_dev_jobs()
     design_jobs = get_active_design_jobs()
     marketing_jobs = get_active_marketing_jobs()
@@ -76,6 +77,7 @@ def home():
     return render_template('home.html',
                            subscribe_form=subscribe_form,
                            jobs=jobs,
+                           recent_jobs=recent_jobs,
                            development=dev_jobs,
                            design=design_jobs,
                            marketing=marketing_jobs,
