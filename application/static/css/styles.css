@@ -295,6 +295,7 @@ input#submit:hover {
   border-radius: 4px;
   height: 200px;
   padding: 20px;
+  font-weight: 300;
 }
 
 .a_underline {
@@ -508,4 +509,50 @@ input#submit:hover {
   max-width: 200px;
   max-height: 200px;
   z-index: 1;
+}
+
+/* Login CSS */
+
+.container-login {
+  margin: 100px auto;
+  max-width: 400px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.main-login {
+  max-width: 600px;
+  margin: 50px auto;
+  animation: fadeIn;
+  animation-duration: 1s;
+}
+
+.big-text {
+  font-size: 42px;
+}
+
+.login-form input {
+  padding: 15px 17px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid transparent;
+  font-size: 16px;
+}
+
+.block input {
+  display: block;
+}
+
+.mb15 {
+  margin-bottom: 15px;
+}
+
+.mb15 input {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.mb50 {
+  margin-bottom: 50px;
 }

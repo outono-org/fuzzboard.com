@@ -17,7 +17,7 @@ class NewJobSubmission(FlaskForm):
     category = SelectField("Category", choices=[
                            ("Pick one"), ("Design"), ("Development"), ("Marketing"), ("Business Development"), ("Other")])
     location = SelectField("Location", choices=[
-                           ("Lisboa"), ("Porto"), ("Aveiro"), ("Açores"), ("Beja"), ("Braga"), ("Bragança"), ("Castelo Branco"), ("Coimbra"), ("Évora"), ("Faro"), ("Guarda"), ("Leiria"), ("Madeira"), ("Portalegre"), ("Santarém"), ("Setúbal"), ("Viana do Castelo"), ("Vila Real"), ("Viseu")], validators=[DataRequired()])
+                           ("Remote"), ("Lisboa"), ("Porto"), ("Aveiro"), ("Açores"), ("Beja"), ("Braga"), ("Bragança"), ("Castelo Branco"), ("Coimbra"), ("Évora"), ("Faro"), ("Guarda"), ("Leiria"), ("Madeira"), ("Portalegre"), ("Santarém"), ("Setúbal"), ("Viana do Castelo"), ("Vila Real"), ("Viseu")], validators=[DataRequired()])
     link = StringField("Where should I go to apply?",
                        validators=[DataRequired(), URL()])
     email = EmailField("Contact email", validators=[DataRequired(), Email()])

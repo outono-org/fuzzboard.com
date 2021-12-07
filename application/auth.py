@@ -30,6 +30,12 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
+@auth.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/login")
+
+
 """ @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUp()
