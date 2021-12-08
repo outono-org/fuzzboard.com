@@ -32,7 +32,7 @@
 
     <div class="jobs-container">
 
-        {% for job in jobs %}
+        {% for job in jobs |reverse %}
             {% if job.category == category %}
                 <a href={{ job.url }} target="_blank" rel="noreferrer">
                     <div class="card-container">

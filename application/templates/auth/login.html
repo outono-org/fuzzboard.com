@@ -9,10 +9,10 @@
     href='/static/css/styles.css'>
 </head>
 <body>
-    <main class="main">
-        <div class="container">
+    <main class="main-login">
+        <div class="container-login">
             <h1 class="mb50 big-text">Sign in</h1>
-            <form class="block mb15" method="post">
+            <form class="block login-form mb15" method="post">
                 {{ form.hidden_tag() }}
                 {{ form.email_address(placeholder="Your email") }}
                 {{ form.password(placeholder="Password") }}
