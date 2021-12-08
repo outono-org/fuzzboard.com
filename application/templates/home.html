@@ -58,7 +58,7 @@
         <a class="category-header" href="{{ url_for('main.category', category='development') }}"><h2>Development jobs</h2></a>
         {% endif %}
 
-        {% for job in development %}
+        {% for job in development |reverse %}
                     <div class="card-container">
 
                         <div class="job-card">
@@ -85,7 +85,7 @@
         <a class="category-header" href="{{ url_for('main.category', category='design') }}"><h2>Design jobs</h2></a>
         {% endif %}
 
-        {% for job in design %}
+        {% for job in design |reverse %}
             <div class="card-container">
 
                 <div class="job-card">
@@ -109,7 +109,7 @@
             <a class="category-header" href="{{ url_for('main.category', category='marketing') }}"><h2>Marketing jobs</h2></a>
         {% endif %}
 
-        {% for job in marketing %}
+        {% for job in marketing |reverse %}
             <div class="card-container">
 
                 <div class="job-card">
@@ -133,7 +133,7 @@
         <a class="category-header" href="{{ url_for('main.category', category='business development') }}"><h2>Business Development jobs</h2></a>
         {% endif %}
 
-        {% for job in bizdev %}
+        {% for job in bizdev |reverse %}
             <div class="card-container">
 
                 <div class="job-card">
@@ -157,7 +157,7 @@
             <a class="category-header" href="{{ url_for('main.category', category='other') }}"><h2>Other jobs</h2></a>
         {% endif %}
 
-        {% for job in other %}
+        {% for job in other |reverse %}
             <div class="card-container">
 
                 <div class="job-card">
