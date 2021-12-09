@@ -61,8 +61,9 @@ def new_job_form():
 @bp.get('/dev_jobs')
 def dev_jobs():
     dev_jobs = get_active_dev_jobs()
+    subscribe_form = NewsletterSubscribe()
 
-    return render_template('dev_jobs.html', dev=dev_jobs)
+    return render_template('dev_jobs.html', dev=dev_jobs, subscribe_form=subscribe_form,)
 
 
 @bp.get('/design_jobs')
