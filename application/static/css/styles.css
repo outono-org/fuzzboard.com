@@ -573,3 +573,8 @@ input#submit:hover {
   transition: color 200ms ease;
   color: #0d0c22;
 }
+
+::selection {
+  background: var(--primary-color);
+  color: rgba(255, 255, 255, 0.85);
+}
