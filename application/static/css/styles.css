@@ -556,3 +556,22 @@ input#submit:hover {
 .mb50 {
   margin-bottom: 50px;
 }
+
+.filter-categories {
+  padding: 0;
+}
+
+.filter-categories li {
+  display: inline-block;
+  padding: 10px 10px;
+  color: #211e1eab;
+  cursor: pointer;
+}
+
+.filter-categories li.active {
+  background-color: rgba(13, 12, 34, 0.05);
+  border-radius: 8px;
+  font-weight: 500;
+  transition: color 200ms ease;
+  color: #0d0c22;
+}

@@ -5,6 +5,8 @@
 {% block main %}
 
 <main class="main">
+
+    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
     
     <div>
         <div>
@@ -30,7 +32,20 @@
         </div>
     </div>
 
-    <div class="jobs-container">
+    
+
+    <div id="replaceMe" class="jobs-container">
+
+        <div>
+            <ul class="filter-categories">
+                <li class="active">All</li>
+                <li hx-get="/dev_jobs" hx-trigger="click" hx-target="#replaceMe">Development</li>
+                <li hx-get="/design_jobs" hx-trigger="click" hx-target="#replaceMe">Design</li>
+                <li hx-get="/marketing_jobs" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
+                <li hx-get="/bizdev_jobs" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
+            </ul></div>
+
+        <div>
 
         <h2>Recent jobs</h2>
 
@@ -178,6 +193,7 @@
         {% endfor %}
 
     </div>
+</div>
 
     <!-- <aside class="ad"></aside> -->
 
