@@ -249,7 +249,6 @@ input#submit:hover {
   display: flex;
   flex-direction: column;
   flex: 3 0 70%;
-  padding: 20px 0px;
 }
 
 .card-container {
@@ -493,13 +492,17 @@ input#submit:hover {
 .filter-categories li {
   display: block;
   padding: 10px 10px;
+  border-radius: 8px;
   color: #211e1eab;
   cursor: pointer;
 }
 
+.filter-categories li:hover {
+  background-color: #fafafb;
+}
+
 .filter-categories li.active {
   background-color: rgba(13, 12, 34, 0.05);
-  border-radius: 8px;
   font-weight: 500;
   transition: color 200ms ease;
   color: #0d0c22;
