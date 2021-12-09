@@ -4,34 +4,29 @@
 
 {% block main %}
 
+<script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+
 <main class="main">
+<div>
+    <h1>Join a Startup in Portugal</h1>
+    <span class="secondary-text main-heading-description">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
+</div>
+</main>
 
-    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
-    
+<main id="replaceMe" class="main">
+
     <div>
-        <div>
-            <h1>Join a Startup in Portugal</h1>
-            <span class="secondary-text main-heading-description">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
-        </div>
-
-        <!-- <div class="header-image">
-            <img alt="building" src="{{url_for('static', filename='edificio.png')}}"/>
-        </div> -->
+        <ul class="filter-categories">
+            <li class="active">All</li>
+            <li hx-get="/dev_jobs" hx-trigger="click" hx-target="#replaceMe">Development</li>
+            <li hx-get="/design_jobs" hx-trigger="click" hx-target="#replaceMe">Design</li>
+            <li hx-get="/marketing_jobs" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
+            <li hx-get="/bizdev_jobs" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
+            <li hx-get="/other_jobs" hx-trigger="click" hx-target="#replaceMe">Others</li>
+        </ul>
     </div>
 
-    <div id="replaceMe" class="jobs-container">
-
-        <div>
-            <ul class="filter-categories">
-                <li class="active">All</li>
-                <li hx-get="/dev_jobs" hx-trigger="click" hx-target="#replaceMe">Development</li>
-                <li hx-get="/design_jobs" hx-trigger="click" hx-target="#replaceMe">Design</li>
-                <li hx-get="/marketing_jobs" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
-                <li hx-get="/bizdev_jobs" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
-                <li hx-get="/other_jobs" hx-trigger="click" hx-target="#replaceMe">Others</li>
-            </ul></div>
-
-        <div>
+    <div class="jobs-container">
 
         <h2>Recent jobs</h2>
 
@@ -181,7 +176,7 @@
     </div>
 </div>
 
-    <!-- <aside class="ad"></aside> -->
+    
 
 </main>
 
