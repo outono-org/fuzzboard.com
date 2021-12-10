@@ -14,13 +14,16 @@
         {%- for job in dev |reverse| batch(5) %}
             {%- for entry in job %}
                 
-            
-                <a href={{ entry.url }} target="_blank" rel="noreferrer">
                     <div class="card-container">
 
                         <div class="job-card">
-                            <h3 class="card-header">{{ entry.title }}</h3>
-                            <span class="secondary-text">{{ entry.company }}</span>
+                            <a href={{ entry.url }} target="_blank" rel="noreferrer">
+                                <h3 class="card-header">{{ entry.title }}</h3>
+                            </a>
+                        
+                            <a href="{{ url_for('main.company', company=entry.company) }}">
+                                <span class="secondary-text">{{ entry.company }}</span>
+                            </a>
                         </div>
 
                         <div class="job-card-location">
@@ -28,7 +31,7 @@
                             <span class="secondary-text">{{ entry.location }}</span>
                         </div>
                     </div>
-                </a>
+                
                 
                 {%- endfor %}
         
