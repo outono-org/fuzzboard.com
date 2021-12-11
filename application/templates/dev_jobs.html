@@ -21,8 +21,8 @@
                                 <h3 class="card-header">{{ entry.title }}</h3>
                             </a>
                         
-                            <a href="{{ url_for('main.company', company=entry.company) }}">
-                                <span class="secondary-text">{{ entry.company }}</span>
+                            <a class="company-hyperlink secondary-text" href="{{ url_for('main.company', company=entry.company) }}">
+                                <span>{{ entry.company }}</span>
                             </a>
                         </div>
 

@@ -54,7 +54,7 @@ select {
 }
 
 .job-card .secondary-text {
-  text-decoration: underline dotted 2px #211e1e71;
+  font-weight: 500;
 }
 
 .category-header {
@@ -273,6 +273,10 @@ input#submit:hover {
   overflow: hidden;
   margin-bottom: 10px;
   margin-left: 20px;
+}
+
+.job-card .company-hyperlink:hover {
+  color: #0d889f !important;
 }
 
 /* Change name to something more universal */
@@ -614,6 +618,10 @@ input#submit:hover {
 
 .mb50 {
   margin-bottom: 50px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
 }
 
 ::selection {
