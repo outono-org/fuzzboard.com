@@ -94,6 +94,11 @@ def other_jobs():
     return render_template('other_jobs.html', other=other_jobs)
 
 
+@bp.get('/save')
+def save():
+    return render_template('save.html')
+
+
 @bp.route('/', methods=["GET", "POST"])
 def home():
     subscribe_form = NewsletterSubscribe()
