@@ -1,7 +1,8 @@
 import os
 
 from flask.wrappers import Response
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
+from wtforms.fields import html5
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, find_bookmark_job_counter, increase_bookmark_job_counter
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -94,9 +95,17 @@ def other_jobs():
     return render_template('other_jobs.html', other=other_jobs)
 
 
-@bp.get('/save')
-def save():
-    return render_template('save.html')
+@bp.post('/bookmark')
+# Right now we're saving the number of clicks on the bookmarking icon
+# from people who don't have an account to have a sense of the interest
+# in the 'save a job' feature.
+def bookmark():
+    bookmark_var = find_bookmark_job_counter()
+
+    if not session.get("username"):
+        increase_bookmark_job_counter(bookmark_var['number_of_clicks'])
+
+    return Response(status=201)
 
 
 @bp.route('/', methods=["GET", "POST"])
