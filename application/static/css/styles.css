@@ -249,7 +249,6 @@ input#submit:hover {
   display: flex;
   flex-direction: column;
   flex: 3 0 70%;
-  padding: 20px 0px;
 }
 
 .card-container {
@@ -447,15 +446,13 @@ input#submit:hover {
 
 .email-subscribe {
   display: flex;
-  position: fixed;
+
   font-weight: 500;
   bottom: 30px;
   border-radius: 8px;
   width: 600px;
   height: 60px;
   background-color: #ffffff;
-  -webkit-box-shadow: 0px 20px 48px rgb(0 0 0 / 10%);
-  box-shadow: 0px 20px 48px rgb(0 0 0 / 10%);
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;
@@ -488,7 +485,33 @@ input#submit:hover {
   padding-right: 5px;
 }
 
+.filter-categories {
+  padding: 0;
+}
+
+.filter-categories li {
+  display: block;
+  padding: 10px 10px;
+  border-radius: 8px;
+  color: #211e1eab;
+  cursor: pointer;
+}
+
+.filter-categories li:hover {
+  background-color: #fafafb;
+}
+
+.filter-categories li.active {
+  background-color: rgba(13, 12, 34, 0.05);
+  font-weight: 500;
+  transition: color 200ms ease;
+  color: #0d0c22;
+}
+
 @media (max-width: 855px) {
+  .filter-categories li {
+    display: inline-block;
+  }
   .recipient {
     display: none;
   }
@@ -555,4 +578,9 @@ input#submit:hover {
 
 .mb50 {
   margin-bottom: 50px;
+}
+
+::selection {
+  background: var(--primary-color);
+  color: rgba(255, 255, 255, 0.85);
 }

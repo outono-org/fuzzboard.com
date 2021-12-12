@@ -4,35 +4,29 @@
 
 {% block main %}
 
+<script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+
 <main class="main">
-    
+<div>
+    <h1>Join a Startup in Portugal</h1>
+    <span class="secondary-text main-heading-description">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
+</div>
+</main>
+
+<main id="replaceMe" class="main">
+
     <div>
-        <div>
-            <h1>Join a Startup in Portugal</h1>
-            <span class="secondary-text main-heading-description">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
-        </div>
-
-        <!-- <div class="header-image">
-            <img alt="building" src="{{url_for('static', filename='edificio.png')}}"/>
-        </div> -->
-    </div>
-
-    <div class="email-subscribe">
-        <span>Get new jobs in your inbox</span>
-        <div>
-        <form method="POST" autocomplete="off" action="https://hey.us6.list-manage.com/subscribe/post">
-        {{ subscribe_form.hidden_tag() }}
-        <input type="hidden" name="u" value="836c6f357c7afce413d17dce1">
-        <input type="hidden" name="id" value="d05c7f7f10">
-        {{ subscribe_form.MERGE0(placeholder="mail@example.com") }}
-        {{ subscribe_form.submit }}
-        </form>
-        </div>
+        <ul class="filter-categories">
+            <li class="active">All</li>
+            <li hx-get="/dev_jobs" hx-trigger="click" hx-target="#replaceMe">Development</li>
+            <li hx-get="/design_jobs" hx-trigger="click" hx-target="#replaceMe">Design</li>
+            <li hx-get="/marketing_jobs" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
+            <li hx-get="/bizdev_jobs" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
+            <li hx-get="/other_jobs" hx-trigger="click" hx-target="#replaceMe">Others</li>
+        </ul>
     </div>
 
     <div class="jobs-container">
-
-        <h2>Recent jobs</h2>
 
         {% for job in recent_jobs %}
             <div class="card-container">
@@ -178,8 +172,9 @@
         {% endfor %}
 
     </div>
+</div>
 
-    <!-- <aside class="ad"></aside> -->
+    
 
 </main>
 
