@@ -2,7 +2,7 @@ import os
 
 from flask.wrappers import Response
 from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, find_bookmark_job_counter, increase_bookmark_job_counter
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, find_bookmark_job_counter, increase_bookmark_job_counter, get_active_jobs2
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -82,7 +82,7 @@ def marketing_jobs():
 
 @bp.get('/bizdev_jobs')
 def bizdev_jobs():
-    bizdev_jobs = get_active_jobs("bizdev")
+    bizdev_jobs = get_active_jobs("business development")
 
     return render_template('bizdev_jobs.html', bizdev=bizdev_jobs)
 
@@ -111,12 +111,11 @@ def bookmark():
 def home():
     subscribe_form = NewsletterSubscribe()
 
-    jobs = get_active_jobs()
     recent_jobs = get_recent_jobs()
     dev_jobs = get_active_jobs("development")
     design_jobs = get_active_jobs("design")
     marketing_jobs = get_active_jobs("marketing")
-    bizdev_jobs = get_active_jobs("bizdev")
+    bizdev_jobs = get_active_jobs("business development")
     other_jobs = get_active_jobs("other")
 
     if subscribe_form.validate_on_submit():
@@ -125,7 +124,6 @@ def home():
 
     return render_template('home.html',
                            subscribe_form=subscribe_form,
-                           jobs=jobs,
                            recent_jobs=recent_jobs,
                            development=dev_jobs,
                            design=design_jobs,
@@ -147,7 +145,7 @@ def category(category):
 
 @bp.get('/company/<company>')
 def company(company):
-    jobs = get_active_jobs()
+    jobs = get_active_jobs2()
 
     for job in jobs:
         if job['company'] == company:

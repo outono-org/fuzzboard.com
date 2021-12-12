@@ -104,6 +104,27 @@ def get_active_jobs(category: str = "$any"):
     return jobs
 
 
+def get_active_jobs2():
+    jobs = [
+        {
+            "_id": job["_id"],
+            "title": job["title"],
+            "company": job["company"],
+            "category": job["category"],
+            "location": job["location"],
+            "url": job["url"],
+            "email": job["email"],
+            "timestamp": job["_id"].generation_time
+        }
+        for job in client.startupjobs.jobs.find(
+            {
+                "status": "active",
+            }
+        )
+    ]
+    return jobs
+
+
 def get_recent_jobs():
     jobs = [
         {

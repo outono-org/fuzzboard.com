@@ -113,7 +113,7 @@
             </div>
         {% endfor %}
         
-        {% if marketing |list|length > 1 %}
+        {% if marketing |list|length %}
             <a class="category-header" href="{{ url_for('main.category', category='marketing') }}"><h2>Marketing jobs</h2></a>
         {% endif %}
 
