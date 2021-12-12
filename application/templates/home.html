@@ -53,7 +53,7 @@
             </div>
         {% endfor %}
 
-        {% if jobs|selectattr('category', 'equalto', 'development') |list|length %}
+        {% if development |list|length %}
         <a class="category-header" href="{{ url_for('main.category', category='development') }}"><h2>Development jobs</h2></a>
         {% endif %}
 
@@ -84,7 +84,7 @@
                     </div>
         {% endfor %}
 
-        {% if jobs|selectattr('category', 'equalto', 'design') |list|length %}
+        {% if design |list|length %}
         <a class="category-header" href="{{ url_for('main.category', category='design') }}"><h2>Design jobs</h2></a>
         {% endif %}
 
@@ -113,7 +113,7 @@
             </div>
         {% endfor %}
         
-        {% if jobs|selectattr('category', 'equalto', 'marketing') |list|length %}
+        {% if marketing |list|length > 1 %}
             <a class="category-header" href="{{ url_for('main.category', category='marketing') }}"><h2>Marketing jobs</h2></a>
         {% endif %}
 
@@ -142,7 +142,7 @@
             </div>
         {% endfor %}
 
-        {% if jobs|selectattr('category', 'equalto', 'business development') |list|length %}
+        {% if bizdev |list|length %}
         <a class="category-header" href="{{ url_for('main.category', category='business development') }}"><h2>Business Development jobs</h2></a>
         {% endif %}
 
@@ -171,7 +171,7 @@
             </div>
         {% endfor %}
         
-        {% if jobs|selectattr('category', 'equalto', 'other') |list|length %}
+        {% if other |list|length %}
             <a class="category-header" href="{{ url_for('main.category', category='other') }}"><h2>Other jobs</h2></a>
         {% endif %}
 
