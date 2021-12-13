@@ -1,7 +1,8 @@
 import os
 
 from flask.wrappers import Response
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, get_active_dev_jobs, get_active_design_jobs, get_active_marketing_jobs, get_active_bizdev_jobs, get_active_other_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups
+from wtforms.fields import html5
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, find_bookmark_job_counter, increase_bookmark_job_counter, get_active_jobs2
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -40,8 +41,7 @@ def newJob():
                    job_title=job_title,
                    company=company)
 
-        response = job_submitted()
-        return response
+        return job_submitted()
 
 
 @bp.get('/new')
@@ -60,7 +60,7 @@ def new_job_form():
 
 @bp.get('/dev_jobs')
 def dev_jobs():
-    dev_jobs = get_active_dev_jobs()
+    dev_jobs = get_active_jobs("development")
     subscribe_form = NewsletterSubscribe()
 
     return render_template('dev_jobs.html', dev=dev_jobs, subscribe_form=subscribe_form,)
@@ -68,43 +68,55 @@ def dev_jobs():
 
 @bp.get('/design_jobs')
 def design_jobs():
-    design_jobs = get_active_design_jobs()
+    design_jobs = get_active_jobs("design")
 
     return render_template('design_jobs.html', design=design_jobs)
 
 
 @bp.get('/marketing_jobs')
 def marketing_jobs():
-    marketing_jobs = get_active_marketing_jobs()
+    marketing_jobs = get_active_jobs("marketing")
 
     return render_template('marketing_jobs.html', marketing=marketing_jobs)
 
 
 @bp.get('/bizdev_jobs')
 def bizdev_jobs():
-    bizdev_jobs = get_active_bizdev_jobs()
+    bizdev_jobs = get_active_jobs("business development")
 
     return render_template('bizdev_jobs.html', bizdev=bizdev_jobs)
 
 
 @bp.get('/other_jobs')
 def other_jobs():
-    other_jobs = get_active_other_jobs()
+    other_jobs = get_active_jobs("other")
 
     return render_template('other_jobs.html', other=other_jobs)
+
+
+@bp.post('/bookmark')
+# Right now we're saving the number of clicks on the bookmarking icon
+# from people who don't have an account to have a sense of the interest
+# in the 'save a job' feature.
+def bookmark():
+
+    if not session.get("username"):
+        number_of_clicks = find_bookmark_job_counter()
+        increase_bookmark_job_counter(number_of_clicks)
+
+    return Response(200)
 
 
 @bp.route('/', methods=["GET", "POST"])
 def home():
     subscribe_form = NewsletterSubscribe()
 
-    jobs = get_active_jobs()
     recent_jobs = get_recent_jobs()
-    dev_jobs = get_active_dev_jobs()
-    design_jobs = get_active_design_jobs()
-    marketing_jobs = get_active_marketing_jobs()
-    bizdev_jobs = get_active_bizdev_jobs()
-    other_jobs = get_active_other_jobs()
+    dev_jobs = get_active_jobs("development")
+    design_jobs = get_active_jobs("design")
+    marketing_jobs = get_active_jobs("marketing")
+    bizdev_jobs = get_active_jobs("business development")
+    other_jobs = get_active_jobs("other")
 
     if subscribe_form.validate_on_submit():
         save_email(subscribe_form.MERGE0.data)
@@ -112,7 +124,6 @@ def home():
 
     return render_template('home.html',
                            subscribe_form=subscribe_form,
-                           jobs=jobs,
                            recent_jobs=recent_jobs,
                            development=dev_jobs,
                            design=design_jobs,
@@ -123,18 +134,18 @@ def home():
 
 @bp.get('/<category>')
 def category(category):
-    jobs = get_active_jobs()
+    jobs = get_active_jobs(category)
 
     for job in jobs:
-        if job['category'] == category:
-            return render_template('category_page.html', category=category, jobs=jobs)
+        # if job['category'] == category:
+        return render_template('category_page.html', category=category, jobs=jobs)
 
     return redirect(url_for('main.home'))
 
 
 @bp.get('/company/<company>')
 def company(company):
-    jobs = get_active_jobs()
+    jobs = get_active_jobs2()
 
     for job in jobs:
         if job['company'] == company:
@@ -186,15 +197,15 @@ def admin():
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
 
 
-@bp.route('/startups', methods=["GET", "POST"])
-def startups():
+@bp.route('/saved', methods=["GET", "POST"])
+def saved_jobs():
     form = StartupsTestForm()
 
     if form.validate_on_submit():
         save_email_test_startups(form.email.data, form.feedback.data)
         return redirect(url_for('main.home'))
 
-    return render_template('startups.html', form=form)
+    return render_template('saved_jobs.html', form=form)
 
 
 @bp.get('/job_submitted')

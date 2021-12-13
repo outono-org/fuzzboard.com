@@ -5,6 +5,25 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash
 
 
+def find_bookmark_job_counter():
+    return client.startupjobs.test_bookmark.find_one(
+        {
+            "number_of_clicks": {"$exists": True}
+        }
+    )['number_of_clicks']
+
+
+def increase_bookmark_job_counter(number_of_clicks):
+    client.startupjobs.test_bookmark.update_one(
+        {
+            "number_of_clicks": {"$exists": True}
+        },
+        {
+            '$set': {'number_of_clicks': number_of_clicks+1}
+        }
+    )
+
+
 def post_job(title, company, category, location, link, email, status):
     client.startupjobs.jobs.insert(
         {
@@ -63,7 +82,7 @@ def check_entry_timelimit():
     )
 
 
-def get_active_jobs():
+def get_active_jobs(category: str = "$any"):
     jobs = [
         {
             "_id": job["_id"],
@@ -77,7 +96,29 @@ def get_active_jobs():
         }
         for job in client.startupjobs.jobs.find(
             {
-                "status": "active"
+                "status": "active",
+                "category": category,
+            }
+        )
+    ]
+    return jobs
+
+
+def get_active_jobs2():
+    jobs = [
+        {
+            "_id": job["_id"],
+            "title": job["title"],
+            "company": job["company"],
+            "category": job["category"],
+            "location": job["location"],
+            "url": job["url"],
+            "email": job["email"],
+            "timestamp": job["_id"].generation_time
+        }
+        for job in client.startupjobs.jobs.find(
+            {
+                "status": "active",
             }
         )
     ]
@@ -103,116 +144,6 @@ def get_recent_jobs():
         )
     ]
     return sorted(jobs, key=lambda entry: entry["timestamp"], reverse=True)[:5]
-
-
-def get_active_dev_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in client.startupjobs.jobs.find(
-            {
-                "status": "active",
-                "category": "development"
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_design_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in client.startupjobs.jobs.find(
-            {
-                "status": "active",
-                "category": "design"
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_marketing_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in client.startupjobs.jobs.find(
-            {
-                "status": "active",
-                "category": "marketing"
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_bizdev_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in client.startupjobs.jobs.find(
-            {
-                "status": "active",
-                "category": "business development"
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_other_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in client.startupjobs.jobs.find(
-            {
-                "status": "active",
-                "category": "other"
-            }
-        )
-    ]
-    return jobs
 
 
 def get_jobs():

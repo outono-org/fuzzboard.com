@@ -4,6 +4,18 @@
 
 #logo-wrapper {
   display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: ease-in 0.3s;
+}
+
+#logo-wrapper:hover {
+  background-color: #fafafb;
+}
+
+#logo-wrapper a {
+  display: flex;
+  align-items: center;
   column-gap: 10px;
 }
 
@@ -15,7 +27,7 @@
   width: fit-content;
   padding: 3px 5px;
   background-color: rgb(247 247 248);
-  color: #72daed;
+  color: #0d889f;
   border-radius: 3px;
 }
 
@@ -54,7 +66,7 @@ select {
 }
 
 .job-card .secondary-text {
-  text-decoration: underline dotted 2px #211e1e71;
+  font-weight: 500;
 }
 
 .category-header {
@@ -74,6 +86,13 @@ select {
   align-items: center;
 }
 
+.logo-symbol {
+  display: inline;
+  max-width: 52px;
+  height: 52px;
+  border-radius: 50%;
+}
+
 h1,
 .logo {
   font-weight: 800;
@@ -85,7 +104,13 @@ h1,
   font-size: 20px;
 }
 
+.navigation {
+  display: flex;
+}
+
 .navigation-item {
+  display: flex;
+  column-gap: 2px;
   font-size: 16px;
   color: #211e1eab;
   padding: 0.6em;
@@ -253,7 +278,7 @@ input#submit:hover {
 
 .card-container {
   display: grid;
-  grid-template-columns: 4fr auto;
+  grid-template-columns: 4fr auto 0.3fr;
   align-items: center;
   padding: 25px 0px;
   /* background-color: #e3f7f1; */
@@ -273,6 +298,10 @@ input#submit:hover {
   overflow: hidden;
   margin-bottom: 10px;
   margin-left: 20px;
+}
+
+.job-card .company-hyperlink:hover {
+  color: #0d889f;
 }
 
 /* Change name to something more universal */
@@ -495,6 +524,7 @@ input#submit:hover {
   border-radius: 8px;
   color: #211e1eab;
   cursor: pointer;
+  transition: 200ms ease-in-out;
 }
 
 .filter-categories li:hover {
@@ -504,11 +534,55 @@ input#submit:hover {
 .filter-categories li.active {
   background-color: rgba(13, 12, 34, 0.05);
   font-weight: 500;
-  transition: color 200ms ease;
   color: #0d0c22;
 }
 
+.hidden.htmx-swapping {
+  opacity: 1;
+  transition: ease-in-out 0.5s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+#saveJob,
+#saveJob > * {
+  display: flex;
+}
+
+.save-icon {
+  opacity: 1;
+  height: 1.7em;
+  fill: #9e9e9e;
+  align-self: center;
+  transition: 300ms ease-in-out;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.save-icon:hover {
+  transform: scale(1.1);
+  fill: #0d889f;
+  background-color: rgba(13, 12, 34, 0.05);
+}
+
+/* Bookmark/saving feature. Need to rename the classes */
+
+.testing div:nth-child(3) {
+  opacity: 0;
+  transition: ease-in-out 0.5s;
+}
+
+.testing:hover div {
+  opacity: 1;
+}
+
 @media (max-width: 855px) {
+  .testing div:nth-child(3) {
+    opacity: 1;
+    transition: ease-in-out 0.5s;
+  }
   .filter-categories li {
     display: inline-block;
   }
@@ -578,6 +652,10 @@ input#submit:hover {
 
 .mb50 {
   margin-bottom: 50px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
 }
 
 ::selection {
