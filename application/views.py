@@ -161,7 +161,7 @@ def rss():
     fg.description('Real-time feed of jobs at Startup Jobs Portugal.')
     fg.link(href='https://startup-jobs.herokuapp.com/')
 
-    for job in get_active_jobs():
+    for job in get_active_jobs2():
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
