@@ -197,15 +197,15 @@ def admin():
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
 
 
-@bp.route('/startups', methods=["GET", "POST"])
-def startups():
+@bp.route('/saved', methods=["GET", "POST"])
+def saved_jobs():
     form = StartupsTestForm()
 
     if form.validate_on_submit():
         save_email_test_startups(form.email.data, form.feedback.data)
         return redirect(url_for('main.home'))
 
-    return render_template('startups.html', form=form)
+    return render_template('saved_jobs.html', form=form)
 
 
 @bp.get('/job_submitted')
