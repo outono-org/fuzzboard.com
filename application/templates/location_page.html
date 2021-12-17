@@ -1,6 +1,14 @@
 {% extends "layout.html" %}
 
-{% block title %}Jobs at {{company |capitalize}}{% endblock %}
+{% block title %}
+{% if location == "Remote" %}
+Remote Startup Jobs
+{% endif %}
+{% if location != "Remote" %}
+Startup Jobs in {{location |capitalize}}
+{% endif %}
+
+{% endblock %}
 
 {% block main %}
 
@@ -54,6 +62,10 @@
         {% endfor %}
 
     </div>
+    
+<!--     {% if location == "Coimbra" %}
+        <aside>Curated by alphaCoimbra.</aside>
+    {% endif %} -->
 
 </main>
 

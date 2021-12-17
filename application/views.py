@@ -169,13 +169,14 @@ def location(location):
 def rss():
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
-    fg.description('Real-time feed of jobs at Startup Jobs Portugal.')
-    fg.link(href='https://startup-jobs.herokuapp.com/')
+    fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
+    fg.link(href='https://startupjobsportugal.com/')
 
     for job in get_active_jobs2():
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
+        fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
         fe.author(name='Startup Jobs Portugal')
