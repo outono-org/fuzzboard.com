@@ -154,6 +154,17 @@ def company(company):
     return redirect(url_for('main.home'))
 
 
+@bp.get('/location/<location>')
+def location(location):
+    jobs = get_active_jobs2()
+
+    for job in jobs:
+        if job['location'] == location:
+            return render_template('location_page.html', location=location, jobs=jobs)
+
+    return redirect(url_for('main.home'))
+
+
 @bp.get('/feed')
 def rss():
     fg = FeedGenerator()
