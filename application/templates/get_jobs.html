@@ -11,7 +11,7 @@
 
 <div class="jobs-container">
 
-        {%- for job in banana |reverse| batch(5) %}
+        {%- for job in jobs |reverse| batch(5) %}
             {%- for entry in job %}
                 
                     <div class="card-container testing">
@@ -43,7 +43,7 @@
                 {%- endfor %}
         
                 <div class="email-subscribe">
-                    <span>Get new jobs in your inbox</span>
+                    <span>Get the latest jobs in your inbox every week.</span>
                     <div>
                     <form method="POST" autocomplete="off" action="https://hey.us6.list-manage.com/subscribe/post">
                     {{ subscribe_form.hidden_tag() }}

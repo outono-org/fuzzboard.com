@@ -475,13 +475,9 @@ input#submit:hover {
 
 .email-subscribe {
   display: flex;
-
   font-weight: 500;
   bottom: 30px;
-  border-radius: 8px;
-  width: 600px;
   height: 60px;
-  background-color: #ffffff;
   justify-content: space-between;
   align-items: center;
   padding: 10px 12px;

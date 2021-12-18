@@ -60,12 +60,10 @@ def new_job_form():
 
 @bp.get('/get_jobs/<category>')
 def htmx_get_jobs(category):
-
-    banana = get_active_jobs(category)
-
+    jobs = get_active_jobs(category)
     subscribe_form = NewsletterSubscribe()
 
-    return render_template('get_jobs.html', banana=banana, category=category, subscribe_form=subscribe_form,)
+    return render_template('get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
 
 
 @bp.post('/bookmark')
