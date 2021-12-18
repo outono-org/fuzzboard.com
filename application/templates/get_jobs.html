@@ -1,11 +1,11 @@
 <div>
     <ul class="filter-categories">
-        <li class="active">All</li>
-        <li hx-get="/get_jobs/development" hx-trigger="click" hx-target="#replaceMe">Development</li>
-        <li hx-get="/get_jobs/design" hx-trigger="click" hx-target="#replaceMe">Design</li>
-        <li hx-get="/get_jobs/marketing" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
-        <li hx-get="/get_jobs/business development" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
-        <li hx-get="/get_jobs/other" hx-trigger="click" hx-target="#replaceMe">Others</li>
+        <li {% if category == "all" %}class="active"{%endif%}>All</li>
+        <li {% if category == "development" %}class="active"{%endif%} hx-get="/get_jobs/development" hx-trigger="click" hx-target="#replaceMe">Development</li>
+        <li {% if category == "design" %}class="active"{%endif%} hx-get="/get_jobs/design" hx-trigger="click" hx-target="#replaceMe">Design</li>
+        <li {% if category == "marketing" %}class="active"{%endif%} hx-get="/get_jobs/marketing" hx-trigger="click" hx-target="#replaceMe">Marketing</li>
+        <li {% if category == "business development" %}class="active"{%endif%} hx-get="/get_jobs/business development" hx-trigger="click" hx-target="#replaceMe">Business Development</li>
+        <li {% if category == "other" %}class="active"{%endif%} hx-get="/get_jobs/other" hx-trigger="click" hx-target="#replaceMe">Others</li>
     </ul>
 </div>
 

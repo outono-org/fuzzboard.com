@@ -63,15 +63,9 @@ def htmx_get_jobs(category):
 
     banana = get_active_jobs(category)
 
-    dev_jobs = get_active_jobs("development")
-    design_jobs = get_active_jobs("design")
-    marketing_jobs = get_active_jobs("marketing")
-    bizdev_jobs = get_active_jobs("business development")
-    other_jobs = get_active_jobs("other")
-
     subscribe_form = NewsletterSubscribe()
 
-    return render_template('get_jobs.html', banana=banana, category=category, dev=dev_jobs, design=design_jobs, marketing=marketing_jobs, bizdev=bizdev_jobs, other=other_jobs, subscribe_form=subscribe_form,)
+    return render_template('get_jobs.html', banana=banana, category=category, subscribe_form=subscribe_form,)
 
 
 @bp.post('/bookmark')
