@@ -58,40 +58,20 @@ def new_job_form():
     return render_template('new_job_form.html', form=form)
 
 
-@bp.get('/dev_jobs')
-def dev_jobs():
+@bp.get('/get_jobs/<category>')
+def htmx_get_jobs(category):
+
+    banana = get_active_jobs(category)
+
     dev_jobs = get_active_jobs("development")
-    subscribe_form = NewsletterSubscribe()
-
-    return render_template('dev_jobs.html', dev=dev_jobs, subscribe_form=subscribe_form,)
-
-
-@bp.get('/design_jobs')
-def design_jobs():
     design_jobs = get_active_jobs("design")
-
-    return render_template('design_jobs.html', design=design_jobs)
-
-
-@bp.get('/marketing_jobs')
-def marketing_jobs():
     marketing_jobs = get_active_jobs("marketing")
-
-    return render_template('marketing_jobs.html', marketing=marketing_jobs)
-
-
-@bp.get('/bizdev_jobs')
-def bizdev_jobs():
     bizdev_jobs = get_active_jobs("business development")
-
-    return render_template('bizdev_jobs.html', bizdev=bizdev_jobs)
-
-
-@bp.get('/other_jobs')
-def other_jobs():
     other_jobs = get_active_jobs("other")
 
-    return render_template('other_jobs.html', other=other_jobs)
+    subscribe_form = NewsletterSubscribe()
+
+    return render_template('get_jobs.html', banana=banana, category=category, dev=dev_jobs, design=design_jobs, marketing=marketing_jobs, bizdev=bizdev_jobs, other=other_jobs, subscribe_form=subscribe_form,)
 
 
 @bp.post('/bookmark')
