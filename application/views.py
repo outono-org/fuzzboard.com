@@ -2,7 +2,7 @@ import os
 
 from flask.wrappers import Response
 from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, increase_bookmark_job_counter, get_active_jobs2, increment_bookmark_value
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -79,14 +79,12 @@ def bookmark():
 
 @bp.route('/', methods=["GET", "POST"])
 def home():
-    subscribe_form = NewsletterSubscribe()
-
     recent_jobs = get_recent_jobs()
-    dev_jobs = get_active_jobs("development")
-    design_jobs = get_active_jobs("design")
-    marketing_jobs = get_active_jobs("marketing")
-    bizdev_jobs = get_active_jobs("business development")
-    other_jobs = get_active_jobs("other")
+
+    categories_list = [get_active_jobs("development"), get_active_jobs("design"),
+                       get_active_jobs("marketing"), get_active_jobs("business development"), get_active_jobs("other")]
+
+    subscribe_form = NewsletterSubscribe()
 
     if subscribe_form.validate_on_submit():
         save_email(subscribe_form.MERGE0.data)
@@ -95,11 +93,7 @@ def home():
     return render_template('home.html',
                            subscribe_form=subscribe_form,
                            recent_jobs=recent_jobs,
-                           development=dev_jobs,
-                           design=design_jobs,
-                           marketing=marketing_jobs,
-                           bizdev=bizdev_jobs,
-                           other=other_jobs)
+                           categories_list=categories_list)
 
 
 @bp.get('/<category>')
