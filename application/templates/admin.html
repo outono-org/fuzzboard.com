@@ -40,149 +40,85 @@
 
             <div class="container">
 
-            <span class="status status-pending">Pending
-                ({{ jobs|selectattr('status', 'equalto', 'pending') |list|length }})
-            </span>
+            {% for entry in form.status.choices %}
+                <span class="status status-{{entry[0]}}">{{entry[0] | capitalize}}
+                    ({{ jobs|selectattr('status', 'equalto', entry[0]) |list|length }})
+                </span>
 
                 <div class="dashboard-list-columns">
 
-                    {% for job in jobs %}
-                    {% if job.status == "pending" %}
+                {% for job in jobs %}
+                    {% if job.status == entry[0] %}
                         
-                    <div class="list-row-wrapper">
+                        <div class="list-row-wrapper">
 
-                        <div class="list-grid-company-column">
-                            {{job.company}}
-                        </div>
+                            <div class="list-grid-company-column">
+                                {{job.company}}
+                            </div>
 
-                        <div class="list-grid-position-column">
-                            {{ job.title }}
-                        </div>
+                            <div class="list-grid-position-column">
+                                {{ job.title }}
+                            </div>
 
-                        <div class="list-grid-status-column">
-                            <form method="POST">
+                            <div class="list-grid-status-column">
+                                <form method="POST">
 
-                                {{ form.csrf_token() }}
+                                    {{ form.csrf_token() }}
 
-                                <select class="list-row-input" id="status" name="status">
-                                    {% for value,label in form.status.choices %}
-                                        <option value={{value}}
-                                        {% if job.status == value %}
-                                            selected
-                                        {% endif %}
-                                        >{{ label }}</option>
-                                    {% endfor %}
-                                </select>
+                                    <select class="list-row-input" id="status" name="status">
+                                        {% for value,label in form.status.choices %}
+                                            <option value={{value}}
+                                            {% if job.status == value %}
+                                                selected
+                                            {% endif %}
+                                            >{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
 
-                                {{ form.id(value=job._id) }}
-                                {{ form.save(class="button") }}
+                                    {{ form.id(value=job._id) }}
+                                    {{ form.save(class="button") }}
+                                
+                                </form>
+                            </div>
+
+                            <div class="list-grid-category-column">
+                                {{ job.category | capitalize }}
+                            </div>
                             
-                            </form>
-                        </div>
-
-                        <div class="list-grid-category-column">
-                            {{ job.category | capitalize }}
-                        </div>
-                        
                             <div class="list-grid-link-column">
                                 <a href="{{ job.url }}" target="_blank">
                                     {{ job.url }}
                                 </a>
                             </div>
-                        
-
-                        <div class="list-grid-location-column">
-                            {{ job.location }}
-                        </div>
-
-                        <div class="list-grid-email-column">
-                            {{ job.email }}
-                        </div>
-
-                        <div class="list-grid-created-column">
-                            {{ job.created_on.strftime("%b %d, %Y %H:%M:%S") }}
-                        </div>
-
-                        <div class="list-grid-edited-column">
-                            {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
-                        </div>
-
-                        <div class="list-grid-save-column">
                             
+
+                            <div class="list-grid-location-column">
+                                {{ job.location }}
+                            </div>
+
+                            <div class="list-grid-email-column">
+                                {{ job.email }}
+                            </div>
+
+                            <div class="list-grid-created-column">
+                                {{ job.created_on.strftime("%b %d, %Y %H:%M:%S") }}
+                            </div>
+
+                            <div class="list-grid-edited-column">
+                                {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
+                            </div>
+
+                            <div class="list-grid-save-column">
+                                
+                            </div>
                         </div>
-                </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-
-            <!-- NEW SECTION -->
-            <span class="status status-active">Active
-                ({{ jobs|selectattr('status', 'equalto', 'active') |list|length }})
-            </span>
-            <div class="dashboard-list-columns">
-
-                {% for job in jobs %}
-                {% if job.status == "active" %}
-                    
-                <div class="list-row-wrapper">
-
-                    <div class="list-grid-company-column">
-                        {{job.company}}
-                    </div>
-
-                    <div class="list-grid-position-column">
-                        {{ job.title }}
-                    </div>
-
-                    <div class="list-grid-status-column">
-                        <form method="POST">
-                            {{ form.csrf_token() }}
-
-                            <select class="list-row-input" id="status" name="status">
-                                {% for value,label in form.status.choices %}
-                                    <option value={{value}}
-                                    {% if job.status == value %}
-                                        selected
-                                    {% endif %}
-                                    >{{ label }}</option>
-                                {% endfor %}
-                            </select>
-
-                            {{ form.id(value=job._id) }}
-                            
-                            {{ form.save(class="button") }}
-                        </form>
-                    </div>
-
-                    <div class="list-grid-category-column">
-                        {{ job.category | capitalize }}
-                    </div>
-                    
-                        <div class="list-grid-link-column">
-                            <a href="{{ job.url }}" target="_blank">
-                                {{ job.url }}
-                            </a>
-                        </div>
-                    
-
-                    <div class="list-grid-location-column">
-                        {{ job.location }}
-                    </div>
-
-                    <div class="list-grid-email-column">
-                        {{ job.email }}
-                    </div>
-
-                    <div class="list-grid-created-column">
-                        {{ job.created_on.strftime("%b %d, %Y %H:%M:%S") }}
-                    </div>
-
-                    <div class="list-grid-edited-column">
-                        {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
-                    </div>
-            </div>
-            {% endif %}
+                    {% endif %}
             {% endfor %}
+                </div>
+
+
+            {% endfor %}
+
         </div>
             
             </div>

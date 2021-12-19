@@ -56,7 +56,9 @@
 
         {% for category in categories_list %}
             {% if category |list|length %}
-                <a class="category-header" href="{{ url_for('main.category', category=category[0]['category']) }}"><h2>{{category[0]["category"]| capitalize}} jobs</h2></a>
+                <a class="category-header" href="{{ url_for('main.category', category=category[0]['category']) }}">
+                    <h2>{{category[0]["category"]| capitalize}} jobs</h2>
+                </a>
             {% endif %}
             
             {% for job in category[:5] |reverse %}
