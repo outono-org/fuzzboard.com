@@ -63,7 +63,7 @@ def update_entry_status(id, status):
 
 
 def check_entry_timelimit():
-    time_limit = datetime.datetime.utcnow() - timedelta(days=30)
+    time_limit = datetime.datetime.utcnow() - timedelta(days=60)
     client.startupjobs.jobs.update_many(
         {
             'status': 'active', 'created_on': {'$lt': time_limit}

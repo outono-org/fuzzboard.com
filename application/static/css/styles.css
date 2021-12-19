@@ -463,6 +463,14 @@ input#submit:hover {
   background-color: #bffcba;
 }
 
+.status-expired {
+  background-color: #babefc;
+}
+
+.status-rejected {
+  background-color: #fcc4ba;
+}
+
 #emoji {
   max-height: 20px;
   max-width: 20px;
