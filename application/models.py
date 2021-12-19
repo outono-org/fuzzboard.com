@@ -5,23 +5,15 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash
 
 
-def find_bookmark_job_counter():
-    return client.startupjobs.test_bookmark.find_one(
+def increment_bookmark_value():
+    return client.startupjobs.test_bookmark.find_one_and_update(
         {
-            "number_of_clicks": {"$exists": True}
-        }
-    )['number_of_clicks']
-
-
-def increase_bookmark_job_counter(number_of_clicks):
-    client.startupjobs.test_bookmark.update_one(
-        {
-            "number_of_clicks": {"$exists": True}
+            'number_of_clicks': {'$exists': True}
         },
         {
-            '$set': {'number_of_clicks': number_of_clicks+1}
+            '$inc': {'number_of_clicks': 1}
         }
-    )
+    )['number_of_clicks']
 
 
 def post_job(title, company, category, location, link, email, status):

@@ -2,7 +2,7 @@ import os
 
 from flask.wrappers import Response
 from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, find_bookmark_job_counter, increase_bookmark_job_counter, get_active_jobs2
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, increase_bookmark_job_counter, get_active_jobs2, increment_bookmark_value
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
 from .decorators import login_required
@@ -71,10 +71,8 @@ def htmx_get_jobs(category):
 # from people who don't have an account to have a sense of the interest
 # in the 'save a job' feature.
 def bookmark():
-
     if not session.get("username"):
-        number_of_clicks = find_bookmark_job_counter()
-        increase_bookmark_job_counter(number_of_clicks)
+        increment_bookmark_value()
 
     return Response(200)
 
