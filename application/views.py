@@ -82,7 +82,7 @@ def home():
     recent_jobs = get_recent_jobs()
 
     categories_list = [get_active_jobs("development"), get_active_jobs("design"),
-                       get_active_jobs("marketing"), get_active_jobs("business development"), get_active_jobs("other")]
+                       get_active_jobs("marketing"), get_active_jobs("product management"), get_active_jobs("business development"), get_active_jobs("other")]
 
     subscribe_form = NewsletterSubscribe()
 
@@ -137,6 +137,29 @@ def rss():
     fg.link(href='https://startupjobsportugal.com/')
 
     for job in get_active_jobs2():
+        fe = fg.add_entry()
+        fe.title(job['title'])
+        fe.link(href=job['url'])
+        fe.content(job['company'])
+        fe.description(job['company'])
+        fe.guid(str(job['_id']), permalink=False)
+        fe.author(name='Startup Jobs Portugal')
+        fe.pubDate(job['timestamp'])
+
+    response = make_response(fg.rss_str())
+    response.headers.set('Content-Type', 'application/rss+xml')
+
+    return response
+
+
+@bp.get('/feed/productized')
+def rss_product():
+    fg = FeedGenerator()
+    fg.title('Startup Jobs Portugal')
+    fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
+    fg.link(href='https://startupjobsportugal.com/')
+
+    for job in get_active_jobs("product management"):
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
