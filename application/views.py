@@ -1,15 +1,17 @@
 import os
 
+from .database import mongo
 from flask.wrappers import Response
+from flask import request
 from wtforms.fields import html5
 from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
 from .emails import send_email
 from flask import make_response
 from feedgen.feed import FeedGenerator
-
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
@@ -188,3 +190,53 @@ def saved_jobs():
 def job_submitted():
 
     return render_template('job_submitted.html')
+
+
+@bp.route('/settings', methods=["GET", "POST"])
+@login_required
+def settings():
+    username = session.get("username")
+    user = mongo.db.users.find_one_or_404({'email': username})
+
+    form = UploadPicture()
+
+    profile_image = form.file.data
+
+    if form.validate_on_submit():
+        filename = secure_filename(profile_image.filename)
+        mongo.save_file(filename, profile_image)
+        mongo.db.users.update_one(
+            {'name': 'Malik'}, {'$set': {'profile_image_name': filename}})
+        return redirect(url_for('main.settings'))
+
+    return render_template("settings.html", username=username, user=user, form=form)
+
+
+@bp.post('/create')
+def create():
+    if 'profile_image' in request.files:
+        profile_image = request.files['profile_image']
+        mongo.save_file(profile_image.filename, profile_image)
+        mongo.db.test_upload_picture.insert({'username': request.form.get(
+            'username'), 'profile_image_name': profile_image.filename})
+    return 'Done'
+
+
+@bp.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
+
+
+@bp.get('/profile/<username>')
+def profile(username):
+    user = mongo.db.users.find_one_or_404({'name': username})
+    if 'profile_image_name' not in user:
+        return f'''
+        <h1>works</1>
+        <h1>{username}</h1>
+        <img src="{url_for('static', filename='default.png')}">
+    '''
+    return f'''
+        <h1>{username}</h1>
+        <img src="{url_for('main.file', filename=user['profile_image_name'])}">
+    '''

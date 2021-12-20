@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}A central place for startup jobs in Portugal{% endblock %}
+
+{% block main %}
+
+<main class="main mb40">
+    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+    <div>
+        <h1>Settings</h1>
+        
+            <form>
+            <span>Your email</span>
+            <span>{{ username }}</span>
+            <span>Your name: {{ user.name }}</span>
+            </form>
+        
+        <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
+        <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
+    </div>
+
+    <div>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+    
+            {{ form.file.label }}
+            {{ form.file() }}
+    
+            {{ form.submit(class="") }}
+        </form>
+    </div>
+
+
+    </div>
+</main>
+
+{% endblock %}

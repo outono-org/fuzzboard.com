@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, SubmitField, TextAreaField, ValidationError, HiddenField, PasswordField
 from wtforms.fields.core import SelectField
 from wtforms.fields.html5 import EmailField
@@ -66,3 +67,8 @@ class StartupsTestForm(FlaskForm):
     feedback = TextAreaField("Tell us why this is important to you")
     email = EmailField("Email*", validators=[DataRequired(), Email()])
     submit = SubmitField("Keep me posted")
+
+
+class UploadPicture(FlaskForm):
+    file = FileField(validators=[FileRequired()])
+    submit = SubmitField("Upload")
