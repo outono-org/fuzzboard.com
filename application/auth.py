@@ -18,11 +18,17 @@ def login():
         password = form.password.data
         user = find_user_by_email(email)
 
-        # If user is found, store the email and id in session.
+        # Check if there's a user with that email in the db
+        # if there is one, check if the account is active.
+        # if it's active, check password and save details in session.
         if user:
             check = check_password_hash(user["password"], password)
 
             if check:
+
+                if user["account_status"] != "active":
+                    return "Your account is not active. If you think this is a mistake, please reach out to Malik."
+
                 session["username"] = email
                 session["user_id"] = str(user["_id"])
                 return redirect(url_for('main.home'))
@@ -36,7 +42,7 @@ def logout():
     return redirect("/login")
 
 
-""" @auth.route("/signup", methods=["GET", "POST"])
+@auth.route("/signup", methods=["GET", "POST"])
 def signup():
     form = SignUp()
 
@@ -50,4 +56,4 @@ def signup():
                     user_name, password=form.password.data)
 
         return redirect(url_for('main.home'))
-    return render_template("auth/signup.html", form=form) """
+    return render_template("auth/signup.html", form=form)

@@ -1,12 +1,16 @@
-from .database import client
+import os
+from .database import mongo
 from bson.objectid import ObjectId
 import datetime
 from datetime import timedelta
 from werkzeug.security import generate_password_hash
+import string
+import random
+import gridfs
 
 
 def increment_bookmark_value():
-    return client.startupjobs.test_bookmark.find_one_and_update(
+    return mongo.db.test_bookmark.find_one_and_update(
         {
             'number_of_clicks': {'$exists': True}
         },
@@ -17,7 +21,7 @@ def increment_bookmark_value():
 
 
 def post_job(title, company, category, location, link, email, status):
-    client.startupjobs.jobs.insert(
+    mongo.db.jobs.insert_one(
         {
             "title": title,
             "company": company,
@@ -33,7 +37,7 @@ def post_job(title, company, category, location, link, email, status):
 
 
 def save_email(email):
-    client.startupjobs.subscribers.insert(
+    mongo.db.subscribers.insert_one(
         {
             "email": email,
             'created_on': datetime.datetime.utcnow()
@@ -42,7 +46,7 @@ def save_email(email):
 
 
 def save_email_test_startups(email, feedback):
-    client.startupjobs.test_startups.insert(
+    mongo.db.test_startups.insert_one(
         {
             "email": email,
             "feedback": feedback,
@@ -52,7 +56,7 @@ def save_email_test_startups(email, feedback):
 
 
 def update_entry_status(id, status):
-    client.startupjobs.jobs.update_one(
+    mongo.db.jobs.update_one(
         {
             '_id': ObjectId(id)
         },
@@ -64,7 +68,7 @@ def update_entry_status(id, status):
 
 def check_entry_timelimit():
     time_limit = datetime.datetime.utcnow() - timedelta(days=60)
-    client.startupjobs.jobs.update_many(
+    mongo.db.jobs.update_many(
         {
             'status': 'active', 'created_on': {'$lt': time_limit}
         },
@@ -86,7 +90,7 @@ def get_active_jobs(category: str = "$any"):
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
-        for job in client.startupjobs.jobs.find(
+        for job in mongo.db.jobs.find(
             {
                 "status": "active",
                 "category": category,
@@ -108,7 +112,7 @@ def get_active_jobs2():
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
-        for job in client.startupjobs.jobs.find(
+        for job in mongo.db.jobs.find(
             {
                 "status": "active",
             }
@@ -129,7 +133,7 @@ def get_recent_jobs():
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
-        for job in client.startupjobs.jobs.find(
+        for job in mongo.db.jobs.find(
             {
                 "status": "active"
             }
@@ -140,7 +144,7 @@ def get_recent_jobs():
 
 def get_jobs():
     jobs = []
-    for job in client.startupjobs.jobs.find(
+    for job in mongo.db.jobs.find(
         {
             "_id": {"$exists": True}
         }
@@ -168,18 +172,47 @@ def get_jobs():
 def create_user(email_address, name, password):
     hashed_pass = generate_password_hash(
         password)
-    client.startupjobs.users.insert(
+    mongo.db.users.insert_one(
         {
             "email": email_address,
             "name": name,
-            "password": hashed_pass
+            "password": hashed_pass,
+            "profile_image_name": "default.png",
+            "account_status": "inactive"
         }
     )
 
 
 def find_user_by_email(email):
-    return client.startupjobs.users.find_one(
+    return mongo.db.users.find_one(
         {
             "email": email
         }
     )
+
+
+def image_id_generator(size=8, chars=string.ascii_letters + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+def get_file_extension(filename):
+    filename, file_extension = os.path.splitext(filename)
+    return file_extension
+
+
+def find_fs_file(filename):
+    result = mongo.db.fs.files.find_one(
+        {'filename': filename},
+        {'_id'}
+    )
+    return result['_id']
+
+
+def delete_file(files_id):
+    fs = gridfs.GridFS(mongo.db)
+    fs.delete(files_id)
+
+
+def find_and_delete_file(filename):
+    result = find_fs_file(filename)
+    delete_file(result)

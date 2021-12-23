@@ -1,10 +1,12 @@
 import os
 
+from bson.objectid import ObjectId
+
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
 from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
@@ -203,23 +205,18 @@ def settings():
     profile_image = form.file.data
 
     if form.validate_on_submit():
-        filename = secure_filename(profile_image.filename)
+        find_and_delete_file(user["profile_image_name"])
+       # I'm replacing the file name uploaded by the user
+       # by a random string + the original file extension.
+        filename = secure_filename(
+            image_id_generator() + get_file_extension(profile_image.filename))
+
         mongo.save_file(filename, profile_image)
         mongo.db.users.update_one(
-            {'name': 'Malik'}, {'$set': {'profile_image_name': filename}})
+            {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
         return redirect(url_for('main.settings'))
 
     return render_template("settings.html", username=username, user=user, form=form)
-
-
-@bp.post('/create')
-def create():
-    if 'profile_image' in request.files:
-        profile_image = request.files['profile_image']
-        mongo.save_file(profile_image.filename, profile_image)
-        mongo.db.test_upload_picture.insert({'username': request.form.get(
-            'username'), 'profile_image_name': profile_image.filename})
-    return 'Done'
 
 
 @bp.route('/file/<filename>')

@@ -14,9 +14,11 @@
             <span>{{ username }}</span>
             <span>Your name: {{ user.name }}</span>
             </form>
-        
+        {% if user.profile_image_name == "default.png" %}
+            <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
+        {% else %}
         <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
-        <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
+        {% endif %}
     </div>
 
     <div>
