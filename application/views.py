@@ -205,7 +205,9 @@ def settings():
     profile_image = form.file.data
 
     if form.validate_on_submit():
-        find_and_delete_file(user["profile_image_name"])
+        if user["profile_image_name"] != "default.png":
+            find_and_delete_file(user["profile_image_name"])
+
        # I'm replacing the file name uploaded by the user
        # by a random string + the original file extension.
         filename = secure_filename(
