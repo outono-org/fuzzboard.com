@@ -52,6 +52,9 @@ Talisman(app,
 # Secret Key config for WTF forms.
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
+# Set maximum allowed payload for user uploads to 2MB
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1000 * 1000
+
 # PyMongo Config
 mongo.init_app(app, uri=os.environ.get("MONGODB_URI"),
                ssl=True, ssl_cert_reqs='CERT_NONE')

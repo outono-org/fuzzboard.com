@@ -216,3 +216,12 @@ def delete_file(files_id):
 def find_and_delete_file(filename):
     result = find_fs_file(filename)
     delete_file(result)
+
+
+# Allowed extensions for image uploads.
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
