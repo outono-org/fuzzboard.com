@@ -6,34 +6,61 @@
 
 <main class="main mb40">
     <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+
     <div>
         <h1>Settings</h1>
-        
-            <form>
-            <span>Your email</span>
-            <span>{{ username }}</span>
-            <span>Your name: {{ user.name }}</span>
-            </form>
+
         {% if user.profile_image_name == "default.png" %}
             <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
         {% else %}
         <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
         {% endif %}
-    </div>
-
-    <div>
-        <form method="POST" enctype="multipart/form-data">
+    
+    
+        <form class="new-job-form" method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
     
             {{ form.file.label }}
             {{ form.file() }}
     
-            {{ form.submit(class="") }}
+            {{ form.submit(class="secondary-btn") }}
         </form>
     </div>
 
+   
+        <form class="new-job-form">
 
-    </div>
+            <h2>Public Profile</h2>
+            
+            <label for="title">Your name</label>
+            <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.name}}">
+
+            <label for="title">Email address</label>
+            <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.email}}">
+            
+            <label for="company">Location</label>
+            <input id="company" name="company" placeholder="Lisbon" required="" type="text" value="">
+
+            <label for="company">About you</label>
+            <textarea id="feedback" name="feedback" placeholder="About you."></textarea>
+
+            <h2>On the Web</h2>
+
+            <label for="company">Personal Website</label>
+            <input id="company" name="company" placeholder="moonwith.com" required="" type="text" value="">
+
+            <label for="company">LinkedIn</label>
+            <input id="company" name="company" placeholder="linkedin.com/in/malikpiara" required="" type="text" value="">
+
+            <label for="company">GitHub</label>
+            <input id="company" name="company" placeholder="github.com/malikpiara" required="" type="text" value="">
+
+            <label for="company">Dribbble</label>
+            <input id="company" name="company" placeholder="dribbble.com/malikpiara" required="" type="text" value="">
+        </form>
+    
+
+    
 </main>
 
 {% endblock %}

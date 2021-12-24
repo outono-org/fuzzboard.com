@@ -1,4 +1,6 @@
 import os
+import sys
+from PIL import Image
 from .database import mongo
 from bson.objectid import ObjectId
 import datetime
@@ -225,3 +227,27 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+def test_pill(image):
+    im = Image.open(image)
+    return im.format, im.size, im.mode
+
+
+def crop_image(infile):
+    with Image.open(infile) as im:
+        (left, upper, right, lower) = (20, 20, 100, 100)
+        im_crop = im.crop((left, upper, right, lower))
+        return im_crop
+
+
+def convert_file_to_webp(infile):
+    for infile in sys.argv[1:]:
+        f, e = os.path.splitext(infile)
+        outfile = f + ".webp"
+        if infile != outfile:
+            try:
+                with Image.open(infile) as im:
+                    im.save(outfile, "webp")
+            except OSError:
+                print("cannot convert", infile)

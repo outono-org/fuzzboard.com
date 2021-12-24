@@ -709,3 +709,8 @@ input#submit:hover {
   width: 150px;
   height: 150px;
 }
+
+.secondary-btn {
+  background-color: #e3e6ea !important;
+  color: #1c1e21 !important;
+}

@@ -1,12 +1,14 @@
 import os
-
+import sys
+from PIL import Image
+from io import StringIO
 from bson.objectid import ObjectId
 
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
 from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file, test_pill, crop_image
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
@@ -208,16 +210,26 @@ def settings():
     # file extension is allowed. Should probably check if the file is allowed
     # before letting the user upload a file.
     if form.validate_on_submit() and allowed_file(profile_image.filename):
-        print(profile_image.filename)
+
         if user["profile_image_name"] != "default.png":
             find_and_delete_file(user["profile_image_name"])
 
-       # I'm replacing the file name uploaded by the user
-       # by a random string + the original file extension.
+        # I'm replacing the file name uploaded by the user
+        # by a random string + the original file extension.
         filename = secure_filename(
             image_id_generator() + get_file_extension(profile_image.filename))
 
+        """ with Image.open(profile_image) as im:
+            (left, upper, right, lower) = (0, 0, 300, 300)
+            croppedImage = im.crop((left, upper, right, lower))
+
+            croppedImage.save(profile_image, format='WEBP')
+
+            print(filename, filename, filename)
+        croppedImage.show() """
+
         mongo.save_file(filename, profile_image)
+
         mongo.db.users.update_one(
             {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
         return redirect(url_for('main.settings'))

@@ -71,4 +71,4 @@ class StartupsTestForm(FlaskForm):
 
 class UploadPicture(FlaskForm):
     file = FileField(validators=[FileRequired()])
-    submit = SubmitField("Upload")
+    submit = SubmitField("Upload new picture")
