@@ -14,27 +14,18 @@
         <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
         {% endif %}
 
-        <h1>{{user.name}}</h1>
+        <h2>{{user.name}}</h2>
+        <h4>Location</h4>
+        Lisbon
+        <br><br>
+        <button class="secondary-btn button-main">Message me</button>
     </div>
 
    
         <div class="new-job-form">
 
-            <h2>Public Profile</h2>
-            
-            <div>
-            <h4>Your name</h4>
-            {{user.name}}
-            </div>
-
-            <h4>Email address</h4>
-            <div>{{user.email}}</div>
-            
-            <h4>Location</h4>
-            <div>Lisbon</div>
-
-            <h4>About you</h4>
-            <div>About me</div>
+            <h3>About Me</h3>
+            <div>Product Manager who codes and designs.  I work on initiatives that promote more access to opportunities for people who don't have them. Currently improving startupjobsportugal.com</div>
 
             <h2>On the Web</h2>
 

@@ -109,6 +109,7 @@ h1,
 }
 
 .navigation-item {
+  font-weight: 500;
   display: flex;
   column-gap: 2px;
   font-size: 16px;
