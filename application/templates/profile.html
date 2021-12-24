@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}A central place for startup jobs in Portugal{% endblock %}
+
+{% block main %}
+
+<main class="main mb40">
+    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+
+    <div>
+        {% if user.profile_image_name == "default.png" %}
+            <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
+        {% else %}
+        <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
+        {% endif %}
+
+        <h1>{{user.name}}</h1>
+    </div>
+
+   
+        <div class="new-job-form">
+
+            <h2>Public Profile</h2>
+            
+            <div>
+            <h4>Your name</h4>
+            {{user.name}}
+            </div>
+
+            <h4>Email address</h4>
+            <div>{{user.email}}</div>
+            
+            <h4>Location</h4>
+            <div>Lisbon</div>
+
+            <h4>About you</h4>
+            <div>About me</div>
+
+            <h2>On the Web</h2>
+
+            <h4>Personal Website</h4>
+            <div>moonwith.com</div>
+
+            <h4>LinkedIn</h4>
+            <div>linkedin.com/in/malikpiara</div>
+            
+
+            <h4>GitHub</h4>
+            <div>github.com/malikpiara</div>
+            
+
+            <h4>Dribbble</h4>
+            <div>dribbble.com/malikpiara</div>
+            
+        </div>
+    
+
+    
+</main>
+
+{% endblock %}

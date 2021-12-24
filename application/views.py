@@ -203,7 +203,6 @@ def settings():
     user = mongo.db.users.find_one_or_404({'email': username})
 
     form = UploadPicture()
-
     profile_image = form.file.data
 
     # if the form validates on submit and if the
@@ -245,13 +244,5 @@ def file(filename):
 @bp.get('/profile/<username>')
 def profile(username):
     user = mongo.db.users.find_one_or_404({'name': username})
-    if 'profile_image_name' not in user:
-        return f'''
-        <h1>works</1>
-        <h1>{username}</h1>
-        <img src="{url_for('static', filename='default.png')}">
-    '''
-    return f'''
-        <h1>{username}</h1>
-        <img src="{url_for('main.file', filename=user['profile_image_name'])}">
-    '''
+
+    return render_template("profile.html", username=username, user=user)
