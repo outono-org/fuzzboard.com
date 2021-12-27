@@ -33,7 +33,8 @@ def post_job(title, company, category, location, link, email, status):
             "email": email,
             "status": status,
             'created_on': datetime.datetime.utcnow(),
-            "last_modified": datetime.datetime.utcnow()
+            "last_modified": datetime.datetime.utcnow(),
+            "modified_by": ""
         }
     )
 
@@ -146,8 +147,6 @@ def get_recent_jobs():
 
 
 def get_jobs():
-    mongo.db.jobs.update_many({"modified_by": {"$exists": False}}, {
-                              "$set": {"modified_by": ""}})
 
     jobs = []
     for job in mongo.db.jobs.find(
