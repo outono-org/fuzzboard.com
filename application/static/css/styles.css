@@ -369,7 +369,7 @@ input#submit:hover {
 }
 
 .dashboard-list-columns {
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
   width: 1850px;
   margin: 30px 0px;
 }
@@ -377,7 +377,7 @@ input#submit:hover {
 .list-grid-header {
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
   font-weight: 700;
   column-gap: 25px;
   padding: 20px 0px 15px 20px;
@@ -403,7 +403,7 @@ input#submit:hover {
 .list-row-wrapper {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 2fr;
   cursor: pointer;
   padding-top: 15px;
   padding-bottom: 15px;
