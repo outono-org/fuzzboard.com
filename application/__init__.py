@@ -4,7 +4,7 @@ from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
 from .views import bp
 from .auth import auth
-from .database import client
+from .database import mongo
 from .emails import mail
 
 load_dotenv()
@@ -52,9 +52,17 @@ Talisman(app,
 # Secret Key config for WTF forms.
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 
+# Set maximum allowed payload for user uploads to 2.5MB
+app.config['MAX_CONTENT_LENGTH'] = 2.5 * 1000 * 1000
+
+# PyMongo Config
+mongo.init_app(app, uri=os.environ.get("MONGODB_URI"),
+               ssl=True, ssl_cert_reqs='CERT_NONE')
+
+
 # Session config. Followed documentation
 app.config["SESSION_TYPE"] = "mongodb"
-app.config["SESSION_MONGODB"] = client
+app.config["SESSION_MONGODB"] = mongo.db
 app.config["SESSION_MONGODB_DB"] = "startupjobs"
 app.config["SESSION_MONGODB_COLLECT"] = "sessions"
 

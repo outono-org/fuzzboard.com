@@ -109,6 +109,7 @@ h1,
 }
 
 .navigation-item {
+  font-weight: 500;
   display: flex;
   column-gap: 2px;
   font-size: 16px;
@@ -209,9 +210,13 @@ button {
 
 .button {
   cursor: pointer;
-  background-color: rgb(169, 182, 199);
-  color: rgb(255, 255, 255);
+  font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
+    sans-serif, apple color emoji, segoe ui emoji;
+  background-color: #e3e6ea;
+  color: #1c1e21;
+  font-weight: 600;
   border-radius: 3px;
+  padding: 3px 10px;
   border-style: none;
 }
 
@@ -337,7 +342,7 @@ input#submit:hover {
   opacity: 50%;
 }
 
-/* ADMIN */
+/* ADMIN DASHBOARD */
 
 .header-admin {
   display: grid;
@@ -364,7 +369,7 @@ input#submit:hover {
 }
 
 .dashboard-list-columns {
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 1fr;
   width: 1850px;
   margin: 30px 0px;
 }
@@ -372,7 +377,7 @@ input#submit:hover {
 .list-grid-header {
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 1fr;
   font-weight: 700;
   column-gap: 25px;
   padding: 20px 0px 15px 20px;
@@ -398,7 +403,7 @@ input#submit:hover {
 .list-row-wrapper {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 1.2fr 0.9fr 0.9fr 1.7fr 0.6fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.2fr 0.9fr 1.2fr 1.7fr 0.6fr 1fr 1fr 1fr 1fr;
   cursor: pointer;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -470,6 +475,20 @@ input#submit:hover {
 .status-rejected {
   background-color: #fcc4ba;
 }
+
+.profile-pic-mini {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+.list-grid-person-column {
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+}
+
+/* END OF DASHBAORD */
 
 #emoji {
   max-height: 20px;
@@ -662,6 +681,10 @@ input#submit:hover {
   margin-bottom: 40px;
 }
 
+.mt40 {
+  margin-top: 40px;
+}
+
 ::selection {
   background: var(--primary-color);
   color: rgba(255, 255, 255, 0.85);
@@ -701,4 +724,70 @@ input#submit:hover {
 
 .tooltip:hover .tooltiptext {
   opacity: 1;
+}
+
+/* User Settings */
+.profile-pic {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
+.secondary-btn {
+  background-color: #ffffff !important;
+  color: #1c1e21 !important;
+  border: 2px solid !important;
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+  column-gap: 3px;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.profile-section-container {
+  margin-bottom: 25px;
+  background-color: #fbf7f2;
+  padding: 25px 30px 35px 40px;
+  border-radius: 8px;
+  font-size: 17px;
+}
+
+.profile-section-profile {
+  width: 400px;
+}
+
+.white-mask {
+  background-color: white;
+  width: 400px;
+  height: 100px;
+  position: relative;
+  z-index: 0;
+  top: -25px;
+  left: -40px;
+  border: dotted 2px rgb(0, 0, 0);
+  border-radius: 8px 8px 0px 0px;
+}
+
+.white-mask:after {
+  background-color: white;
+  width: 396px;
+  height: 90px;
+  position: absolute;
+  top: 10px;
+  content: "";
+}
+
+.profile-section-profile-container {
+  position: relative;
+  top: -80px;
 }

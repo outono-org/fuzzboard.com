@@ -1,15 +1,16 @@
 import os
 
+from .database import mongo
 from flask.wrappers import Response
-from wtforms.fields import html5
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value
+from flask import request
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file, get_users
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm
+from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
 from .emails import send_email
 from flask import make_response
 from feedgen.feed import FeedGenerator
-
+from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
@@ -178,22 +179,26 @@ def rss_product():
 @bp.route('/admin', methods=["GET", "POST"])
 @login_required
 def admin():
-    # form = JobManagement(id="test")
+    user = mongo.db.users.find_one_or_404({'email': session["username"]})
+
+    # get id and return user name. if modified is = user, return name
 
     form = JobManagement()
     refresh_button = RefreshJobStatus()
 
     jobs = get_jobs()
+    users = get_users()
 
     if form.validate_on_submit():
-        update_entry_status(form.id.data, form.status.data)
+        update_entry_status(form.id.data, form.status.data,
+                            user["_id"])
         return redirect(url_for('main.admin'))
 
     if refresh_button.validate_on_submit():
         check_entry_timelimit()
         return redirect(url_for('main.admin'))
 
-    return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs)
+    return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs, users=users)
 
 
 @bp.route('/saved', methods=["GET", "POST"])
@@ -211,3 +216,55 @@ def saved_jobs():
 def job_submitted():
 
     return render_template('job_submitted.html')
+
+
+@bp.route('/settings', methods=["GET", "POST"])
+@login_required
+def settings():
+    username = session.get("username")
+    user = mongo.db.users.find_one_or_404({'email': username})
+
+    form = UploadPicture()
+    profile_image = form.file.data
+
+    # if the form validates on submit and if the
+    # file extension is allowed. Should probably check if the file is allowed
+    # before letting the user upload a file.
+    if form.validate_on_submit() and allowed_file(profile_image.filename):
+
+        if user["profile_image_name"] != "default.png":
+            find_and_delete_file(user["profile_image_name"])
+
+        # I'm replacing the file name uploaded by the user
+        # by a random string + the original file extension.
+        filename = secure_filename(
+            image_id_generator() + get_file_extension(profile_image.filename))
+
+        """ with Image.open(profile_image) as im:
+            (left, upper, right, lower) = (0, 0, 300, 300)
+            croppedImage = im.crop((left, upper, right, lower))
+
+            croppedImage.save(profile_image, format='WEBP')
+
+            print(filename, filename, filename)
+        croppedImage.show() """
+
+        mongo.save_file(filename, profile_image)
+
+        mongo.db.users.update_one(
+            {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
+        return redirect(url_for('main.settings'))
+
+    return render_template("settings.html", username=username, user=user, form=form)
+
+
+@bp.route('/file/<filename>')
+def file(filename):
+    return mongo.send_file(filename)
+
+
+@bp.get('/profile/<username>')
+def profile(username):
+    user = mongo.db.users.find_one_or_404({'name': username})
+
+    return render_template("profile.html", username=username, user=user)
