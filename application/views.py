@@ -241,6 +241,7 @@ def file(filename):
 
 
 @bp.get('/profile/<username>')
+@login_required
 def profile(username):
     user = mongo.db.users.find_one_or_404({'name': username})
 
