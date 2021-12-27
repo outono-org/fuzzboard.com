@@ -5,14 +5,14 @@
 {% block main %}
 
 <main class="main mt40">
-    <script src="{{url_for('static', filename='htmx.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
 
     <div class="profile-section-container profile-section-profile">
         <div class="white-mask"></div>
         <div class="profile-section-profile-container">
             
             {% if user.profile_image_name == "default.png" %}
-                <img class="profile-pic" src="{{url_for('static', filename='default.png')}}">
+                <img class="profile-pic" src="{{url_for('static', filename='images/default.png')}}">
             {% else %}
             <img class="profile-pic" src="{{url_for('main.file', filename=user.profile_image_name)}}">
             {% endif %}
