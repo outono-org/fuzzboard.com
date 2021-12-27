@@ -388,6 +388,8 @@ input#submit:hover {
 
 .list-grid-company-column,
 .list-grid-position-column,
+.list-grid-status-column,
+.list-grid-category-column,
 .list-grid-header-column,
 .list-grid-header-column,
 .list-grid-link-column,
@@ -398,6 +400,14 @@ input#submit:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  column-gap: 5px;
+  align-items: center;
+}
+
+.dashboard-icon svg {
+  height: 22px;
+  width: 22px;
 }
 
 .list-row-wrapper {
