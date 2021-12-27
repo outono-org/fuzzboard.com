@@ -82,7 +82,7 @@ def home():
     recent_jobs = get_recent_jobs()
 
     categories_list = [get_active_jobs("development"), get_active_jobs("design"),
-                       get_active_jobs("marketing"), get_active_jobs("business development"), get_active_jobs("other")]
+                       get_active_jobs("marketing"), get_active_jobs("product management"), get_active_jobs("business development"), get_active_jobs("other")]
 
     subscribe_form = NewsletterSubscribe()
 
