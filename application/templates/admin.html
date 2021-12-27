@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Startup Jobs Portugal</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/static/css/styles.css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/32x32.png') }}">
     </head>
     
     <div class="preload-transitions">
@@ -114,7 +114,7 @@
                                 {% for user in users %}
                                     {% if user._id == job.modified_by %}
                                         {% if user.profile_image_name == "default.png" %}
-                                            <img class="profile-pic-mini" src="{{url_for('static', filename='default.png')}}">
+                                            <img class="profile-pic-mini" src="{{url_for('static', filename='images/default.png')}}">
                                         {% else %}
                                             <img class="profile-pic-mini" src="{{url_for('main.file', filename=user.profile_image_name)}}">
                                         {% endif %}
@@ -143,5 +143,5 @@
     </div>
 
 </body>
-<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </html>
