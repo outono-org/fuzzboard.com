@@ -4,6 +4,8 @@ from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
 from .views import bp
 from .auth import auth
+from .admin import admin
+from .feeds import feed
 from .database import mongo
 from .emails import mail
 
@@ -12,6 +14,8 @@ load_dotenv()
 app = Flask(__name__)
 app.register_blueprint(bp)
 app.register_blueprint(auth)
+app.register_blueprint(admin)
+app.register_blueprint(feed)
 
 csp = {
     'default-src': [
