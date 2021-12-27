@@ -57,13 +57,14 @@ def save_email_test_startups(email, feedback):
     )
 
 
-def update_entry_status(id, status):
+def update_entry_status(id, status, user):
     mongo.db.jobs.update_one(
         {
             '_id': ObjectId(id)
         },
         {
-            '$set': {'status': status, 'last_modified': datetime.datetime.utcnow()}
+            '$set': {'status': status, 'last_modified': datetime.datetime.utcnow(),
+                     'modified_by': user}
         }
     )
 
@@ -145,6 +146,9 @@ def get_recent_jobs():
 
 
 def get_jobs():
+    mongo.db.jobs.update_many({"modified_by": {"$exists": False}}, {
+                              "$set": {"modified_by": ""}})
+
     jobs = []
     for job in mongo.db.jobs.find(
         {
@@ -162,7 +166,8 @@ def get_jobs():
             "email": job["email"],
             "timestamp": job["_id"].generation_time,
             "created_on": job["created_on"],
-            "last_modified": job["last_modified"]
+            "last_modified": job["last_modified"],
+            'modified_by': job['modified_by']
         }
 
         jobs.append(entry)
@@ -183,6 +188,24 @@ def create_user(email_address, name, password):
             "account_status": "inactive"
         }
     )
+
+
+def get_users():
+    users = []
+    for user in mongo.db.users.find(
+        {
+            "_id": {"$exists": True}
+        }
+    ):
+        entry = {
+            "_id": user["_id"],
+            "email": user["email"],
+            "name": user["name"],
+            "profile_image_name": user["profile_image_name"]
+        }
+
+        users.append(entry)
+    return users
 
 
 def find_user_by_email(email):

@@ -31,6 +31,7 @@
                 <div class="list-grid-email-column">Email</div>
                 <div class="list-grid-created-column">Created</div>
                 <div class="list-grid-edited-column">Last Edited</div>
+                <div class="list-grid-edited-column">Modified By</div>
             </div>
         </header>
 
@@ -48,6 +49,7 @@
                 <div class="dashboard-list-columns">
 
                 {% for job in jobs %}
+                
                     {% if job.status == entry[0] %}
                         
                         <div class="list-row-wrapper">
@@ -108,11 +110,24 @@
                                 {{ job.last_modified.strftime("%b %d, %Y %H:%M:%S") }}
                             </div>
 
-                            <div class="list-grid-save-column">
-                                
+                            <div class="list-grid-person-column">
+                                {% for user in users %}
+                                    {% if user._id == job.modified_by %}
+                                        {% if user.profile_image_name == "default.png" %}
+                                            <img class="profile-pic-mini" src="{{url_for('static', filename='default.png')}}">
+                                        {% else %}
+                                            <img class="profile-pic-mini" src="{{url_for('main.file', filename=user.profile_image_name)}}">
+                                        {% endif %}
+                                        {{ user.name }}
+                                    {% endif %}
+                                {% endfor %}
                             </div>
+
                         </div>
+                        
                     {% endif %}
+                    
+                    
             {% endfor %}
                 </div>
 
