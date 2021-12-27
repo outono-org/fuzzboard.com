@@ -9,13 +9,13 @@
     href='/static/css/styles.css'>
 </head>
 <body>
-    <main class="main">
-        <div class="container">
+    <main class="main-login">
+        <div class="container-login">
             <h1 class="big-text mb50">Sign up</h1>
             {% for message in get_flashed_messages() %}
                 {{ message }}
             {% endfor %}
-            <form class="block mb15" autocomplete="off" method="post">
+            <form class="block mb15 login-form" autocomplete="off" method="post">
                 {{ form.hidden_tag() }}
                 {{ form.email_address(placeholder="email@example.com", autocomplete="off") }}
                 {{ form.name(placeholder="Your name", autocomplete="off") }}
