@@ -3,7 +3,7 @@ import os
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file, find_user, get_users
+from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file, get_users
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
