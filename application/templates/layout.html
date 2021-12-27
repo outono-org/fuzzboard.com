@@ -51,7 +51,7 @@
             </span>
             {% if session.username %}
             <span class="navigation-item">
-                <a href="{{ url_for('main.admin') }}" target="_blank" rel="noreferrer">Dashboard</a>
+                <a href="{{ url_for('admin.dashboard') }}" target="_blank" rel="noreferrer">Dashboard</a>
             </span>
             {% endif %}
         </div>
@@ -82,7 +82,7 @@
                 </svg>
             </a>
 
-            <a href="{{  url_for('main.rss' )}}" target="_blank" rel="noreferrer">
+            <a href="{{  url_for('feed.rss' )}}" target="_blank" rel="noreferrer">
                 <svg role="img" fill="rgba(57, 56, 86, 0.4)" width="16" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <title>RSS</title>

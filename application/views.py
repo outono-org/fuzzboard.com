@@ -3,13 +3,12 @@ import os
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_jobs, get_recent_jobs, update_entry_status, check_entry_timelimit, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file, get_users
+from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, JobManagement, RefreshJobStatus, NewsletterSubscribe, StartupsTestForm, UploadPicture
+from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
 from .emails import send_email
-from flask import make_response
-from feedgen.feed import FeedGenerator
+
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
@@ -56,7 +55,7 @@ def new():
 def new_job_form():
     form = NewJobSubmission()
 
-    return render_template('new_job_form.html', form=form)
+    return render_template('fragments/new_job_form.html', form=form)
 
 
 @bp.get('/get_jobs/<category>')
@@ -64,7 +63,7 @@ def htmx_get_jobs(category):
     jobs = get_active_jobs(category)
     subscribe_form = NewsletterSubscribe()
 
-    return render_template('get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
+    return render_template('fragments/get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
 
 
 @bp.post('/bookmark')
@@ -130,54 +129,6 @@ def location(location):
     return redirect(url_for('main.home'))
 
 
-@bp.get('/feed')
-def rss():
-    fg = FeedGenerator()
-    fg.title('Startup Jobs Portugal')
-    fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
-    fg.link(href='https://startupjobsportugal.com/')
-
-    for job in get_active_jobs2():
-        fe = fg.add_entry()
-        fe.title(job['title'])
-        fe.link(href=job['url'])
-        fe.content(job['company'])
-        fe.description(job['company'])
-        fe.guid(str(job['_id']), permalink=False)
-        fe.author(name='Startup Jobs Portugal')
-        fe.pubDate(job['timestamp'])
-
-    response = make_response(fg.rss_str())
-    response.headers.set('Content-Type', 'application/rss+xml')
-
-    return response
-
-
-@bp.route('/admin', methods=["GET", "POST"])
-@login_required
-def admin():
-    user = mongo.db.users.find_one_or_404({'email': session["username"]})
-
-    # get id and return user name. if modified is = user, return name
-
-    form = JobManagement()
-    refresh_button = RefreshJobStatus()
-
-    jobs = get_jobs()
-    users = get_users()
-
-    if form.validate_on_submit():
-        update_entry_status(form.id.data, form.status.data,
-                            user["_id"])
-        return redirect(url_for('main.admin'))
-
-    if refresh_button.validate_on_submit():
-        check_entry_timelimit()
-        return redirect(url_for('main.admin'))
-
-    return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs, users=users)
-
-
 @bp.route('/saved', methods=["GET", "POST"])
 def saved_jobs():
     form = StartupsTestForm()
@@ -192,7 +143,7 @@ def saved_jobs():
 @bp.get('/job_submitted')
 def job_submitted():
 
-    return render_template('job_submitted.html')
+    return render_template('fragments/job_submitted.html')
 
 
 @bp.route('/settings', methods=["GET", "POST"])
