@@ -354,6 +354,8 @@ input#submit:hover {
 
 .header-admin-title-button {
   display: flex;
+  position: fixed;
+  width: 100%;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
@@ -382,7 +384,7 @@ input#submit:hover {
   column-gap: 25px;
   padding: 20px 0px 15px 20px;
   width: 1850px;
-  margin: 0px 20px 0px 20px;
+  margin: 100px 20px 0px 20px;
   font-size: 15px;
 }
 
