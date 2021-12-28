@@ -51,9 +51,13 @@
             <div class="container">
 
             {% for entry in form.status.choices %}
-                <span class="status status-{{entry[0]}}">{{entry[0] | capitalize}}
-                    ({{ jobs|selectattr('status', 'equalto', entry[0]) |list|length }})
-                </span>
+            <details open>
+                <summary>
+                    <span class="status status-{{entry[0]}}">{{entry[0] | capitalize}}
+                        ({{ jobs|selectattr('status', 'equalto', entry[0]) |list|length }})
+                    </span>
+                </summary>
+            
 
                 <div class="dashboard-list-columns">
 
@@ -135,13 +139,16 @@
                         </div>
                         
                     {% endif %}
-                    
+                
                     
             {% endfor %}
+       
                 </div>
-
-
+            </details>
+            
+                
             {% endfor %}
+        
 
         </div>
             

@@ -500,6 +500,23 @@ input#submit:hover {
   align-items: center;
 }
 
+details > summary {
+  display: flex;
+  cursor: pointer;
+  user-select: none;
+}
+details[open] summary ~ * {
+  animation: sweep 0.5s ease-in-out;
+}
+@keyframes sweep {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* END OF DASHBAORD */
 
 #emoji {
