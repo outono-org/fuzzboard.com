@@ -173,14 +173,14 @@ button {
   font-size: 16px;
 }
 
-.new-job-form label {
+label {
   margin-bottom: 5px;
   font-weight: 500;
 }
 
-.new-job-form input,
-.new-job-form textarea,
-.new-job-form select {
+input,
+textarea,
+select {
   padding: 10px 12px;
   margin-bottom: 15px;
   padding: 15px 17px;
@@ -193,9 +193,9 @@ button {
   transition: ease-in 0.2s;
 }
 
-.new-job-form input:hover,
-.new-job-form textarea:hover,
-.new-job-form select:hover {
+input:hover,
+textarea:hover,
+select:hover {
   background-color: rgba(57, 56, 86, 0.1);
 }
 
@@ -819,4 +819,26 @@ h6 {
 .profile-section-profile-container {
   position: relative;
   top: -80px;
+}
+
+.settings-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 2rem;
+  row-gap: 0.5rem;
+  font-size: 16px;
+  flex: 2 0 auto;
+}
+
+.settings-form input,
+.settings-form textarea {
+  width: 100%;
+}
+
+.full-column {
+  grid-column: 1 / span 2;
+}
+
+.flex0 {
+  flex: 2 0 0;
 }

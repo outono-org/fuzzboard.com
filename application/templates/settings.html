@@ -1,14 +1,15 @@
 {% extends "layout.html" %}
 
-{% block title %}A central place for startup jobs in Portugal{% endblock %}
+{% block title %}Settings{% endblock %}
 
 {% block main %}
 
 <main class="main mb40">
+
     <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
 
-    <div>
-        <h1>Settings</h1>
+    <div class="flex0">
+        <h2></h2>
 
         {% if user.profile_image_name == "default.png" %}
             <img class="profile-pic" src="{{url_for('static', filename='images/default.png')}}">
@@ -17,7 +18,7 @@
         {% endif %}
     
     
-        <form class="new-job-form" method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
     
             {{ form.file.label }}
@@ -28,35 +29,51 @@
     </div>
 
    
-        <form class="new-job-form">
+        <form class="settings-form">
 
-            <h2>Public Profile</h2>
+            <h2 class="full-column">Public Profile</h2>
             
-            <label for="title">Your name</label>
-            <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.name}}">
-
-            <label for="title">Email address</label>
-            <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.email}}">
+            <div>
+                <label for="title">Your name</label>
+                <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.name}}">
+            </div>
             
-            <label for="company">Location</label>
-            <input id="company" name="company" placeholder="Lisbon" required="" type="text" value="">
+            <div>
+                <label for="company">Location</label>
+                <input id="company" name="company" placeholder="Lisbon" required="" type="text" value="">
+            </div>
 
-            <label for="company">About you</label>
-            <textarea id="feedback" name="feedback" placeholder="About you."></textarea>
+            <div class="full-column">
+                <label for="title">Email address</label>
+                <input id="title" name="title" placeholder="Name" required="" type="text" value="{{user.email}}">
+            </div>
 
-            <h2>On the Web</h2>
+            <div class="full-column">
+                <label for="company">About you</label>
+                <textarea id="feedback" name="feedback" placeholder="About you."></textarea>
+            </div>
 
-            <label for="company">Personal Website</label>
-            <input id="company" name="company" placeholder="moonwith.com" required="" type="text" value="">
+            <h2 class="full-column">On the Web</h2>
 
-            <label for="company">LinkedIn</label>
-            <input id="company" name="company" placeholder="linkedin.com/in/malikpiara" required="" type="text" value="">
+            <div>
+                <label for="company">Personal Website</label>
+                <input id="company" name="company" placeholder="moonwith.com" required="" type="text" value="">
+            </div>
 
-            <label for="company">GitHub</label>
-            <input id="company" name="company" placeholder="github.com/malikpiara" required="" type="text" value="">
+            <div>
+                <label for="company">LinkedIn</label>
+                <input id="company" name="company" placeholder="linkedin.com/in/malikpiara" required="" type="text" value="">
+            </div>
 
-            <label for="company">Dribbble</label>
-            <input id="company" name="company" placeholder="dribbble.com/malikpiara" required="" type="text" value="">
+            <div>
+                <label for="company">GitHub</label>
+                <input id="company" name="company" placeholder="github.com/malikpiara" required="" type="text" value="">
+            </div>
+
+            <div>
+                <label for="company">Dribbble</label>
+                <input id="company" name="company" placeholder="dribbble.com/malikpiara" required="" type="text" value="">
+            </div>
         </form>
     
 
