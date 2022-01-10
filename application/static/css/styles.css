@@ -1,5 +1,5 @@
 :root {
-  --primary-color: #72daed;
+  --primary-color: #48acbe;
 }
 
 #logo-wrapper {
@@ -71,10 +71,9 @@ select {
 
 .category-header {
   color: #2f344f;
-}
-
-.category-header h2 {
-  text-decoration: underline;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header {
@@ -173,6 +172,11 @@ button {
   font-size: 16px;
 }
 
+.new-job-form > input,
+select {
+  margin-bottom: 15px;
+}
+
 label {
   margin-bottom: 5px;
   font-weight: 500;
@@ -185,7 +189,7 @@ select {
   padding: 15px 17px;
   background-color: rgba(57, 56, 86, 0.04);
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-family: inherit;
   font-size: 14px;
   transition: ease-in 0.2s;
@@ -783,7 +787,7 @@ h6 {
 
 .profile-section-container {
   margin-bottom: 25px;
-  background-color: #fbf7f2;
+  background-color: #f4f4f3;
   padding: 25px 30px 35px 40px;
   border-radius: 8px;
   font-size: 17px;
