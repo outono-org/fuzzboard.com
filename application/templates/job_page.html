@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Startups{% endblock %}
+
+{% block main %}
+<main class="main">
+        <div>
+            <h1>{{ job_title }}</h1>
+            <a href="{{ job_url }}" target="_blank" rel="noreferrer">
+                <button class="button-main">Apply for this position</button>
+            </a>
+        </div>
+        <div>
+            <h2>{{ company }}</h2>
+            <div><b>Location</b></div>
+            <div>{{ location }}</div>
+            <a href="{{ job_url }}" target="_blank" rel="noreferrer">
+                <button class="button-main">Apply for this position</button>
+            </a>
+        </div>
+        
+</main>
+
+{% endblock %}

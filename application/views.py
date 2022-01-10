@@ -140,6 +140,22 @@ def saved_jobs():
     return render_template('saved_jobs.html', form=form)
 
 
+@bp.get('/jobs/<id>')
+def jobs(id):
+
+    jobs = get_active_jobs2()
+
+    for job in jobs:
+        if str(job['_id']) == id:
+            company = job['company']
+            job_title = job['title']
+            job_url = job['url']
+            location = job['location']
+            return render_template('job_page.html', id=id, company=company, job_title=job_title, job_url=job_url, location=location)
+
+    return render_template('job_page.html')
+
+
 @bp.get('/job_submitted')
 def job_submitted():
 
