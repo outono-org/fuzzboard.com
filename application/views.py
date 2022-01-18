@@ -3,7 +3,7 @@ import os
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, get_active_jobs2, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file
+from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
@@ -60,7 +60,7 @@ def new_job_form():
 
 @bp.get('/get_jobs/<category>')
 def htmx_get_jobs(category):
-    jobs = get_active_jobs(category)
+    jobs = get_active_jobs(category=category)
     subscribe_form = NewsletterSubscribe()
 
     return render_template('fragments/get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
@@ -81,8 +81,14 @@ def bookmark():
 def home():
     recent_jobs = get_recent_jobs()
 
-    categories_list = [get_active_jobs("development"), get_active_jobs("design"),
-                       get_active_jobs("marketing"), get_active_jobs("product management"), get_active_jobs("business development"), get_active_jobs("other")]
+    categories_list = [
+        get_active_jobs(category="development"),
+        get_active_jobs(category="design"),
+        get_active_jobs(category="marketing"),
+        get_active_jobs(category="product management"),
+        get_active_jobs(category="business development"),
+        get_active_jobs(category="other")
+    ]
 
     subscribe_form = NewsletterSubscribe()
 
@@ -98,35 +104,32 @@ def home():
 
 @bp.get('/<category>')
 def category(category):
-    jobs = get_active_jobs(category)
+    jobs = get_active_jobs(category=category)
 
-    for job in jobs:
-        # if job['category'] == category:
-        return render_template('category_page.html', category=category, jobs=jobs)
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
 
-    return redirect(url_for('main.home'))
+    return render_template('category_page.html', category=category, jobs=jobs)
 
 
 @bp.get('/company/<company>')
 def company(company):
-    jobs = get_active_jobs2()
+    jobs = get_active_jobs(company=company)
 
-    for job in jobs:
-        if job['company'] == company:
-            return render_template('company_page.html', company=company, jobs=jobs)
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
 
-    return redirect(url_for('main.home'))
+    return render_template('company_page.html', company=company, jobs=jobs)
 
 
 @bp.get('/location/<location>')
 def location(location):
-    jobs = get_active_jobs2()
+    jobs = get_active_jobs(location=location)
 
-    for job in jobs:
-        if job['location'] == location:
-            return render_template('location_page.html', location=location, jobs=jobs)
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
 
-    return redirect(url_for('main.home'))
+    return render_template('location_page.html', location=location, jobs=jobs)
 
 
 @bp.route('/saved', methods=["GET", "POST"])
@@ -142,18 +145,12 @@ def saved_jobs():
 
 @bp.get('/jobs/<id>')
 def jobs(id):
+    jobs = get_active_jobs(id=id)
 
-    jobs = get_active_jobs2()
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
 
-    for job in jobs:
-        if str(job['_id']) == id:
-            company = job['company']
-            job_title = job['title']
-            job_url = job['url']
-            location = job['location']
-            return render_template('job_page.html', id=id, company=company, job_title=job_title, job_url=job_url, location=location)
-
-    return render_template('job_page.html')
+    return render_template('job_page.html', jobs=jobs, id=id)
 
 
 @bp.get('/job_submitted')

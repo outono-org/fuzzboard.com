@@ -12,10 +12,8 @@
     <div class="jobs-container">
 
         {% for job in jobs %}
-            {% if job.company == company %}
-                
                     <div class="card-container testing">
-                        <a href={{ job.url }} target="_blank" rel="noreferrer">
+                        <a href="{{ url_for('main.jobs', id=job._id) }}">
                             <div class="job-card">
                                 <h3 class="card-header">{{ job.title }}</h3>
                                 <span class="secondary-text">{{ job.company }}</span>
@@ -35,11 +33,7 @@
                         </div>
 
                     </div>
-                    
-                
-            {% endif %}
         {% endfor %}
-
     </div>
 
 </main>

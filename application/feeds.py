@@ -1,7 +1,7 @@
 from flask import make_response
 from feedgen.feed import FeedGenerator
 from flask import Blueprint
-from .models import get_active_jobs, get_active_jobs2
+from .models import get_active_jobs
 
 feed = Blueprint('feed', __name__)
 
@@ -13,7 +13,7 @@ def rss():
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
     fg.link(href='https://startupjobsportugal.com/')
 
-    for job in get_active_jobs2():
+    for job in get_active_jobs():
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
@@ -36,7 +36,7 @@ def rss_product():
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
     fg.link(href='https://startupjobsportugal.com/')
 
-    for job in get_active_jobs("product management"):
+    for job in get_active_jobs(category="product management"):
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])
@@ -59,7 +59,7 @@ def rss_all(category):
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
     fg.link(href='https://startupjobsportugal.com/')
 
-    for job in get_active_jobs(category):
+    for job in get_active_jobs(category=category):
         fe = fg.add_entry()
         fe.title(job['title'])
         fe.link(href=job['url'])

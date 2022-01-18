@@ -20,24 +20,14 @@ Startup Jobs in {{location |capitalize}}
         {% if location != "Remote" %}
             <h1>Startups Jobs in {{ location }}</h1>
         {% endif %}
-        
-       <!--  {% if category == "business development" %}
-            <span class="secondary-text">Find bizdev, growth and sales jobs in Portugal.</span>
-        {% endif %}
-
-        {% if category == "other" %}
-            <span class="secondary-text">Work alongside a team of people who care about creating a better future. From Portugal to the World.</span>
-        {% endif %} -->
-        
     </div>
 
     <div class="jobs-container">
 
         {% for job in jobs %}
-            {% if job.location == location %}
-                
+
                     <div class="card-container testing">
-                        <a href={{ job.url }} target="_blank" rel="noreferrer">
+                        <a href="{{ url_for('main.jobs', id=job._id) }}">
                             <div class="job-card">
                                 <h3 class="card-header">{{ job.title }}</h3>
                                 <span class="secondary-text">{{ job.company }}</span>
@@ -58,8 +48,6 @@ Startup Jobs in {{location |capitalize}}
 
                     </div>
                     
-                
-            {% endif %}
         {% endfor %}
 
     </div>

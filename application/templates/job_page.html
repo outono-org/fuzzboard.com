@@ -4,21 +4,22 @@
 
 {% block main %}
 <main class="main">
+    {% for job in jobs %}
         <div>
-            <h1>{{ job_title }}</h1>
-            <a href="{{ job_url }}" target="_blank" rel="noreferrer">
+            <h1>{{ job.title }}</h1>
+            <a href="{{ job.url }}" target="_blank" rel="noreferrer">
                 <button class="button-main">Apply for this position</button>
             </a>
         </div>
         <div>
-            <h2>{{ company }}</h2>
+            <h2>{{ job.company }}</h2>
             <div><b>Location</b></div>
-            <div>{{ location }}</div>
+            <div>{{ job.location }}</div>
             <a href="{{ job_url }}" target="_blank" rel="noreferrer">
                 <button class="button-main">Apply for this position</button>
             </a>
         </div>
-        
+    {% endfor %}
 </main>
 
 {% endblock %}

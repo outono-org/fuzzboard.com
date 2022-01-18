@@ -82,7 +82,18 @@ def check_entry_timelimit():
     )
 
 
-def get_active_jobs(category: str = "$any"):
+def get_active_jobs(category: str = None, company: str = None, location: str = None, id: str = None):
+    condition = {"status": "active"}
+
+    if id != None:
+        condition["_id"] = ObjectId(id)
+    if category != None:
+        condition["category"] = category
+    if company != None:
+        condition["company"] = company
+    if location != None:
+        condition["location"] = location
+
     jobs = [
         {
             "_id": job["_id"],
@@ -94,33 +105,7 @@ def get_active_jobs(category: str = "$any"):
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
-        for job in mongo.db.jobs.find(
-            {
-                "status": "active",
-                "category": category,
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_jobs2():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in mongo.db.jobs.find(
-            {
-                "status": "active",
-            }
-        )
+        for job in mongo.db.jobs.find(condition)
     ]
     return jobs
 
