@@ -33,7 +33,7 @@
     <div class="jobs-container">
 
         {% for job in jobs |reverse %}
-        <a href="{{ url_for('main.jobs', id=job._id) }}">
+        <a href="{{ url_for('main.jobs', slug=job.slug) }}">
                     <div class="card-container">
 
                         <div class="job-card">

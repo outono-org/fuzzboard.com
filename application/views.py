@@ -3,11 +3,12 @@ import os
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, image_id_generator, get_file_extension, find_and_delete_file, allowed_file
+from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, add_slug_to_db
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
 from .emails import send_email
+import string
 
 from werkzeug.utils import secure_filename
 
@@ -79,6 +80,9 @@ def bookmark():
 
 @bp.route('/', methods=["GET", "POST"])
 def home():
+    # important: I'm changing the DB by adding a new field to every entry
+    add_slug_to_db()
+
     recent_jobs = get_recent_jobs()
 
     categories_list = [
@@ -143,14 +147,14 @@ def saved_jobs():
     return render_template('saved_jobs.html', form=form)
 
 
-@bp.get('/jobs/<id>')
-def jobs(id):
-    jobs = get_active_jobs(id=id)
+@bp.get('/jobs/<slug>')
+def jobs(slug):
+    jobs = get_active_jobs(slug=slug)
 
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
 
-    return render_template('job_page.html', jobs=jobs, id=id)
+    return render_template('job_page.html', jobs=jobs, slug=slug)
 
 
 @bp.get('/job_submitted')
@@ -179,7 +183,7 @@ def settings():
         # I'm replacing the file name uploaded by the user
         # by a random string + the original file extension.
         filename = secure_filename(
-            image_id_generator() + get_file_extension(profile_image.filename))
+            id_generator() + get_file_extension(profile_image.filename))
 
         """ with Image.open(profile_image) as im:
             (left, upper, right, lower) = (0, 0, 300, 300)

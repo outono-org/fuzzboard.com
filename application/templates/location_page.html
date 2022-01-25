@@ -27,7 +27,7 @@ Startup Jobs in {{location |capitalize}}
         {% for job in jobs %}
 
                     <div class="card-container testing">
-                        <a href="{{ url_for('main.jobs', id=job._id) }}">
+                        <a href="{{ url_for('main.jobs', slug=job.slug) }}">
                             <div class="job-card">
                                 <h3 class="card-header">{{ job.title }}</h3>
                                 <span class="secondary-text">{{ job.company }}</span>
