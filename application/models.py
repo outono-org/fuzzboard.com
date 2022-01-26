@@ -93,23 +93,30 @@ def check_entry_timelimit():
 
 
 def add_slug_to_db():
-
+    # BUG: The id generator is only being generated once for every entry!!!!
     # Looking for documents without slugs and updating them.
-    mongo.db.jobs.update_many(
-        {
-            'slug': {"$exists": False}
-        },
-        [
+
+    # for job in jobs -> update_one
+
+    for job in mongo.db.jobs.find({'slug': {"$exists": False}}):
+
+        slug = id_generator(size=6, chars=string.digits) + \
+            '-' + job['title'].replace(' ', '-').lower()
+
+        mongo.db.jobs.update_one(
+
+            {
+                '_id': job["_id"]
+            },
 
             {
                 '$set':
-                {
-                    'slug': {'$toLower': {'$concat': [id_generator(size=6, chars=string.digits),
-                                                      '-', '$title']}},
-                    'slug': {'$replaceAll': {'input': "$slug", 'find': " ", 'replacement': "-"}}}
+                    {
+                        'slug': slug
+                    }
             }
-        ]
-    )
+
+        )
 
 
 def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, id: str = None):

@@ -80,8 +80,6 @@ def bookmark():
 
 @bp.route('/', methods=["GET", "POST"])
 def home():
-    # important: I'm changing the DB by adding a new field to every entry
-    add_slug_to_db()
 
     recent_jobs = get_recent_jobs()
 
