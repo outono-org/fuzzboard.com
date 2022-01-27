@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
-from .views import bp
+from .views import bp, ckeditor, mde
 from .auth import auth
 from .admin import admin
 from .feeds import feed
@@ -24,28 +24,51 @@ csp = {
         '*.googletagmanager.com',
         '*.gstatic.com',
         'cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
-        'https://www.googletagmanager.com',
         '*.googleanalytics.com',
         '*.google-analytics.com',
+        'cdn.ckeditor.com/*',
+        'unsafe-inline',
+        '\'unsafe-inline\'',
+        'cdn.jsdelivr.net/simplemde/latest/simplemde.min.css',
+        'maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css',
     ],
     'script-src': [
         '\'self\'',
         'unsafe-inline',
+        '\'unsafe-inline\'',
         'ajax.googleapis.com',
-        'https://code.jquery.com',
-        'https://www.google.com',
-        'www.googletagmanager.com',
+        'code.jquery.com',
+        'google.com',
+        'googletagmanager.com',
+        '*.googletagmanager.com',
         '*.googleanalytics.com',
         '*.google-analytics.com',
-        'https://www.googletagmanager.com/',
+        'googletagmanager.com/',
+        'cdn.ckeditor.com/*',
+        'cdn.ckeditor.com/4.14.0/basic/ckeditor.js',
+        'cdn.ckeditor.com/4.14.0/basic/*',
+        'cdn.ckeditor.com/4.14.0/basic/styles.js',
+        'cdn.ckeditor.com/4.14.0/basic/lang/en.js',
+        'cdn.jsdelivr.net/simplemde/latest/simplemde.min.js',
+    ],
+    'script-src-elem': [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        'googletagmanager.com',
+        '*.googletagmanager.com',
+        '*.googleanalytics.com',
+        '*.google-analytics.com',
+        'googletagmanager.com/',
+        'cdn.jsdelivr.net/simplemde/latest/simplemde.min.js',
+    ],
+    'script-src-attr': [
+        '\'self\'',
+        '\'unsafe-inline\'',
+        '*.googletagmanager.com',
     ],
     'img-src': [
         '\'self\'',
-        '*.bootstrapcdn.com',
-        '*.googleapis.com',
-        'www.google-analytics.com',
-        'https://ssl.gstatic.com',
-        'https://www.gstatic.com',
+        'https://cdn.sstatic.net/Img/unified/wmd-buttons.svg',
     ],
 }
 Talisman(app,
@@ -80,6 +103,9 @@ app.config['MAIL_PASSWORD'] = os.environ.get('SENDGRID_API_KEY')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
 mail.init_app(app)
+
+ckeditor.init_app(app)
+mde.init_app(app)
 
 
 @ app.route('/robots.txt')

@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{% block title %}{% endblock %} - Startup Jobs Portugal</title>
+    {{mde.css}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
@@ -18,8 +19,8 @@
     
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script nonce="{{ csp_nonce() }}" async src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
-    <script nonce="{{ csp_nonce() }}">
+    <script  async src="https://www.googletagmanager.com/gtag/js?id=G-NX2FW45HWD"></script>
+    <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());

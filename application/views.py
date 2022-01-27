@@ -9,10 +9,21 @@ from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, Uplo
 from .decorators import login_required
 from .emails import send_email
 import string
-
+from flask_ckeditor import CKEditor
+from flask_mde import Mde
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
+
+ckeditor = CKEditor()
+mde = Mde()
+
+
+@bp.get('/texteditor')
+def textEditor():
+    form = NewJobSubmission()
+
+    return render_template('texteditor.html', form=form)
 
 
 @bp.post('/newJob')
