@@ -26,7 +26,7 @@ def increment_bookmark_value():
     )['number_of_clicks']
 
 
-def post_job(title, company, category, location, link, email, status):
+def post_job(title, company, category, location, description, link, email, status):
 
     # Generating slug for each entry posted
     slug = id_generator(size=6, chars=string.digits) + \
@@ -38,6 +38,7 @@ def post_job(title, company, category, location, link, email, status):
             "company": company,
             "category": category.lower(),
             "location": location,
+            "description": description,
             "url": link,
             "slug": slug,
             "email": email,
@@ -92,11 +93,27 @@ def check_entry_timelimit():
     )
 
 
-def add_slug_to_db():
-    # BUG: The id generator is only being generated once for every entry!!!!
-    # Looking for documents without slugs and updating them.
+def add_description_to_db():
+    # Looking for documents without description field and updating them.
 
-    # for job in jobs -> update_one
+    for job in mongo.db.jobs.find({'description': {"$exists": False}}):
+
+        mongo.db.jobs.update_one(
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'description': ''
+                    }
+            }
+        )
+
+
+def add_slug_to_db():
+    # Looking for documents without slugs and updating them.
 
     for job in mongo.db.jobs.find({'slug': {"$exists": False}}):
 
@@ -115,7 +132,6 @@ def add_slug_to_db():
                         'slug': slug
                     }
             }
-
         )
 
 
@@ -141,6 +157,7 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
             "company": job["company"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
             "slug": job["slug"],
             "email": job["email"],
@@ -159,6 +176,7 @@ def get_recent_jobs():
             "company": job["company"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
             "slug": job["slug"],
             "email": job["email"],
@@ -188,7 +206,9 @@ def get_jobs():
             "status": job["status"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
+            "slug": job["slug"],
             "email": job["email"],
             "timestamp": job["_id"].generation_time,
             "created_on": job["created_on"],

@@ -23,7 +23,6 @@
             <br>→ We're the <strong>first page on Google</strong> for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</span>
         <br><br>
         
-        
     </header>
 
     <div class="new-job-form" id="replaceMe">
@@ -50,7 +49,7 @@
 
         <div class="mkdn-editor">
             <label>Description</label>
-            {{mde.editor()}}
+            {{ form.editor }}
             <small>Examples: Use “-” for bullet lists, and “###” for headers.</small>
         </div>
         
@@ -67,7 +66,7 @@
 </div>
 
     <aside class="recipient">
-        <h3>Your job listing preview</h3>
+        <h4 class="primary">Your job listing preview</h4>
         {{ mde.preview }}
     </aside>
 

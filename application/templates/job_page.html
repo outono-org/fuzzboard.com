@@ -5,20 +5,21 @@
 {% block main %}
 <main class="main">
     {% for job in jobs %}
-        <div>
+        <div class="job-description-container">
             <h1>{{ job.title }}</h1>
+            {{ job.description  |safe }}
             <a href="{{ job.url }}" target="_blank" rel="noreferrer">
                 <button class="button-main">Apply for this position</button>
             </a>
         </div>
-        <div>
+        <aside class="job-page-aside">
             <h2>{{ job.company }}</h2>
             <div><b>Location</b></div>
             <div>{{ job.location }}</div>
             <a href="{{ job.url }}" target="_blank" rel="noreferrer">
-                <button class="button-main">Apply for this position</button>
+                <button class="button-main button-secondary">Apply for this position</button>
             </a>
-        </div>
+        </aside>
     {% endfor %}
 </main>
 

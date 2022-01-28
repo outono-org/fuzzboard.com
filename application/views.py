@@ -1,5 +1,5 @@
 import os
-
+import mistune
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
@@ -33,13 +33,14 @@ def newJob():
     job_title = form.title.data
 
     if form.validate_on_submit():
-        post_job(form.title.data,
-                 form.company.data,
-                 form.category.data,
-                 form.location.data,
-                 form.link.data,
-                 form.email.data,
-                 "pending")
+        post_job(title=form.title.data,
+                 company=form.company.data,
+                 category=form.category.data,
+                 location=form.location.data,
+                 description=form.description.data,
+                 link=form.link.data,
+                 email=form.email.data,
+                 status="pending")
         # Notification sent to the person who submitted the job.
         send_email(subject='Your submission | Startup Jobs',
                    to=form.email.data,
@@ -159,6 +160,9 @@ def saved_jobs():
 @bp.get('/jobs/<slug>')
 def jobs(slug):
     jobs = get_active_jobs(slug=slug)
+
+    for job in jobs:
+        job["description"] = mistune.html(job["description"])
 
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
