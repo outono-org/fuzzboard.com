@@ -2,6 +2,7 @@
   --primary-color: rgb(0, 173, 239);
   --secondary-color: rgb(237 250 255);
   --dark-blue: rgb(1 67 92);
+  --primary-text: rgba(38, 62, 89, 0.788);
 }
 
 .primary {
@@ -42,7 +43,7 @@ body {
   font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
     sans-serif, apple color emoji, segoe ui emoji;
   line-height: 1.5;
-  color: #2f344f;
+  color: var(--primary-text);
 }
 
 body * {
@@ -60,6 +61,7 @@ body * {
 
 a {
   text-decoration: none;
+  color: var(--primary-text);
 }
 
 select {
@@ -67,11 +69,7 @@ select {
   font-size: inherit;
 }
 
-.secondary-text {
-  color: #211e1eab;
-}
-
-.job-card .secondary-text {
+.job-card {
   font-weight: 500;
 }
 
@@ -119,7 +117,6 @@ h2,
   display: flex;
   column-gap: 2px;
   font-size: 16px;
-  color: #211e1eab;
   padding: 0.6em;
   border-radius: 8px;
 }
@@ -129,7 +126,7 @@ h2,
 }
 
 .navigation-item:hover {
-  background-color: #fafafb;
+  background-color: rgba(13, 12, 34, 0.05);
 }
 
 .header-new-job-page {
@@ -322,7 +319,7 @@ input#submit:hover {
 }
 
 .card-container:hover {
-  background-color: #fafafb;
+  background-color: rgba(13, 12, 34, 0.05);
   border-bottom: transparent;
 }
 
@@ -574,25 +571,16 @@ details[open] summary ~ * {
   padding: 10px 12px;
 }
 
-.partners {
-  display: flex;
-}
-
-.partners-logo {
-  width: 160px;
-  fill: rgba(57, 56, 86, 0.3);
-}
-
-.partners-logo:hover {
-  fill: rgba(57, 56, 86, 0.4);
-}
-
 .highlight {
   background-color: rgba(251, 191, 36, 0.2);
   color: #211e1ec4;
   border-radius: 1px;
   padding-left: 5px;
   padding-right: 5px;
+}
+
+.job-categories {
+  flex: 1 1 auto;
 }
 
 .filter-categories {
@@ -609,13 +597,13 @@ details[open] summary ~ * {
 }
 
 .filter-categories li:hover {
-  background-color: #fafafb;
+  background-color: rgba(13, 12, 34, 0.05);
 }
 
 .filter-categories li.active {
-  background-color: rgba(13, 12, 34, 0.05);
+  background-color: var(--secondary-color);
   font-weight: 500;
-  color: #0d0c22;
+  color: var(--primary-color);
 }
 
 .hidden.htmx-swapping {
@@ -941,10 +929,18 @@ h6 {
   left: 225px !important;
 }
 
+#wmd-preview {
+  font-size: 1em;
+  font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
+    sans-serif, apple color emoji, segoe ui emoji;
+  color: var(--primary-text);
+}
+
 /* Job Page */
 
 .job-description-container {
   flex: 0 1 800px;
+  color: var(--primary-text);
 }
 
 .job-page-aside {

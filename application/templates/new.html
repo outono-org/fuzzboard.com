@@ -4,25 +4,35 @@
 
 {% block main %}
 
-<main class="main">
+{{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+
+{{mde.js}}
+
+<main class="main-new-job">
     
     <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
     
     <header class="header-new-job-page">
 
-        <h1>Submit a job for free</h1>
+        <h1>Hire highly qualified talent in record time.</h1>
 
-        <span class="secondary-text">Each job approved is shared across our communication channels, weekly newsletter and inside the Slack workspace for <a class="a_underline" href="https://351.community/" target="_blank" rel="noreferrer">351</a>, one of the most active Startup Communities in Portugal.</span>
-        <br><br>
-        <span class="secondary-text">→ Our monthly organic reach is <b>9.9K on LinkedIn</b>.
-            <br>→ Our newsletter is sent every Monday to people that are <b>actively</b> looking for jobs at startups.
-            <br>→ We're the first page on Google for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</span>
-        <br><br>
+        <span class="secondary-text">We pride ourselves in curating a job board for companies that aim to create an impact while promoting a people friendly workplace. Other job boards are charging you too much for questionable results. Although we don't promise you better results, we don't charge you at all. </span>
         
+        <h2>Here's some reasons to pick us</h2>
+        <span class="secondary-text">→ Our job board is seen by people who are specifically looking for a company with startup culture.
+            <br>→ Every job is featured in <a class="a_underline" target="_blank" rel="noreferrer" href="https://us6.campaign-archive.com/?u=836c6f357c7afce413d17dce1&id=ed9c4423d6">our weekly newsletter</a> and <a class="a_underline" target="_blank" rel="noreferrer" href="https://www.linkedin.com/company/351community/">the most active Startup Community in Portugal</a>.
+            <br>→ We're <strong>first page on Google</strong> for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</span>
+        <br><br>
         
     </header>
 
     <div class="new-job-form" id="replaceMe">
+        <!-- <div>
+            <form>
+                {{ ckeditor.create() }}
+                <input type="submit">
+            </form>
+        </div> -->
     <form class="new-job-form" hx-post="/newJob" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
         {{ form.hidden_tag() }}
 
@@ -38,6 +48,12 @@
         {{ form.location.label }}
         {{ form.location(placeholder="Lisbon") }}
 
+        <div class="mkdn-editor">
+            <label>Description</label>
+            {{ form.description }}
+            <small>Examples: Use “-” for bullet lists, and “###” for headers.</small>
+        </div>
+        
         {{ form.link.label }}
         <small>Please submit a URL. Other formats are not accepted.</small>
         {{ form.link(id="button-js", placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder", autocomplete="off") }}
@@ -51,9 +67,8 @@
 </div>
 
     <aside class="recipient">
-        <span class="recipient-text">Hi! My name is Mariana. I’ll be the one reviewing your job submission.<br><br> You can reach me on <a class="a_underline" href="https://twitter.com/fzboard" target="_blank" rel="noreferrer">Twitter</a>, <a class="a_underline" href="https://www.linkedin.com/in/marianadkobayashi/" target="_blank" rel="noreferrer">LinkedIn</a> or <a class="a_underline" href="mailto:marianadanifk@gmail.com">Email</a>.</span>
-        <img class="contact-photo" src="{{url_for('static', filename='images/mariana.jpeg') }}" alt="Mariana Ko">
-        <img class="oyk" alt="Only you know who you can be" src="{{url_for('static', filename='images/02.png')}}"/>
+        <h4 class="primary">Your job listing preview</h4>
+        {{ mde.preview }}
     </aside>
 
 </main>

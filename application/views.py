@@ -19,13 +19,6 @@ ckeditor = CKEditor()
 mde = Mde()
 
 
-@bp.get('/texteditor')
-def textEditor():
-    form = NewJobSubmission()
-
-    return render_template('texteditor.html', form=form)
-
-
 @bp.post('/newJob')
 def newJob():
     form = NewJobSubmission()
