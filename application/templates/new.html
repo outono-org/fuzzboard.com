@@ -4,10 +4,6 @@
 
 {% block main %}
 
-{{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
-
-{{mde.js}}
-
 <main class="main-new-job">
     
     <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
@@ -16,7 +12,7 @@
 
         <h1>Hire highly qualified talent in record time.</h1>
 
-        <p class="super-text mb40">With Startup Jobs Portugal, you can reach and engage with people who aim to create an impact and who are specifically looking to join a company with startup culture.</p>
+        <p class="super-text">With Startup Jobs Portugal, you can reach and engage with people who aim to create an impact and who are specifically looking to join a company with startup culture.</p>
         
         <h3>Here's some reasons to pick us:</h3>
         <p>→ Our posts are seen by approximately 12K people on LinkedIn every month (organic reach).</p>
@@ -24,13 +20,11 @@
             <p>→ We're <strong>first page on Google</strong> for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</p>
     </header>
 
-    <div class="new-job-form" id="replaceMe">
-        <!-- <div>
-            <form>
-                {{ ckeditor.create() }}
-                <input type="submit">
-            </form>
-        </div> -->
+    <div class="job-form-wrapper" id="replaceMe">
+
+    <div class="new-job-form">
+        {{mde.js}}
+        
     <form class="new-job-form" hx-post="/newJob" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
         {{ form.hidden_tag() }}
 
@@ -68,6 +62,8 @@
         <h4 class="primary">Your job listing preview</h4>
         {{ mde.preview }}
     </aside>
+
+</div>
 
 </main>
 {% endblock %}

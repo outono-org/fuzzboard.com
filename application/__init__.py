@@ -36,6 +36,7 @@ csp = {
         '\'self\'',
         'unsafe-inline',
         '\'unsafe-inline\'',
+        '\'unsafe-eval\'',
         'ajax.googleapis.com',
         'code.jquery.com',
         'google.com',

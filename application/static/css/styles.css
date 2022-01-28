@@ -179,12 +179,16 @@ button {
   animation-duration: 1s;
 }
 
+.job-form-wrapper {
+  display: flex;
+  flex: 3;
+  column-gap: 40px;
+}
+
 .new-job-form {
   display: flex;
   flex-direction: column;
-  margin-right: 20px;
   flex: 1 0 450px;
-  font-size: 16px;
 }
 
 .new-job-form > input,
@@ -274,8 +278,8 @@ input#submit:hover {
 }
 
 .recipient {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column;*/
   flex: 3 0 250px;
   position: sticky;
   top: 0;
