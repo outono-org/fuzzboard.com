@@ -1,6 +1,7 @@
 :root {
   --primary-color: rgb(0, 173, 239);
   --secondary-color: rgb(237 250 255);
+  --dark-blue: rgb(1 67 92);
 }
 
 .primary {
@@ -98,6 +99,7 @@ select {
 }
 
 h1,
+h2,
 .logo {
   font-weight: 800;
   color: #263e59;
@@ -261,7 +263,7 @@ input#submit {
 
 .button-main:hover,
 input#submit:hover {
-  background-color: var(--primary-color);
+  background-color: var(--dark-blue);
 }
 
 .button-secondary:hover {
