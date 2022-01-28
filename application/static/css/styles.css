@@ -936,6 +936,10 @@ h6 {
   color: var(--primary-text);
 }
 
+.super-text {
+  font-size: 1.2em;
+}
+
 /* Job Page */
 
 .job-description-container {
