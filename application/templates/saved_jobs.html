@@ -10,7 +10,7 @@
             <p>You don't have to open a million tabs and keep track of all the interesting jobs on your own. We're building a space that lets you bookmark jobs privately and where you can come back to. Whenever you need.</p>
 
             <h3>Be the first one to know when bookmarks start working.</h3>
-            <form class="new-job-form" method="POST">
+            <form class="new-job-form margin-t-16" method="POST">
                 {{ form.hidden_tag() }}
                 
                 {{ form.email.label }}
@@ -19,7 +19,7 @@
                 {{ form.feedback.label }}
                 {{ form.feedback(placeholder="If you don't have anything to say, that's okay too. You can submit the form without filling this field.") }}
         
-                {{ form.submit(class="button-secondary button-main") }}
+                {{ form.submit(class="button-secondary button-main margin-t-16") }}
             </form>
         </div>
         

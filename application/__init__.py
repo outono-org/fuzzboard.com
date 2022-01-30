@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
-from .views import bp, ckeditor, mde
+from .views import bp, ckeditor, mde, simplemde
 from .auth import auth
 from .admin import admin
 from .feeds import feed
@@ -31,6 +31,11 @@ csp = {
         '\'unsafe-inline\'',
         'cdn.jsdelivr.net/simplemde/latest/simplemde.min.css',
         'maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.woff2',
+        'https://maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.woff',
+        'maxcdn.bootstrapcdn.com/font-awesome/latest/fonts/fontawesome-webfont.ttf',
+        'https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.aff',
+        'https://cdn.jsdelivr.net/codemirror.spell-checker/latest/en_US.dic',
     ],
     'script-src': [
         '\'self\'',
@@ -107,6 +112,10 @@ mail.init_app(app)
 
 ckeditor.init_app(app)
 mde.init_app(app)
+
+app.config['SIMPLEMDE_JS_IIFE'] = True
+app.config['SIMPLEMDE_USE_CDN'] = True
+simplemde.init_app(app)
 
 
 @ app.route('/robots.txt')

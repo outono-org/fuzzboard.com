@@ -11,6 +11,8 @@
         content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
     <meta property="og:image" content="{{ url_for('static', filename='images/preview2.png') }}">
     {{mde.css}}
+    {{ simplemde.css }}
+    {{ simplemde.js }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/32x32.png') }}">
@@ -94,7 +96,6 @@
         </div>
     </footer>
     {% endblock %}
-    <script src="{{ url_for('static', filename='js/test.js') }}"></script>
 </body>
 
 </html>

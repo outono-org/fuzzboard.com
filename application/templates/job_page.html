@@ -1,11 +1,17 @@
 {% extends "layout.html" %}
 
-{% block title %}Startups{% endblock %}
+{% block title %}
+    {% for job in jobs %}
+        {{ job.title }} at {{ job.company }}
+    {% endfor %}
+{% endblock %}
+
 
 {% block main %}
 <main class="main">
     {% for job in jobs %}
         <div class="job-description-container">
+            <h4>{{ job.company }} is hiring a</h4>
             <h1>{{ job.title }}</h1>
             {{ job.description  |safe }}
             <a href="{{ job.url }}" target="_blank" rel="noreferrer">
@@ -13,12 +19,25 @@
             </a>
         </div>
         <aside class="job-page-aside">
-            <h2>{{ job.company }}</h2>
-            <div><b>Location</b></div>
-            <div>{{ job.location }}</div>
-            <a href="{{ job.url }}" target="_blank" rel="noreferrer">
-                <button class="button-main button-secondary">Apply for this position</button>
-            </a>
+            <div class="aside-content-container">
+                <div class="aside-header-container">
+                    <h2>{{ job.company }}</h2>
+                    
+                    <a class="margin-t-8" href="{{ url_for('main.company', company=job.company) }}">See Company</a>
+                    <a class="margin-t-16" href="{{ job.url }}" target="_blank" rel="noreferrer">
+                        <button class="button-main button-secondary">Apply for this position</button>
+                    </a>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="margin-t-24">
+                <div>Location</div>
+                <div><strong>{{ job.location }}</strong></div>
+            </div>
+            <div class="margin-t-24">
+                <div>Published Date</div>
+                <div><strong>{{ days_ago }}</strong></div>
+            </div>
         </aside>
     {% endfor %}
 </main>

@@ -1,9 +1,11 @@
+from crypt import methods
 import os
+import datetime
 import mistune
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, add_slug_to_db
+from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
@@ -11,12 +13,14 @@ from .emails import send_email
 import string
 from flask_ckeditor import CKEditor
 from flask_mde import Mde
+from flask_simplemde import SimpleMDE
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
 ckeditor = CKEditor()
 mde = Mde()
+simplemde = SimpleMDE()
 
 
 @bp.post('/newJob')
@@ -55,6 +59,24 @@ def new():
     form = NewJobSubmission()
 
     return render_template('new.html', form=form)
+
+
+@bp.get('/new2')
+def new2():
+    form = NewJobSubmission()
+
+    return render_template('new2.html', form=form)
+
+
+@bp.route('/mde-test', methods=["GET", "POST"])
+def mdetest():
+
+    if request.method == 'POST':
+        content = request.form['content']
+
+        print(content)
+
+    return render_template('mde-test.html')
 
 
 @bp.get('/new_job_form')
@@ -152,15 +174,26 @@ def saved_jobs():
 
 @bp.get('/jobs/<slug>')
 def jobs(slug):
+    # TODO: Replace get active jobs with a new get job function.
     jobs = get_active_jobs(slug=slug)
+
+    today = datetime.datetime.now()
 
     for job in jobs:
         job["description"] = mistune.html(job["description"])
+        job["timestamp"] = job["timestamp"].replace(tzinfo=None)
+
+        print(today)
+        print(job["timestamp"])
+        print(today - job["timestamp"])
+
+        days_ago = (today - job["timestamp"])
+        days_ago = str(days_ago).split(",")[0] + " " + "ago"
 
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
 
-    return render_template('job_page.html', jobs=jobs, slug=slug)
+    return render_template('job_page.html', jobs=jobs, slug=slug, days_ago=days_ago)
 
 
 @bp.get('/job_submitted')

@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Post job{% endblock %}
+
+{% block main %}
+
+<main class="main-new-job">
+
+    <div class="job-form-wrapper">
+
+    <div class="new-job-form">
+        {{mde.js}}
+        
+    <form class="new-job-form" id="myform" method="POST">
+        
+    </form>
+
+    <label>Your job listing preview</label>
+        <div>
+        <textarea form="myform" name="content", id="content">{{ request.form['content'] }}</textarea>
+            {{ simplemde.load }}
+        </div>
+        <input form="myform" type="submit">
+</div>
+</div>
+
+</main>
+{% endblock %}
