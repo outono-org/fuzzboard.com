@@ -12,14 +12,14 @@
         {{mde.js}}
         
     <form class="new-job-form" id="myform" method="POST">
-        
-    </form>
-
-    <label>Your job listing preview</label>
+        <label>Your job listing preview</label>
         <div>
         <textarea form="myform" name="content", id="content">{{ request.form['content'] }}</textarea>
             {{ simplemde.load }}
         </div>
+    </form>
+
+    
         <input form="myform" type="submit">
 </div>
 </div>

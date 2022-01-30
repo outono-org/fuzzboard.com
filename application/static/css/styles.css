@@ -672,6 +672,9 @@ details[open] summary ~ * {
   .navigation {
     display: none;
   }
+  .mb40-mobile {
+    margin-bottom: 40px;
+  }
 }
 
 .oyk {
@@ -962,6 +965,16 @@ p {
 .CodeMirror {
   background-color: #f7f7f8;
   border: none;
+}
+
+.fa.fa-quote-left,
+.fa.fa-picture-o,
+.editor-statusbar {
+  display: none;
+}
+
+.editor-toolbar i.separator:nth-child(8n) {
+  display: none;
 }
 
 /* Job Page */

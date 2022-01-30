@@ -10,7 +10,7 @@
 {% block main %}
 <main class="main">
     {% for job in jobs %}
-        <div class="job-description-container">
+        <div class="job-description-container mb40-mobile">
             <h4>{{ job.company }} is hiring a</h4>
             <h1>{{ job.title }}</h1>
             {{ job.description  |safe }}
