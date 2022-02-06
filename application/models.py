@@ -11,6 +11,10 @@ import random
 import gridfs
 
 
+def id_generator(size=8, chars=string.ascii_letters + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
 def increment_bookmark_value():
     return mongo.db.test_bookmark.find_one_and_update(
         {
@@ -22,14 +26,21 @@ def increment_bookmark_value():
     )['number_of_clicks']
 
 
-def post_job(title, company, category, location, link, email, status):
+def post_job(title, company, category, location, description, link, email, status):
+
+    # Generating slug for each entry posted
+    slug = id_generator(size=6, chars=string.digits) + \
+        '-' + title.replace(' ', '-').lower()
+
     mongo.db.jobs.insert_one(
         {
             "title": title,
             "company": company,
             "category": category.lower(),
             "location": location,
+            "description": description,
             "url": link,
+            "slug": slug,
             "email": email,
             "status": status,
             'created_on': datetime.datetime.utcnow(),
@@ -82,7 +93,63 @@ def check_entry_timelimit():
     )
 
 
-def get_active_jobs(category: str = "$any"):
+def add_description_to_db():
+    # Looking for documents without description field and updating them.
+
+    for job in mongo.db.jobs.find({'description': {"$exists": False}}):
+
+        mongo.db.jobs.update_one(
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'description': ''
+                    }
+            }
+        )
+
+
+def add_slug_to_db():
+    # Looking for documents without slugs and updating them.
+
+    for job in mongo.db.jobs.find({'slug': {"$exists": False}}):
+
+        slug = id_generator(size=6, chars=string.digits) + \
+            '-' + job['title'].replace(' ', '-').lower()
+
+        mongo.db.jobs.update_one(
+
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'slug': slug
+                    }
+            }
+        )
+
+
+def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, id: str = None):
+
+    condition = {"status": "active"}
+
+    if id != None:
+        condition["_id"] = ObjectId(id)
+    if slug != None:
+        condition["slug"] = slug
+    if category != None:
+        condition["category"] = category
+    if company != None:
+        condition["company"] = company
+    if location != None:
+        condition["location"] = location
+
     jobs = [
         {
             "_id": job["_id"],
@@ -90,37 +157,13 @@ def get_active_jobs(category: str = "$any"):
             "company": job["company"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
+            "slug": job["slug"],
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
-        for job in mongo.db.jobs.find(
-            {
-                "status": "active",
-                "category": category,
-            }
-        )
-    ]
-    return jobs
-
-
-def get_active_jobs2():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "url": job["url"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in mongo.db.jobs.find(
-            {
-                "status": "active",
-            }
-        )
+        for job in mongo.db.jobs.find(condition)
     ]
     return jobs
 
@@ -133,7 +176,9 @@ def get_recent_jobs():
             "company": job["company"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
+            "slug": job["slug"],
             "email": job["email"],
             "timestamp": job["_id"].generation_time
         }
@@ -161,7 +206,9 @@ def get_jobs():
             "status": job["status"],
             "category": job["category"],
             "location": job["location"],
+            "description": job["description"],
             "url": job["url"],
+            "slug": job["slug"],
             "email": job["email"],
             "timestamp": job["_id"].generation_time,
             "created_on": job["created_on"],
@@ -213,10 +260,6 @@ def find_user_by_email(email):
             "email": email
         }
     )
-
-
-def image_id_generator(size=8, chars=string.ascii_letters + string.digits):
-    return ''.join(random.choice(chars) for _ in range(size))
 
 
 def get_file_extension(filename):

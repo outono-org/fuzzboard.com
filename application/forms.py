@@ -2,8 +2,10 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, SubmitField, TextAreaField, ValidationError, HiddenField, PasswordField
 from wtforms.fields.core import SelectField
+from wtforms.widgets import TextArea
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, EqualTo, URL
+from flask_mde import Mde, MdeField
 from .models import find_user_by_email
 
 STATUS_CHOICES = [('pending', 'Pending'),
@@ -19,6 +21,7 @@ class NewJobSubmission(FlaskForm):
                            ("Pick one"), ("Design"), ("Development"), ("Marketing"), ("Product Management"), ("Business Development"), ("Other")])
     location = SelectField("Location", choices=[
                            ("Remote"), ("Lisboa"), ("Porto"), ("Aveiro"), ("Açores"), ("Beja"), ("Braga"), ("Bragança"), ("Castelo Branco"), ("Coimbra"), ("Évora"), ("Faro"), ("Guarda"), ("Leiria"), ("Madeira"), ("Portalegre"), ("Santarém"), ("Setúbal"), ("Viana do Castelo"), ("Vila Real"), ("Viseu")], validators=[DataRequired()])
+    description = StringField(u'Description', widget=TextArea())
     link = StringField("Where should I go to apply?",
                        validators=[DataRequired(), URL()])
     email = EmailField("Contact email", validators=[DataRequired(), Email()])

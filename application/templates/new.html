@@ -4,57 +4,77 @@
 
 {% block main %}
 
-<main class="main">
+<main class="main-new-job">
     
     <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
     
     <header class="header-new-job-page">
 
-        <h1>Submit a job for free</h1>
+        <h1>Hire highly qualified talent in record time.</h1>
 
-        <span class="secondary-text">Each job approved is shared across our communication channels, weekly newsletter and inside the Slack workspace for <a class="a_underline" href="https://351.community/" target="_blank" rel="noreferrer">351</a>, one of the most active Startup Communities in Portugal.</span>
-        <br><br>
-        <span class="secondary-text">→ Our monthly organic reach is <b>9.9K on LinkedIn</b>.
-            <br>→ Our newsletter is sent every Monday to people that are <b>actively</b> looking for jobs at startups.
-            <br>→ We're the first page on Google for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</span>
-        <br><br>
+        <p class="super-text">With Startup Jobs Portugal, you can reach and engage with people who aim to create an impact and who are specifically looking to join a company with startup culture.</p>
         
-        
+        <h3>Here's some reasons to pick us:</h3>
+        <p>→ Our posts are seen by approximately 12K people on LinkedIn every month (organic reach).</p>
+            <p>→ Every job entry is featured on <a class="a_underline" target="_blank" rel="noreferrer" href="https://us6.campaign-archive.com/?u=836c6f357c7afce413d17dce1&id=ed9c4423d6">our weekly newsletter</a> and <a class="a_underline" target="_blank" rel="noreferrer" href="https://www.linkedin.com/company/351community/">the most active Startup Community in Portugal</a>.</p>
+            <p>→ We're <strong>first page on Google</strong> for queries like "Startup Jobs Portugal", "Startup Jobs Porto" and "Product Management jobs Portugal".</p>
     </header>
 
-    <div class="new-job-form" id="replaceMe">
+    <div class="job-form-wrapper" id="replaceMe">
+
+    <div class="new-job-form">
+        
     <form class="new-job-form" hx-post="/newJob" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
         {{ form.hidden_tag() }}
 
-        {{ form.title.label }}
-        {{ form.title(placeholder="Senior fullstack developer") }}
-
-        {{ form.company.label }}
-        {{ form.company(placeholder="Upframe") }}
-
-        {{ form.category.label }}
-        {{ form.category(placeholder="Upframe") }}
-
-        {{ form.location.label }}
-        {{ form.location(placeholder="Lisbon") }}
-
-        {{ form.link.label }}
-        <small>Please submit a URL. Other formats are not accepted.</small>
-        {{ form.link(id="button-js", placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder", autocomplete="off") }}
+        <div class="new-job-form-left">
+            <div class="flex-col">
+                {{ form.title.label }}
+                {{ form.title(placeholder="Senior fullstack developer") }}
+            </div>
         
-        {{ form.email.label }}
-        {{ form.email(placeholder="malik@outono.org") }}
+            <div class="flex-col">
+            {{ form.company.label }}
+            {{ form.company(placeholder="Upframe") }}
+            </div>
 
-        {{ form.submit(class="button-main") }}
+            <div class="flex-col">
+                {{ form.category.label }}
+                {{ form.category(placeholder="Upframe") }}
+            </div>
+
+            <div class="flex-col">
+                {{ form.location.label }}
+                {{ form.location(placeholder="Lisbon") }}
+            </div>
+
+            <div class="flex-col">
+                {{ form.link.label }}
+                <small>Please submit a URL. Other formats are not accepted.</small>
+                {{ form.link(placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder", autocomplete="off") }}
+            </div>
+
+            <div class="flex-col">
+                {{ form.email.label }}
+                {{ form.email(placeholder="malik@outono.org") }}
+            </div>
+
+            <div class="flex-col">
+                {{ form.submit(class="button-main") }}
+            </div>
+        
+        </div>
+
+        <div class="recipient flex-col">
+            {{ form.description.label }}
+            {{ form.description }}
+            {{ simplemde.load }}
+        </div>
 
     </form>
 </div>
 
-    <aside class="recipient">
-        <span class="recipient-text">Hi! My name is Mariana. I’ll be the one reviewing your job submission.<br><br> You can reach me on <a class="a_underline" href="https://twitter.com/fzboard" target="_blank" rel="noreferrer">Twitter</a>, <a class="a_underline" href="https://www.linkedin.com/in/marianadkobayashi/" target="_blank" rel="noreferrer">LinkedIn</a> or <a class="a_underline" href="mailto:marianadanifk@gmail.com">Email</a>.</span>
-        <img class="contact-photo" src="{{url_for('static', filename='images/mariana.jpeg') }}" alt="Mariana Ko">
-        <img class="oyk" alt="Only you know who you can be" src="{{url_for('static', filename='images/02.png')}}"/>
-    </aside>
+</div>
 
 </main>
 {% endblock %}
