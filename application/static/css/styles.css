@@ -1016,6 +1016,10 @@ p {
   align-items: center;
 }
 
+.aside-header-container h2 {
+  text-align: center;
+}
+
 .divider {
   margin: 32px 0;
   border-top: 1px solid #e7e7e9;
