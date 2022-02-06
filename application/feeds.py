@@ -16,7 +16,7 @@ def rss():
     for job in get_active_jobs():
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=job['url'])
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
@@ -39,7 +39,7 @@ def rss_product():
     for job in get_active_jobs(category="product management"):
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=job['url'])
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
@@ -62,7 +62,7 @@ def rss_all(category):
     for job in get_active_jobs(category=category):
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=job['url'])
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)

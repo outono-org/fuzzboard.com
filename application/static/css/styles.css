@@ -9,6 +9,11 @@
   color: var(--primary-color);
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
 #logo-wrapper {
   display: flex;
   align-items: center;
@@ -191,8 +196,16 @@ button {
 
 .new-job-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1 0 450px;
+  column-gap: 40px;
+}
+
+.new-job-form-left {
+  flex: 2 0 300px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
 }
 
 .new-job-form > input,
@@ -975,6 +988,11 @@ p {
 
 .editor-toolbar i.separator:nth-child(8n) {
   display: none;
+}
+
+.CodeMirror
+  .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+  background: none;
 }
 
 /* Job Page */

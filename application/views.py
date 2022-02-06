@@ -30,6 +30,7 @@ def newJob():
     job_title = form.title.data
 
     if form.validate_on_submit():
+
         post_job(title=form.title.data,
                  company=form.company.data,
                  category=form.category.data,
@@ -61,22 +62,15 @@ def new():
     return render_template('new.html', form=form)
 
 
-@bp.get('/new2')
-def new2():
-    form = NewJobSubmission()
-
-    return render_template('new2.html', form=form)
-
-
-@bp.route('/mde-test', methods=["GET", "POST"])
+""" @bp.route('/mde-test', methods=["GET", "POST"])
 def mdetest():
 
     if request.method == 'POST':
         content = request.form['content']
 
-        print(content)
+    print(content)
 
-    return render_template('mde-test.html')
+    return render_template('mde-test.html') """
 
 
 @bp.get('/new_job_form')
@@ -183,12 +177,18 @@ def jobs(slug):
         job["description"] = mistune.html(job["description"])
         job["timestamp"] = job["timestamp"].replace(tzinfo=None)
 
-        print(today)
+        """ print(today)
         print(job["timestamp"])
-        print(today - job["timestamp"])
+        print(today - job["timestamp"]) """
 
         days_ago = (today - job["timestamp"])
+
         days_ago = str(days_ago).split(",")[0] + " " + "ago"
+
+        is_less_than_one_day = int(str(days_ago).split(",")[0][0]) < 1
+
+        if is_less_than_one_day:
+            days_ago = "Today"
 
     if len(jobs) == 0:
         return redirect(url_for('main.home'))

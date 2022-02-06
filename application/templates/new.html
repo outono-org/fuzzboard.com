@@ -12,7 +12,7 @@
 
         <h1>Hire highly qualified talent in record time.</h1>
 
-        <p class="super-text">Hiring has never been so challenging. Covid isn't making it easier. With Startup Jobs Portugal, you can reach and engage with people who are specifically looking to join teams with a startup culture and a powerful mission like yours.</p>
+        <p class="super-text">With Startup Jobs Portugal, you can reach and engage with people who aim to create an impact and who are specifically looking to join a company with startup culture.</p>
         
         <h3>Here's some reasons to pick us:</h3>
         <p>→ Our posts are seen by approximately 12K people on LinkedIn every month (organic reach).</p>
@@ -23,45 +23,56 @@
     <div class="job-form-wrapper" id="replaceMe">
 
     <div class="new-job-form">
-        {{mde.js}}
         
     <form class="new-job-form" hx-post="/newJob" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
         {{ form.hidden_tag() }}
 
-        {{ form.title.label }}
-        {{ form.title(placeholder="Senior fullstack developer") }}
+        <div class="new-job-form-left">
+            <div class="flex-col">
+                {{ form.title.label }}
+                {{ form.title(placeholder="Senior fullstack developer") }}
+            </div>
+        
+            <div class="flex-col">
+            {{ form.company.label }}
+            {{ form.company(placeholder="Upframe") }}
+            </div>
 
-        {{ form.company.label }}
-        {{ form.company(placeholder="Upframe") }}
+            <div class="flex-col">
+                {{ form.category.label }}
+                {{ form.category(placeholder="Upframe") }}
+            </div>
 
-        {{ form.category.label }}
-        {{ form.category(placeholder="Upframe") }}
+            <div class="flex-col">
+                {{ form.location.label }}
+                {{ form.location(placeholder="Lisbon") }}
+            </div>
 
-        {{ form.location.label }}
-        {{ form.location(placeholder="Lisbon") }}
+            <div class="flex-col">
+                {{ form.link.label }}
+                <small>Please submit a URL. Other formats are not accepted.</small>
+                {{ form.link(placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder", autocomplete="off") }}
+            </div>
 
-        <div class="mkdn-editor">
-            <label>Description</label>
-            {{ form.description }}
-            <small>Examples: Use “-” for bullet lists, and “###” for headers.</small>
+            <div class="flex-col">
+                {{ form.email.label }}
+                {{ form.email(placeholder="malik@outono.org") }}
+            </div>
+
+            <div class="flex-col">
+                {{ form.submit(class="button-main") }}
+            </div>
+        
         </div>
-        
-        {{ form.link.label }}
-        <small>Please submit a URL. Other formats are not accepted.</small>
-        {{ form.link(id="button-js", placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder", autocomplete="off") }}
-        
-        {{ form.email.label }}
-        {{ form.email(placeholder="malik@outono.org") }}
 
-        {{ form.submit(class="button-main") }}
+        <div class="recipient flex-col">
+            {{ form.description.label }}
+            {{ form.description }}
+            {{ simplemde.load }}
+        </div>
 
     </form>
 </div>
-
-    <aside class="recipient">
-        <h4 class="primary">Your job listing preview</h4>
-        {{ mde.preview }}
-    </aside>
 
 </div>
 

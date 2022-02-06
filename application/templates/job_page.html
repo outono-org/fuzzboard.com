@@ -1,11 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}
-    {% for job in jobs %}
-        {{ job.title }} at {{ job.company }}
-    {% endfor %}
-{% endblock %}
-
+{% block title %}{% for job in jobs %}{{ job.title }} at {{ job.company }}{% endfor %}{% endblock %}
 
 {% block main %}
 <main class="main">
