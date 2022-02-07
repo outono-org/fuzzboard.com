@@ -11,12 +11,12 @@ def rss():
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
-    fg.link(href='https://startupjobsportugal.com/')
+    fg.link(href='https://startupjobsportugal.com/jobs/')
 
     for job in get_active_jobs():
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=url_for('main.jobs', slug=job['slug']))
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
@@ -34,12 +34,12 @@ def rss_product():
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
-    fg.link(href='https://startupjobsportugal.com/')
+    fg.link(href='https://startupjobsportugal.com/jobs/')
 
     for job in get_active_jobs(category="product management"):
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=url_for('main.jobs', slug=job['slug']))
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
@@ -57,12 +57,12 @@ def rss_all(category):
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
-    fg.link(href='https://startupjobsportugal.com/')
+    fg.link(href='https://startupjobsportugal.com/jobs/')
 
     for job in get_active_jobs(category=category):
         fe = fg.add_entry()
         fe.title(job['title'])
-        fe.link(href=url_for('main.jobs', slug=job['slug']))
+        fe.link(href=job['slug'])
         fe.content(job['company'])
         fe.description(job['company'])
         fe.guid(str(job['_id']), permalink=False)
