@@ -5,15 +5,24 @@
     {% block head %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Primary Meta Tags -->
     <title>{% block title %}{% endblock %} - Startup Jobs Portugal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
         content="{% block meta_description %}{% endblock %}">
-    <meta name="twitter:description"
-    content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
-    <meta name="twitter:site" content="@fzboard" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ self.title }} - Startup Jobs Portugal">
     <meta property="og:description" content="{{ self.meta_description() }}">
     <meta property="og:image" content="{{ url_for('static', filename='images/preview.png') }}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@fzboard" />
+    <meta property="twitter:title" content="{{ self.title }} - Startup Jobs Portugal" />
+    <meta name="twitter:description" content="{{ self.meta_description() }}">
     <meta name="twitter:image" content="{{ url_for('static', filename='images/preview.png') }}">
    
     {{ simplemde.css }}
