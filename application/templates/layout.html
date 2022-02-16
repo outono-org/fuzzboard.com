@@ -14,14 +14,14 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ self.title }} - Startup Jobs Portugal">
+    <meta property="og:title" content="{{ self.title() }} - Startup Jobs Portugal">
     <meta property="og:description" content="{{ self.meta_description() }}">
     <meta property="og:image" content="{{ url_for('static', filename='images/preview.png') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@fzboard" />
-    <meta property="twitter:title" content="{{ self.title }} - Startup Jobs Portugal" />
+    <meta property="twitter:title" content="{{ self.title() }} - Startup Jobs Portugal" />
     <meta name="twitter:description" content="{{ self.meta_description() }}">
     <meta name="twitter:image" content="{{ url_for('static', filename='images/preview.png') }}">
    
