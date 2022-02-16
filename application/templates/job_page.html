@@ -2,6 +2,8 @@
 
 {% block title %}{% for job in jobs %}{{ job.title }} at {{ job.company }}{% endfor %}{% endblock %}
 
+{% block meta_description %}{% for job in jobs %} {{ clean_description |safe }} {% endfor %} {% endblock %}
+
 {% block main %}
 <main class="main">
     {% for job in jobs %}

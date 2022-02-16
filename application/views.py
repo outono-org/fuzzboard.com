@@ -1,4 +1,5 @@
 from crypt import methods
+import re
 import os
 import datetime
 import mistune
@@ -177,6 +178,9 @@ def jobs(slug):
         job["description"] = mistune.html(job["description"])
         job["timestamp"] = job["timestamp"].replace(tzinfo=None)
 
+        CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+        clean_description = re.sub(CLEANR, '', job["description"])[:1000]
+
         """ print(today)
         print(job["timestamp"])
         print(today - job["timestamp"]) """
@@ -193,7 +197,7 @@ def jobs(slug):
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
 
-    return render_template('job_page.html', jobs=jobs, slug=slug, days_ago=days_ago)
+    return render_template('job_page.html', jobs=jobs, slug=slug, days_ago=days_ago, clean_description=clean_description)
 
 
 @bp.get('/job_submitted')
