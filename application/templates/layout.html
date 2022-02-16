@@ -8,11 +8,11 @@
     <title>{% block title %}{% endblock %} - Startup Jobs Portugal</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
+        content="{% block meta_description %}{% endblock %}">
     <meta name="twitter:description"
     content="Find a startup job in Portugal. Work alongside a team of people who care about creating a better future. From Portugal to the World. Frontend jobs, backend jobs and fullstack jobs to data science jobs.">
     <meta name="twitter:site" content="@fzboard" />
-    <meta property="og:description" content="{% block meta_description %}{% endblock %}">
+    <meta property="og:description" content="{{ self.meta_description() }}">
     <meta property="og:image" content="{{ url_for('static', filename='images/preview.png') }}">
     <meta name="twitter:image" content="{{ url_for('static', filename='images/preview.png') }}">
    
