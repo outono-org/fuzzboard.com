@@ -179,7 +179,7 @@ def jobs(slug):
         job["timestamp"] = job["timestamp"].replace(tzinfo=None)
 
         CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
-        clean_description = re.sub(CLEANR, '', job["description"])
+        clean_description = re.sub(CLEANR, '', job["description"])[:1000]
 
         """ print(today)
         print(job["timestamp"])
