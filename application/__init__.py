@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
-from .views import bp, ckeditor, mde, simplemde
+from .views import bp, simplemde
 from .auth import auth
 from .admin import admin
 from .feeds import feed
@@ -110,8 +110,6 @@ app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER')
 
 mail.init_app(app)
 
-ckeditor.init_app(app)
-mde.init_app(app)
 
 app.config['SIMPLEMDE_JS_IIFE'] = True
 app.config['SIMPLEMDE_USE_CDN'] = True
