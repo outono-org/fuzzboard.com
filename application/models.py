@@ -165,30 +165,7 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
         }
         for job in mongo.db.jobs.find(condition)
     ]
-    return jobs
-
-
-def get_recent_jobs():
-    jobs = [
-        {
-            "_id": job["_id"],
-            "title": job["title"],
-            "company": job["company"],
-            "category": job["category"],
-            "location": job["location"],
-            "description": job["description"],
-            "url": job["url"],
-            "slug": job["slug"],
-            "email": job["email"],
-            "timestamp": job["_id"].generation_time
-        }
-        for job in mongo.db.jobs.find(
-            {
-                "status": "active"
-            }
-        )
-    ]
-    return sorted(jobs, key=lambda entry: entry["timestamp"], reverse=True)[:5]
+    return sorted(jobs, key=lambda entry: entry["timestamp"], reverse=True)
 
 
 def get_jobs():

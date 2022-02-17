@@ -6,22 +6,45 @@ import mistune
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, get_recent_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file
+from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
 from .decorators import login_required
 from .emails import send_email
 import string
-from flask_ckeditor import CKEditor
-from flask_mde import Mde
 from flask_simplemde import SimpleMDE
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
-ckeditor = CKEditor()
-mde = Mde()
+
 simplemde = SimpleMDE()
+
+
+@bp.route('/', methods=["GET", "POST"])
+def home():
+
+    recent_jobs = get_active_jobs()[:5]
+
+    categories_list = [
+        get_active_jobs(category="development")[:5],
+        get_active_jobs(category="design")[:5],
+        get_active_jobs(category="marketing")[:5],
+        get_active_jobs(category="product management")[:5],
+        get_active_jobs(category="business development")[:5],
+        get_active_jobs(category="other")[:5]
+    ]
+
+    subscribe_form = NewsletterSubscribe()
+
+    if subscribe_form.validate_on_submit():
+        save_email(subscribe_form.MERGE0.data)
+        return redirect(url_for('main.home'))
+
+    return render_template('home.html',
+                           subscribe_form=subscribe_form,
+                           recent_jobs=recent_jobs,
+                           categories_list=categories_list)
 
 
 @bp.post('/newJob')
@@ -98,32 +121,6 @@ def bookmark():
         increment_bookmark_value()
 
     return Response(200)
-
-
-@bp.route('/', methods=["GET", "POST"])
-def home():
-
-    recent_jobs = get_recent_jobs()
-
-    categories_list = [
-        get_active_jobs(category="development"),
-        get_active_jobs(category="design"),
-        get_active_jobs(category="marketing"),
-        get_active_jobs(category="product management"),
-        get_active_jobs(category="business development"),
-        get_active_jobs(category="other")
-    ]
-
-    subscribe_form = NewsletterSubscribe()
-
-    if subscribe_form.validate_on_submit():
-        save_email(subscribe_form.MERGE0.data)
-        return redirect(url_for('main.home'))
-
-    return render_template('home.html',
-                           subscribe_form=subscribe_form,
-                           recent_jobs=recent_jobs,
-                           categories_list=categories_list)
 
 
 @bp.get('/<category>')
