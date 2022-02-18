@@ -12,7 +12,7 @@
 
 <div class="jobs-container">
 
-        {%- for job in jobs |reverse| batch(5) %}
+        {%- for job in jobs | batch(5) %}
             {%- for entry in job %}
                 
                     <div class="card-container testing">

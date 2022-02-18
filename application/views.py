@@ -71,7 +71,7 @@ def newJob():
                    company=company)
         # Notification sent to myself.
         send_email(subject='New submission at Startup Jobs',
-                   to=os.environ.get('MAIL_DEFAULT_SENDER'),
+                   to=os.environ.get('MAIL_DEFAULT_RECEIVER'),
                    template='mail/submission_notification',
                    job_title=job_title,
                    company=company)
