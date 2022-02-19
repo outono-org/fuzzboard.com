@@ -1,5 +1,6 @@
 import os
 import sys
+from xmlrpc.client import boolean
 from PIL import Image
 from .database import mongo
 from bson.objectid import ObjectId
@@ -135,7 +136,7 @@ def add_slug_to_db():
         )
 
 
-def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, id: str = None):
+def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, id: str = None, reverse: bool = True):
 
     condition = {"status": "active"}
 
@@ -165,7 +166,7 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
         }
         for job in mongo.db.jobs.find(condition)
     ]
-    return sorted(jobs, key=lambda entry: entry["timestamp"], reverse=True)
+    return sorted(jobs, key=lambda entry: entry["timestamp"], reverse=reverse)
 
 
 def get_jobs():
