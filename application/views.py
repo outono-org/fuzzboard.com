@@ -86,17 +86,6 @@ def new():
     return render_template('new.html', form=form)
 
 
-""" @bp.route('/mde-test', methods=["GET", "POST"])
-def mdetest():
-
-    if request.method == 'POST':
-        content = request.form['content']
-
-    print(content)
-
-    return render_template('mde-test.html') """
-
-
 @bp.get('/new_job_form')
 def new_job_form():
     form = NewJobSubmission()
@@ -167,20 +156,23 @@ def saved_jobs():
 @bp.get('/jobs/<slug>')
 def jobs(slug):
     # TODO: Replace get active jobs with a new get job function.
+    # TODO: I wonder if there's a better way to handle "days ago"
     jobs = get_active_jobs(slug=slug)
 
     today = datetime.datetime.now()
+    today = today.replace(microsecond=0)
 
     for job in jobs:
         job["description"] = mistune.html(job["description"])
         job["timestamp"] = job["timestamp"].replace(tzinfo=None)
 
+        # Removing HTML tags and characters from job description.
         CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
         clean_description = re.sub(CLEANR, '', job["description"])[:1000]
 
-        """ print(today)
+        print(today)
         print(job["timestamp"])
-        print(today - job["timestamp"]) """
+        print(today - job["timestamp"])
 
         days_ago = (today - job["timestamp"])
 
