@@ -170,15 +170,22 @@ def jobs(slug):
         CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
         clean_description = re.sub(CLEANR, '', job["description"])[:1000]
 
+        """
         print(today)
         print(job["timestamp"])
         print(today - job["timestamp"])
+        """
+
+        # Testing a potential way of fixing the url bug.
+        print(secure_filename("MLOps / Back-End Engineer"))
 
         days_ago = (today - job["timestamp"])
 
-        days_ago = str(days_ago).split(",")[0] + " " + "ago"
+        # if the characters are less than 8, that means
+        # they don't have "days" yet.
+        is_less_than_one_day = len(str(days_ago)) < 8
 
-        is_less_than_one_day = int(str(days_ago).split(",")[0][0]) < 1
+        days_ago = str(days_ago).split(",")[0] + " " + "ago"
 
         if is_less_than_one_day:
             days_ago = "Today"
