@@ -1,5 +1,6 @@
 import os
 import sys
+import urllib.parse
 from xmlrpc.client import boolean
 from PIL import Image
 from .database import mongo
@@ -31,7 +32,7 @@ def post_job(title, company, category, location, description, link, email, statu
 
     # Generating slug for each entry posted
     slug = id_generator(size=6, chars=string.digits) + \
-        '-' + title.replace(' ', '-').lower()
+        '-' + urllib.parse.quote(title.replace(' ', '-'), safe='').lower()
 
     mongo.db.jobs.insert_one(
         {
@@ -131,6 +132,26 @@ def add_slug_to_db():
                 '$set':
                     {
                         'slug': slug
+                    }
+            }
+        )
+
+
+def encode_job_urls():
+    # Encoding every job url in the database.
+
+    for job in mongo.db.jobs.find({'slug': {"$exists": True}}):
+
+        mongo.db.jobs.update_one(
+
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'slug': urllib.parse.quote(job["slug"], safe='')
                     }
             }
         )
