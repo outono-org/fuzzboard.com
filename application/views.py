@@ -1,4 +1,5 @@
 from crypt import methods
+import urllib.parse
 import re
 import os
 import datetime
@@ -177,7 +178,7 @@ def jobs(slug):
         """
 
         # Testing a potential way of fixing the url bug.
-        print(secure_filename("MLOps / Back-End Engineer"))
+        print(urllib.parse.quote("MLOps / Back-End Engineer", safe=''))
 
         days_ago = (today - job["timestamp"])
 

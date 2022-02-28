@@ -3,7 +3,7 @@ from .decorators import login_required
 from .database import mongo
 from .forms import JobManagement, RefreshJobStatus
 from .models import get_jobs, update_entry_status, check_entry_timelimit, get_users
-from .models import add_slug_to_db, add_description_to_db
+from .models import add_slug_to_db, add_description_to_db, encode_job_urls
 
 admin = Blueprint('admin', __name__)
 
@@ -12,8 +12,9 @@ admin = Blueprint('admin', __name__)
 @login_required
 def update_db():
     # important: I'm changing the DB by adding a new field to every entry
-    add_slug_to_db()
-    add_description_to_db()
+    # add_slug_to_db()
+    # add_description_to_db()
+    encode_job_urls()
     return redirect(url_for('main.home'))
 
 
