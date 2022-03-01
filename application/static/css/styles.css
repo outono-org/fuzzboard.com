@@ -124,6 +124,7 @@ h2,
 .navigation-item {
   font-weight: 500;
   display: flex;
+  align-items: center;
   column-gap: 2px;
   font-size: 16px;
   padding: 0.6em;
@@ -132,6 +133,8 @@ h2,
 
 .navigation-item a {
   color: inherit;
+  display: flex;
+  align-items: center;
 }
 
 .navigation-item:hover {
@@ -566,7 +569,7 @@ details[open] summary ~ * {
 
 /* END OF DASHBAORD */
 
-#emoji {
+.emoji {
   max-height: 20px;
   max-width: 20px;
 }
