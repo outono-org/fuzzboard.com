@@ -28,7 +28,7 @@ def increment_bookmark_value():
     )['number_of_clicks']
 
 
-def post_job(title, company, category, location, description, link, email, status):
+def post_job(title, company, category, location, description, link, email, status, visa_sponsor):
 
     # Generating slug for each entry posted
     slug = id_generator(size=6, chars=string.digits) + \
@@ -45,6 +45,7 @@ def post_job(title, company, category, location, description, link, email, statu
             "slug": slug,
             "email": email,
             "status": status,
+            "visa_sponsor": visa_sponsor,
             'created_on': datetime.datetime.utcnow(),
             "last_modified": datetime.datetime.utcnow(),
             "modified_by": ""
@@ -114,6 +115,25 @@ def add_description_to_db():
         )
 
 
+def add_visa_status_to_db():
+    # Looking for documents without visa status and updating them.
+
+    for job in mongo.db.jobs.find({'visa_sponsor': {"$exists": False}}):
+
+        mongo.db.jobs.update_one(
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'visa_sponsor': False
+                    }
+            }
+        )
+
+
 def add_slug_to_db():
     # Looking for documents without slugs and updating them.
 
@@ -157,7 +177,7 @@ def encode_job_urls():
         )
 
 
-def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, id: str = None, reverse: bool = True):
+def get_active_jobs(category: str = None, slug: str = None, company: str = None, location: str = None, visa_sponsor: bool = None, id: str = None, reverse: bool = True):
 
     condition = {"status": "active"}
 
@@ -171,6 +191,8 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
         condition["company"] = company
     if location != None:
         condition["location"] = location
+    if visa_sponsor != None:
+        condition["visa_sponsor"] = visa_sponsor
 
     jobs = [
         {
@@ -183,6 +205,7 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
             "url": job["url"],
             "slug": job["slug"],
             "email": job["email"],
+            "visa_sponsor": job["visa_sponsor"],
             "timestamp": job["_id"].generation_time
         }
         for job in mongo.db.jobs.find(condition)
@@ -209,6 +232,7 @@ def get_jobs():
             "url": job["url"],
             "slug": job["slug"],
             "email": job["email"],
+            "visa_sponsor": job["visa_sponsor"],
             "timestamp": job["_id"].generation_time,
             "created_on": job["created_on"],
             "last_modified": job["last_modified"],

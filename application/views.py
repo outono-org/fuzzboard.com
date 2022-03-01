@@ -63,7 +63,8 @@ def newJob():
                  description=form.description.data,
                  link=form.link.data,
                  email=form.email.data,
-                 status="pending")
+                 status="pending",
+                 visa_sponsor=form.visa_sponsor.data)
         # Notification sent to the person who submitted the job.
         send_email(subject='Your submission | Startup Jobs',
                    to=form.email.data,
@@ -121,6 +122,17 @@ def category(category):
         return redirect(url_for('main.home'))
 
     return render_template('category_page.html', category=category, jobs=jobs)
+
+
+# Ukraine CASAFARI page.
+@bp.get('/visa')
+def visa():
+    jobs = get_active_jobs(visa_sponsor=True)
+
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
+
+    return render_template('visa_sponsor.html', jobs=jobs)
 
 
 @bp.get('/company/<company>')
