@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileRequired
 from wtforms import StringField, SubmitField, TextAreaField, ValidationError, HiddenField, PasswordField
-from wtforms.fields.core import SelectField
+from wtforms.fields.core import SelectField, BooleanField
 from wtforms.widgets import TextArea
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, Email, EqualTo, URL
@@ -25,6 +25,8 @@ class NewJobSubmission(FlaskForm):
     link = StringField("Where should I go to apply?",
                        validators=[DataRequired(), URL()])
     email = EmailField("Contact email", validators=[DataRequired(), Email()])
+    visa_sponsor = BooleanField(
+        label="🇺🇦 We're willing to sponsor a Ukrainian citizen escaping the country along with his/her family.")
     submit = SubmitField("Submit job")
 
 
