@@ -671,6 +671,15 @@ details[open] summary ~ * {
   opacity: 1;
 }
 
+/* Ukraine,VISA Start */
+
+.visa-checkbox {
+  margin-top: 20px;
+  padding: 5px;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+}
+
 @media (max-width: 855px) {
   .testing div:nth-child(3) {
     opacity: 1;
