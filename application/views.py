@@ -63,7 +63,7 @@ def newJob():
                  description=form.description.data,
                  link=form.link.data,
                  email=form.email.data,
-                 status="pending",
+                 status="active",
                  visa_sponsor=form.visa_sponsor.data)
         # Notification sent to the person who submitted the job.
         send_email(subject='Your submission | Startup Jobs',
