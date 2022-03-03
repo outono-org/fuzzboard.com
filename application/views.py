@@ -135,6 +135,12 @@ def category(category):
 # Ukraine CASAFARI page.
 @bp.get('/visa')
 def visa():
+
+    return redirect(url_for('main.visa_ukraine'))
+
+
+@bp.get('/ukraine')
+def visa_ukraine():
     jobs = get_active_jobs(visa_sponsor=True)
 
     # Chat contact must be updated in env variables.
