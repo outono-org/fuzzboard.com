@@ -137,10 +137,14 @@ def category(category):
 def visa():
     jobs = get_active_jobs(visa_sponsor=True)
 
+    # Chat contact must be updated in env variables.
+    user = mongo.db.users.find_one_or_404(
+        {'email': os.environ.get('CHAT_CONTACT')})
+
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
 
-    return render_template('visa_sponsor.html', jobs=jobs)
+    return render_template('visa_sponsor.html', jobs=jobs, user=user)
 
 
 @bp.get('/company/<company>')
