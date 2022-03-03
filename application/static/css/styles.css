@@ -673,6 +673,10 @@ details[open] summary ~ * {
 
 /* Ukraine,VISA Start */
 
+.ukraine-flag {
+  width: 40px;
+}
+
 .visa-checkbox {
   margin-top: 20px;
   padding: 5px;
