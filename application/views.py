@@ -103,6 +103,14 @@ def htmx_get_jobs(category):
     return render_template('fragments/get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
 
 
+@bp.get('/get_jobs/visa/<category>')
+def htmx_get_jobs_visa(category):
+    jobs = get_active_jobs(category=category, visa_sponsor=True)
+    subscribe_form = NewsletterSubscribe()
+
+    return render_template('fragments/get_jobs_visa.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
+
+
 @bp.post('/bookmark')
 # Right now we're saving the number of clicks on the bookmarking icon
 # from people who don't have an account to have a sense of the interest
