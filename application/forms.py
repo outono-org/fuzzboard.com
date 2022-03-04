@@ -26,7 +26,7 @@ class NewJobSubmission(FlaskForm):
                        validators=[DataRequired(), URL()])
     email = EmailField("Contact email", validators=[DataRequired(), Email()])
     visa_sponsor = BooleanField(
-        label="🇺🇦 We're willing to sponsor a Ukrainian citizen escaping the country along with his/her family.")
+        label="🇺🇦 We're willing to sponsor a Ukrainian citizen escaping the country along with their family.")
     submit = SubmitField("Submit job")
 
 
