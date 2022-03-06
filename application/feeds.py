@@ -105,7 +105,7 @@ def rss_visa():
 
 
 @feed.get('/feed/visa/<category>')
-def rss_all(category):
+def rss_visa_all(category):
     fg = FeedGenerator()
     fg.title('Startup Jobs Portugal')
     fg.description('Real-time feed for jobs at Startup Jobs Portugal.')
