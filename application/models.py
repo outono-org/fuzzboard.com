@@ -28,7 +28,7 @@ def increment_bookmark_value():
     )['number_of_clicks']
 
 
-def post_job(title, company, category, location, description, link, email, status, visa_sponsor):
+def post_job(title, company, category, location, description, link, email, status, visa_sponsor: bool):
 
     # Generating slug for each entry posted
     slug = id_generator(size=6, chars=string.digits) + \

@@ -314,14 +314,6 @@ def newJobUkraine():
     company = request.form['company']
     job_title = request.form['title']
 
-    print(request.form['visa_sponsor'])
-
-    if request.form['visa_sponsor'] == 'true':
-        request.form['visa_sponsor'] == True
-
-    if request.form['visa_sponsor'] == 'false':
-        request.form['visa_sponsor'] == False
-
     post_job(title=request.form['title'],
              company=request.form['company'],
              category=request.form['category'],
@@ -330,7 +322,7 @@ def newJobUkraine():
              link=request.form['link'],
              email=request.form['email'],
              status="active",
-             visa_sponsor=request.form['visa_sponsor'])
+             visa_sponsor=bool(request.form['visa_sponsor']))
     # Notification sent to the person who submitted the job.
     send_email(subject='Your submission | Startup Jobs',
                to=request.form['email'],
