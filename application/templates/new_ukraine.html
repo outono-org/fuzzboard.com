@@ -1,0 +1,103 @@
+{% extends "layout_ukraine.html" %}
+
+{% block title %}Post job{% endblock %}
+
+{% block main %}
+
+<main class="main-new-job">
+    
+    <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
+    
+    <header class="header-new-job-page">
+
+        <h1>Hire anyone escaping 🇺🇦 Ukraine</h1>
+
+        <p class="super-text">Help provide the same sense of purpose, belonging and advancement that anyone escaping the war previously enjoyed.</p>
+        
+    </header>
+
+    <div class="job-form-wrapper" id="replaceMe">
+
+    <div class="new-job-form">
+        
+    <form class="new-job-form" hx-post="/newJobUkraine" method="POST" hx-swap="innerHTML" hx-target="#replaceMe">
+
+        <div class="new-job-form-left">
+            <div class="flex-col">
+                <label>Job Title</label>
+                <input type="text" id="title" name="title" placeholder="Senior fullstack developer" required>
+            </div>
+
+            <div class="flex-col">
+                <label>Company</label>
+                <input type="text" id="company" name="company" placeholder="Upframe" required>
+            </div>
+
+            <div class="flex-col">
+                <label>Category</label>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>Select your option</option>
+                    <option value="Design">Design</option>
+                    <option value="Development">Development</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Product Management">Product Management</option>
+                    <option value="Business Development">Business Development</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            
+            <div class="flex-col">
+                <label>Location</label>
+                <select name="location" id="location" hx-get="/cities" hx-target="#city" required>
+                    <option value="" disabled selected>Select your option</option>
+                    <option value="portugal">Portugal</option>
+                    <option value="germany">Germany</option>
+                    <option value="netherlands">Netherlands</option>
+                </select>
+              </div>
+
+              <div class="flex-col">
+                <label>City</label>
+                <select id="city" name="city" required>
+                    <option value="" disabled selected>Select your option</option>
+                </select>
+            </div>
+
+            <div class="flex-col">
+                <label>Where should I go to apply?</label>
+                <small>Please submit a URL. Other formats are not accepted.</small>
+                <input type="url" id="link" name="link" placeholder="https://angel.co/company/upframe/jobs/1159754-fullstack-developer-co-founder" required autocomplete="off">
+            </div>
+
+            <div class="flex-col">
+                <label>Contact Email</label>
+                <input type="email" id="email" name="email" placeholder="malik@outono.org" required>
+            </div>
+
+            <div class="flex-col">
+                <input type="submit" class="button-main" id="submit" name="submit" value="Submit Job">
+            </div>
+        
+        </div>
+
+        <div class="recipient flex-col">
+            <label>Description</label>
+            <textarea id="description" name="description"></textarea>
+            {{ simplemde.load }}
+
+            <div class="visa-checkbox">
+                <input type='hidden' value='false' name='visa_sponsor'>
+                <input id="visa_sponsor" name="visa_sponsor" type="checkbox" value="true">
+                <label>🇺🇦 We're willing to sponsor anyone escaping the war in Ukraine along with their family.</label>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+</div>
+
+</main>
+{% endblock %}

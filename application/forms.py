@@ -30,6 +30,22 @@ class NewJobSubmission(FlaskForm):
     submit = SubmitField("Submit job")
 
 
+class NewJobSubmissionUkraine(FlaskForm):
+    title = StringField("Job title", validators=[DataRequired()])
+    company = StringField("Company", validators=[DataRequired()])
+    category = SelectField("Category", choices=[
+                           ("Pick one"), ("Design"), ("Development"), ("Marketing"), ("Product Management"), ("Business Development"), ("Other")])
+    location = SelectField("Location", choices=[
+                           ("portugal"), ("germany"), ("netherlands")], validators=[DataRequired()])
+    description = StringField(u'Description', widget=TextArea())
+    link = StringField("Where should I go to apply?",
+                       validators=[DataRequired(), URL()])
+    email = EmailField("Contact email", validators=[DataRequired(), Email()])
+    visa_sponsor = BooleanField(
+        label="🇺🇦 We're willing to sponsor a Ukrainian citizen escaping the country along with their family.")
+    submit = SubmitField("Submit job")
+
+
 class JobManagement(FlaskForm):
     status = SelectField(u'Status', choices=STATUS_CHOICES)
     id = HiddenField("id")

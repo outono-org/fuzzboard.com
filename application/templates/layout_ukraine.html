@@ -25,6 +25,10 @@
     <meta name="twitter:description" content="{{ self.meta_description() }}">
     <meta name="twitter:image" content="{{ url_for('static', filename='images/preview.png') }}">
 
+     <!-- Simple MDE loader -->
+     {{ simplemde.css }}
+     {{ simplemde.js }}
+
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -52,7 +56,7 @@
         <div id="logo-wrapper">
             <a href="{{ url_for('main.home') }}">
                 <img class="ukraine-flag" alt="Ukraine flag" src="{{url_for('static', filename='images/ukraine_circle.png')}}" />
-                <h2 class="card-header logo">Startup Jobs</h2>
+                <h2 class="card-header logo">Fuzzboard</h2>
             </a>
             
         </div>
@@ -68,7 +72,7 @@
             {% endif %}
         </div>
         <div>
-            <a href="{{ url_for('main.new') }}">
+            <a href="{{ url_for('main.new_ukraine') }}">
                 <button class="button-main button-main-cta">Add a job</button>
             </a>
         </div>

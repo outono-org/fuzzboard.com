@@ -9,7 +9,7 @@ from flask.wrappers import Response
 from flask import request
 from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file
 from flask import render_template, Blueprint, redirect, url_for, session
-from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture
+from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture, NewJobSubmissionUkraine
 from .decorators import login_required
 from .emails import send_email
 import string
@@ -284,3 +284,129 @@ def profile(username):
     user = mongo.db.users.find_one_or_404({'name': username})
 
     return render_template("profile.html", username=username, user=user)
+
+# Mission Ukraine
+
+
+@bp.get('/new/ukraine')
+def new_ukraine():
+    # Chat contact must be updated in env variables.
+    user = mongo.db.users.find_one_or_404(
+        {'email': os.environ.get('CHAT_CONTACT')})
+
+    return render_template('new_ukraine.html', user=user)
+
+
+@bp.get('/cities')
+def get_city():
+    if request.args.get('location') == 'portugal':
+        return render_template('fragments/cities/portugal.html')
+    if request.args.get('location') == 'germany':
+        return render_template('fragments/cities/germany.html')
+    if request.args.get('location') == 'netherlands':
+        return render_template('fragments/cities/netherlands.html')
+    else:
+        return print("nothing is being returned")
+
+
+@bp.post('/newJobUkraine')
+def newJobUkraine():
+    company = request.form['company']
+    job_title = request.form['title']
+
+    print(request.form['visa_sponsor'])
+
+    if request.form['visa_sponsor'] == 'true':
+        request.form['visa_sponsor'] == True
+
+    if request.form['visa_sponsor'] == 'false':
+        request.form['visa_sponsor'] == False
+
+    post_job(title=request.form['title'],
+             company=request.form['company'],
+             category=request.form['category'],
+             location=request.form['city'],
+             description=request.form['description'],
+             link=request.form['link'],
+             email=request.form['email'],
+             status="active",
+             visa_sponsor=request.form['visa_sponsor'])
+    # Notification sent to the person who submitted the job.
+    send_email(subject='Your submission | Startup Jobs',
+               to=request.form['email'],
+               template='mail/new_job',
+               job_title=job_title,
+               company=company)
+    # Notification sent to myself.
+    send_email(subject='New submission at Startup Jobs',
+               to=os.environ.get('MAIL_DEFAULT_RECEIVER'),
+               template='mail/submission_notification',
+               job_title=job_title,
+               company=company)
+
+    return job_submitted()
+
+
+portuguese_cities = ['Açores', 'Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Evora', 'Faro', 'Guarda',
+                     'Leiria', 'Lisboa', 'Madeira', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Viana do Castelo', 'Vila Real', 'Viseu']
+german_cities = ['Berlin', 'Bielefeld', 'Bochum', 'Bonn', 'Bremen', 'Cologne', 'Dortmund', 'Dresden', 'Duisburg',
+                 'Düsseldorf', 'Essen', 'Frankfurt', 'Hamburg', 'Hanover', 'Leipzig', 'Munich', 'Nuremberg', 'Stuttgart', 'Wuppertal']
+netherlands_cities = ['Amsterdam', 'Eindhoven',
+                      'Rotterdam', 'The Hague', 'Utrecht']
+
+
+@bp.get('/ukraine/portugal')
+def visa_ukraine_portugal():
+
+    jobs = []
+
+    for city in portuguese_cities:
+        new_city = get_active_jobs(visa_sponsor=True, location=city)
+        jobs = jobs + new_city
+
+    # Chat contact must be updated in env variables.
+    user = mongo.db.users.find_one_or_404(
+        {'email': os.environ.get('CHAT_CONTACT')})
+
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
+
+    return render_template('ukraine/portugal.html', jobs=jobs, user=user)
+
+
+@bp.get('/ukraine/germany')
+def visa_ukraine_germany():
+
+    jobs = []
+
+    for city in german_cities:
+        new_city = get_active_jobs(visa_sponsor=True, location=city)
+        jobs = jobs + new_city
+
+    # Chat contact must be updated in env variables.
+    user = mongo.db.users.find_one_or_404(
+        {'email': os.environ.get('CHAT_CONTACT')})
+
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
+
+    return render_template('ukraine/germany.html', jobs=jobs, user=user)
+
+
+@bp.get('/ukraine/netherlands')
+def visa_ukraine_netherlands():
+
+    jobs = []
+
+    for city in netherlands_cities:
+        new_city = get_active_jobs(visa_sponsor=True, location=city)
+        jobs = jobs + new_city
+
+    # Chat contact must be updated in env variables.
+    user = mongo.db.users.find_one_or_404(
+        {'email': os.environ.get('CHAT_CONTACT')})
+
+    if len(jobs) == 0:
+        return redirect(url_for('main.home'))
+
+    return render_template('ukraine/netherlands.html', jobs=jobs, user=user)
