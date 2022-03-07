@@ -699,7 +699,23 @@ details[open] summary ~ * {
   background-color: var(--secondary-color);
 }
 
+.navigation-country {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.navigation-country:hover {
+  background-color: rgba(13, 12, 34, 0.05);
+}
+
+.navigation-country a {
+  color: var(--dark-blue);
+}
+
 @media (max-width: 855px) {
+  button.button-main.button-main-cta {
+    display: none;
+  }
   .testing div:nth-child(3) {
     opacity: 1;
     transition: ease-in-out 0.5s;
