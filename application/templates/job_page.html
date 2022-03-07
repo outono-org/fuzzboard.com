@@ -36,7 +36,7 @@
                     <div>Published Date</div>
                     <div><strong>{{ days_ago }}</strong></div>
                 </div>
-                {% if job.visa_sponsor %}
+                {% if job.visa_sponsor == true %}
                 <div class="divider"></div>
                 <img class="ukraine-flag" alt="Ukraine flag" src="{{url_for('static', filename='images/ukraine_circle.png')}}" />
                 <p>This company is willing to sponsor a Ukrainian citizen escaping the country along with their family.</span>
