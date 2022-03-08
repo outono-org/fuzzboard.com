@@ -83,9 +83,10 @@ def newJob():
 
 @bp.get('/new')
 def new():
-    form = NewJobSubmission()
+    """     form = NewJobSubmission()
 
-    return render_template('new.html', form=form)
+    return render_template('new.html', form=form) """
+    return redirect(url_for('main.new_ukraine'))
 
 
 @bp.get('/new_job_form')
