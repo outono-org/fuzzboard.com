@@ -115,6 +115,8 @@ h2,
 
 .main-heading-description {
   font-size: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .navigation {
