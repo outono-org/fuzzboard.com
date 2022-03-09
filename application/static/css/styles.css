@@ -117,6 +117,7 @@ h2,
   font-size: 20px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .navigation {
