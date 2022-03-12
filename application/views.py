@@ -191,8 +191,7 @@ def jobs(slug):
     # TODO: I wonder if there's a better way to handle "days ago"
     jobs = get_active_jobs(slug=slug)
 
-    today = datetime.datetime.now()
-    today = today.replace(microsecond=0)
+    today = datetime.datetime.now().replace(microsecond=0)
 
     for job in jobs:
         job["description"] = mistune.html(job["description"])
@@ -202,20 +201,11 @@ def jobs(slug):
         CLEANR = re.compile('<.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
         clean_description = re.sub(CLEANR, '', job["description"])[:1000]
 
-        """
-        print(today)
-        print(job["timestamp"])
-        print(today - job["timestamp"])
-        """
-
-        # Testing a potential way of fixing the url bug.
-        print(urllib.parse.quote("MLOps / Back-End Engineer", safe=''))
-
         days_ago = (today - job["timestamp"])
 
         # if the characters are less than 8, that means
         # they don't have "days" yet.
-        is_less_than_one_day = len(str(days_ago)) < 8
+        is_less_than_one_day = len(str(days_ago)) <= 8
 
         days_ago = str(days_ago).split(",")[0] + " " + "ago"
 
