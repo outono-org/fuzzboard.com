@@ -719,6 +719,10 @@ details[open] summary ~ * {
   max-width: 200px;
 }
 
+#response-div {
+  display: none;
+}
+
 @media (max-width: 855px) {
   button.button-main.button-main-cta {
     display: none;

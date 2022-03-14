@@ -28,6 +28,17 @@ def increment_bookmark_value():
     )['number_of_clicks']
 
 
+def increment_value(id, key):
+    return mongo.db.jobs.find_one_and_update(
+        {
+            '_id': ObjectId(id)
+        },
+        {
+            '$inc': {key: 1}
+        }
+    )
+
+
 def post_job(title, company, category, location, description, link, email, status, visa_sponsor: bool):
 
     # Generating slug for each entry posted
@@ -46,6 +57,11 @@ def post_job(title, company, category, location, description, link, email, statu
             "email": email,
             "status": status,
             "visa_sponsor": visa_sponsor,
+            "stats":
+                {
+                    "num_of_applies": 0,
+                    "num_of_saves": 0,
+            },
             'created_on': datetime.datetime.utcnow(),
             "last_modified": datetime.datetime.utcnow(),
             "modified_by": ""
@@ -134,6 +150,26 @@ def add_visa_status_to_db():
         )
 
 
+def add_stats_to_jobs():
+    # Looking for documents without stats and updating them.
+
+    for job in mongo.db.jobs.find({'stats': {"$exists": False}}):
+
+        mongo.db.jobs.update_one(
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        "stats.num_of_applies": 0,
+                        "stats.num_of_saves": 0,
+                    }
+            }
+        )
+
+
 def add_slug_to_db():
     # Looking for documents without slugs and updating them.
 
@@ -205,6 +241,7 @@ def get_active_jobs(category: str = None, slug: str = None, company: str = None,
             "url": job["url"],
             "slug": job["slug"],
             "email": job["email"],
+            "stats": job["stats"],
             "visa_sponsor": job["visa_sponsor"],
             "timestamp": job["_id"].generation_time
         }

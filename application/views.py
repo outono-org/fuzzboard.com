@@ -7,7 +7,7 @@ import mistune
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file
+from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, increment_value
 from flask import render_template, Blueprint, redirect, url_for, session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture, NewJobSubmissionUkraine
 from .decorators import login_required
@@ -117,8 +117,7 @@ def htmx_get_jobs_visa(category):
 # from people who don't have an account to have a sense of the interest
 # in the 'save a job' feature.
 def bookmark():
-    if not session.get("username"):
-        increment_bookmark_value()
+    increment_bookmark_value()
 
     return Response(200)
 
@@ -185,7 +184,7 @@ def saved_jobs():
     return render_template('saved_jobs.html', form=form)
 
 
-@bp.get('/jobs/<slug>')
+@bp.route('/jobs/<slug>', methods=["GET", "POST"])
 def jobs(slug):
     # TODO: Replace get active jobs with a new get job function.
     # TODO: I wonder if there's a better way to handle "days ago"
@@ -218,14 +217,21 @@ def jobs(slug):
     return render_template('job_page.html', jobs=jobs, slug=slug, days_ago=days_ago, clean_description=clean_description)
 
 
-@bp.get('/job_submitted')
+@bp.post('/<id>/increment')
+def increment(id):
+    increment_value(id=id, key='stats.num_of_applies')
+
+    return Response(200)
+
+
+@ bp.get('/job_submitted')
 def job_submitted():
 
     return render_template('fragments/job_submitted.html')
 
 
-@bp.route('/settings', methods=["GET", "POST"])
-@login_required
+@ bp.route('/settings', methods=["GET", "POST"])
+@ login_required
 def settings():
     username = session.get("username")
     user = mongo.db.users.find_one_or_404({'email': username})
@@ -264,13 +270,13 @@ def settings():
     return render_template("settings.html", username=username, user=user, form=form)
 
 
-@bp.route('/file/<filename>')
+@ bp.route('/file/<filename>')
 def file(filename):
     return mongo.send_file(filename)
 
 
-@bp.get('/profile/<username>')
-@login_required
+@ bp.get('/profile/<username>')
+@ login_required
 def profile(username):
     user = mongo.db.users.find_one_or_404({'name': username})
 
@@ -279,7 +285,7 @@ def profile(username):
 # Mission Ukraine
 
 
-@bp.get('/new/ukraine')
+@ bp.get('/new/ukraine')
 def new_ukraine():
     # Chat contact must be updated in env variables.
     user = mongo.db.users.find_one_or_404(
