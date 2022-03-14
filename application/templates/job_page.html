@@ -26,7 +26,7 @@
                         
                         <a class="margin-t-8" href="{{ url_for('main.company', company=job.company) }}">See Company</a>
                         <a class="margin-t-16" href="{{ job.url }}" target="_blank" rel="noreferrer">
-                            <button class="button-main button-secondary" hx-target="#response-div" hx-post="/{{ job._id }}/increment">Apply for this position</button>
+                            <button class="button-main button-primary" hx-target="#response-div" hx-post="/{{ job._id }}/increment">Apply for this position</button>
                         </a>
                     </div>
                 </div>
