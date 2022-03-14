@@ -1064,7 +1064,7 @@ p {
   flex: 1 0 300px;
   height: fit-content;
   padding: 32px;
-  border: 1px solid #e7e7e9;
+  background-color: #ebeff35e;
   border-radius: 8px;
 }
 
