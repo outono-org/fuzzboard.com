@@ -6,15 +6,18 @@
 
 {% block main %}
 <main class="main">
+    <script src="{{url_for('static', filename='js/htmx.min.js')}}"></script>
     {% for job in jobs %}
         <div class="job-description-container mb40-mobile">
             <h4>{{ job.company }} is hiring a</h4>
             <h1>{{ job.title }}</h1>
             {{ job.description  |safe }}
             <a href="{{ job.url }}" target="_blank" rel="noreferrer">
-                <button class="button-main">Apply for this position</button>
+                <button class="button-main" hx-target="#response-div" hx-post="/{{ job._id }}/increment">Apply for this position</button>
             </a>
         </div>
+
+        <div id="response-div"></div>
 
             <aside class="job-page-aside">
                 <div class="aside-content-container">
@@ -23,7 +26,7 @@
                         
                         <a class="margin-t-8" href="{{ url_for('main.company', company=job.company) }}">See Company</a>
                         <a class="margin-t-16" href="{{ job.url }}" target="_blank" rel="noreferrer">
-                            <button class="button-main button-secondary">Apply for this position</button>
+                            <button class="button-main button-secondary" hx-target="#response-div" hx-post="/{{ job._id }}/increment">Apply for this position</button>
                         </a>
                     </div>
                 </div>
@@ -36,6 +39,12 @@
                     <div>Published Date</div>
                     <div><strong>{{ days_ago }}</strong></div>
                 </div>
+                {% if session.username %}
+                <div class="margin-t-24">
+                    <div>Number of Applicants</div>
+                    <div><strong>{{ job.stats.num_of_applies }}</strong></div>
+                </div>
+                {% endif %}
                 {% if job.visa_sponsor == true %}
                 <div class="divider"></div>
                 <img class="ukraine-flag" alt="Ukraine flag" src="{{url_for('static', filename='images/ukraine_circle.png')}}" />

@@ -3,7 +3,7 @@ from .decorators import login_required
 from .database import mongo
 from .forms import JobManagement, RefreshJobStatus
 from .models import get_jobs, update_entry_status, check_entry_timelimit, get_users
-from .models import add_visa_status_to_db
+from .models import add_stats_to_jobs
 
 admin = Blueprint('admin', __name__)
 
@@ -15,7 +15,8 @@ def update_db():
     # add_slug_to_db()
     # add_description_to_db()
     # encode_job_urls()
-    add_visa_status_to_db()
+    # add_visa_status_to_db()
+    add_stats_to_jobs()
     return redirect(url_for('main.home'))
 
 
