@@ -28,6 +28,9 @@
                         <a class="margin-t-16" href="{{ job.url }}" target="_blank" rel="noreferrer">
                             <button class="button-main button-primary" hx-target="#response-div" hx-post="/{{ job._id }}/increment">Apply for this position</button>
                         </a>
+                            
+                            <button class="margin-t-16 button-main button-tertiary" onclick="setTimeout(function() { window.location='{{ url_for('main.savedJobs') }}' }, 100)" hx-target="#response-div" hx-post="/{{ job._id }}/bookmark" method="POST">Save Job</button>
+                        
                     </div>
                 </div>
                 <div class="divider"></div>

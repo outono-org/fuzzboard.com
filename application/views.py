@@ -2,6 +2,7 @@ from crypt import methods
 import urllib.parse
 import re
 import os
+from bson.objectid import ObjectId
 import datetime
 import mistune
 from .database import mongo
@@ -9,6 +10,7 @@ from flask.wrappers import Response
 from flask import request
 from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, increment_value
 from flask import render_template, Blueprint, redirect, url_for, session
+from flask_session.__init__ import Session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture, NewJobSubmissionUkraine
 from .decorators import login_required
 from .emails import send_email
@@ -18,7 +20,7 @@ from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
-
+sess = Session()
 simplemde = SimpleMDE()
 
 
@@ -26,6 +28,13 @@ simplemde = SimpleMDE()
 def home():
 
     recent_jobs = get_active_jobs()[:5]
+
+    # Start of Session.
+
+    if 'saved_jobs' not in session:
+        session['saved_jobs'] = []
+
+    # End of Session.
 
     categories_list = [
         get_active_jobs(category="development")[:5],
@@ -66,13 +75,13 @@ def newJob():
                  status="active",
                  visa_sponsor=form.visa_sponsor.data)
         # Notification sent to the person who submitted the job.
-        send_email(subject='Your submission | Startup Jobs',
+        send_email(subject='Your submission | Fuzzboard',
                    to=form.email.data,
                    template='mail/new_job',
                    job_title=job_title,
                    company=company)
         # Notification sent to myself.
-        send_email(subject='New submission at Startup Jobs',
+        send_email(subject='New submission at Fuzzboard',
                    to=os.environ.get('MAIL_DEFAULT_RECEIVER'),
                    template='mail/submission_notification',
                    job_title=job_title,
@@ -112,12 +121,25 @@ def htmx_get_jobs_visa(category):
     return render_template('fragments/get_jobs_visa.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
 
 
-@bp.post('/bookmark')
-# Right now we're saving the number of clicks on the bookmarking icon
-# from people who don't have an account to have a sense of the interest
-# in the 'save a job' feature.
-def bookmark():
-    increment_bookmark_value()
+@bp.post('/<id>/bookmark')
+def bookmark(id):
+    id = ObjectId(id)
+
+    if id in session['saved_jobs']:
+        return Response(400)
+
+    session['saved_jobs'].append(id)
+    session.modified = True
+
+    return Response(200)
+
+
+@bp.post('/<id>/remove_bookmark')
+def remove_bookmark(id):
+    id = ObjectId(id)
+
+    session['saved_jobs'].remove(id)
+    session.modified = True
 
     return Response(200)
 
@@ -171,17 +193,6 @@ def location(location):
         return redirect(url_for('main.home'))
 
     return render_template('location_page.html', location=location, jobs=jobs)
-
-
-@bp.route('/saved', methods=["GET", "POST"])
-def saved_jobs():
-    form = StartupsTestForm()
-
-    if form.validate_on_submit():
-        save_email_test_startups(form.email.data, form.feedback.data)
-        return redirect(url_for('main.home'))
-
-    return render_template('saved_jobs.html', form=form)
 
 
 @bp.route('/jobs/<slug>', methods=["GET", "POST"])
@@ -326,13 +337,13 @@ def newJobUkraine():
              status="active",
              visa_sponsor=bool(request.form['visa_sponsor']))
     # Notification sent to the person who submitted the job.
-    send_email(subject='Your submission | Startup Jobs',
+    send_email(subject='Your submission | Fuzzboard',
                to=request.form['email'],
                template='mail/new_job',
                job_title=job_title,
                company=company)
     # Notification sent to myself.
-    send_email(subject='New submission at Startup Jobs',
+    send_email(subject='New submission at Fuzzboard',
                to=os.environ.get('MAIL_DEFAULT_RECEIVER'),
                template='mail/submission_notification',
                job_title=job_title,
@@ -446,3 +457,15 @@ def visa_ukraine_italy():
         return redirect(url_for('main.home'))
 
     return render_template('ukraine/italy.html', jobs=jobs, user=user)
+
+
+@bp.get('/savedJobs')
+def savedJobs():
+
+    if 'saved_jobs' not in session:
+        session['saved_jobs'] = []
+
+    jobs = list(mongo.db.jobs.find(
+        {'_id': {"$in": session['saved_jobs']}}))
+
+    return render_template('saved_jobs.html', jobs=jobs)
