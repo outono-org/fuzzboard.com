@@ -709,7 +709,7 @@ details[open] summary ~ * {
 
 .visa-checkbox {
   margin-top: 20px;
-  padding: 5px;
+  padding: 20px 5px;
   border-radius: 8px;
   background-color: var(--secondary-color);
 }
