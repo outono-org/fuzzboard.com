@@ -5,7 +5,7 @@
     {% block head %}
 
     <!-- Primary Meta Tags -->
-    <title>{% block title %}{% endblock %} - Startup Jobs Portugal</title>
+    <title>{% block title %}{% endblock %} - Fuzzboard</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,14 +14,14 @@
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ self.title() }} - Startup Jobs Portugal">
+    <meta property="og:title" content="{{ self.title() }} - Fuzzboard">
     <meta property="og:description" content="{{ self.meta_description() }}">
     <meta property="og:image" content="{{ url_for('static', filename='images/preview.png') }}">
 
     <!-- Twitter Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@fzboard" />
-    <meta property="twitter:title" content="{{ self.title() }} - Startup Jobs Portugal" />
+    <meta property="twitter:title" content="{{ self.title() }} - Fuzzboard" />
     <meta name="twitter:description" content="{{ self.meta_description() }}">
     <meta name="twitter:image" content="{{ url_for('static', filename='images/preview.png') }}">
 
@@ -62,7 +62,7 @@
         <div class="navigation">
             <!-- <span class="navigation-item">
                 <svg class="save-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M 6.0097656 2 C 4.9143111 2 4.0097656 2.9025988 4.0097656 3.9980469 L 4 22 L 12 19 L 20 22 L 20 20.556641 L 20 4 C 20 2.9069372 19.093063 2 18 2 L 6.0097656 2 z M 6.0097656 4 L 18 4 L 18 19.113281 L 12 16.863281 L 6.0019531 19.113281 L 6.0097656 4 z"></path></svg>
-                <a href="{{ url_for('main.saved_jobs') }}" id="startups">Saved Jobs</a>
+                <a href="{{ url_for('main.savedJobs') }}" id="startups">Saved Jobs</a>
             </span> -->
             
             <!-- <span class="navigation-item">

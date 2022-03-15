@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, request, send_from_directory
 from flask_talisman import Talisman, GOOGLE_CSP_POLICY
-from .views import bp, simplemde
+from .views import bp, simplemde, sess
 from .auth import auth
 from .admin import admin
 from .feeds import feed
@@ -94,10 +94,10 @@ mongo.init_app(app, uri=os.environ.get("MONGODB_URI"),
 
 
 # Session config. Followed documentation
+
 app.config["SESSION_TYPE"] = "mongodb"
 app.config["SESSION_MONGODB"] = mongo.db
-app.config["SESSION_MONGODB_DB"] = "startupjobs"
-app.config["SESSION_MONGODB_COLLECT"] = "sessions"
+sess.init_app(app)
 
 # Sendgrid setup.
 app.config['SECRET_KEY'] = 'top-secret!'
