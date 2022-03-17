@@ -57,7 +57,6 @@
             <a href="{{ url_for('main.home') }}">
                 <h2 class="card-header logo">Fuzzboard</h2>
             </a>
-            
         </div>
         <div class="navigation">
             <!-- <span class="navigation-item">
@@ -87,6 +86,29 @@
         </div>
     </header>
     {% endblock %}
+
+    <nav class="mobile-navigation">
+        <!-- <a data-active="true" href="#"><svg class="save-icon-navigation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M 6.01 2 C 4.914 2 4.01 2.903 4.01 3.998 L 4 22 L 12 19 L 20 22 L 20 20.557 L 20 4 C 20 2.907 19.093 2 18 2 L 6.01 2 Z M 6.01 4 L 18 4 L 6.01 4 Z"></path></svg></a> -->
+
+        <a href="{{ url_for('main.home') }}"><div class="flex-col align-center">
+            <svg class="home-icon-navigation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-width="2" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Home</span>
+        </div></a>
+
+        <a href="{{ url_for('main.visa_ukraine') }}">
+            <div class="flex-col align-center">
+                <svg class="ukraine-icon-navigation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-hash"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+                <span>Ukraine</span>
+            </div>
+        </a>
+
+        <a href="{{ url_for('main.savedJobs') }}">
+        <div class="flex-col align-center">
+                <svg class="save-icon-navigation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M 6.0097656 2 C 4.9143111 2 4.0097656 2.9025988 4.0097656 3.9980469 L 4 22 L 12 19 L 20 22 L 20 20.556641 L 20 4 C 20 2.9069372 19.093063 2 18 2 L 6.0097656 2 z M 6.0097656 4 L 18 4 L 18 19.113281 L 12 16.863281 L 6.0019531 19.113281 L 6.0097656 4 z"></path></svg>
+                <span>Saved</span>
+        </div>
+        </a>
+    </nav>
 
     {% block main %}
     {% endblock %}

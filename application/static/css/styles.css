@@ -657,6 +657,7 @@ details[open] summary ~ * {
 .save-button {
   border: none;
   padding: 0;
+  background: none;
 }
 
 .save-icon {
@@ -697,7 +698,7 @@ details[open] summary ~ * {
   position: fixed;
   right: 15px;
   bottom: 15px;
-  z-index: 2;
+  z-index: 100;
 }
 
 .person-widget img {
@@ -735,7 +736,72 @@ details[open] summary ~ * {
   display: none;
 }
 
+/* Mobile Navigation */
+
+.align-center {
+  align-items: center;
+}
+
+.mobile-navigation {
+  display: none;
+  width: 100%;
+  height: 70px;
+  background-color: #ffffff;
+  box-shadow: rgb(0 0 0 / 10%) 0px -2px 4px;
+  z-index: 99;
+  align-items: center;
+  justify-content: space-evenly;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.mobile-navigation a {
+  color: #6d6d6d;
+}
+
+.mobile-navigation [data-active="true"] {
+  background-color: red;
+}
+
 @media (max-width: 855px) {
+  footer {
+    display: none;
+  }
+
+  .mobile-navigation {
+    display: flex;
+  }
+
+  .save-icon-navigation {
+    opacity: 1;
+    height: 2.1em;
+    fill: #9e9e9e;
+    align-self: center;
+    transition: 300ms ease-in-out;
+    border-radius: 50%;
+    padding: 5px;
+  }
+
+  .home-icon-navigation {
+    fill: none;
+    stroke: #9e9e9e;
+    opacity: 1;
+    height: 2.1em;
+    align-self: center;
+    transition: 300ms ease-in-out;
+    padding: 5px;
+  }
+
+  .ukraine-icon-navigation {
+    stroke: #9e9e9e;
+    opacity: 1;
+    height: 2.1em;
+    align-self: center;
+    transition: 300ms ease-in-out;
+    padding: 5px;
+  }
+
   button.button-main.button-main-cta {
     display: none;
   }
