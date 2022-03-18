@@ -298,11 +298,8 @@ def profile(username):
 
 @ bp.get('/new/ukraine')
 def new_ukraine():
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
 
-    return render_template('new_ukraine.html', user=user)
+    return render_template('new_ukraine.html')
 
 
 @bp.get('/cities')
