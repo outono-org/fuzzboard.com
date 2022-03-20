@@ -10,7 +10,7 @@ from flask.wrappers import Response
 from flask import request
 from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, increment_value
 from flask import render_template, Blueprint, redirect, url_for, session
-from flask_session.__init__ import Session
+from flask_session import Session
 from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture, NewJobSubmissionUkraine
 from .decorators import login_required
 from .emails import send_email
@@ -20,6 +20,8 @@ from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
+# Should I be initatilising sessions here? Maybe I should move this to
+# another place so sessions are only initiailised when needed?
 sess = Session()
 simplemde = SimpleMDE()
 
@@ -28,13 +30,6 @@ simplemde = SimpleMDE()
 def home():
 
     recent_jobs = get_active_jobs()[:5]
-
-    # Start of Session.
-
-    if 'saved_jobs' not in session:
-        session['saved_jobs'] = []
-
-    # End of Session.
 
     categories_list = [
         get_active_jobs(category="development")[:5],
@@ -123,6 +118,10 @@ def htmx_get_jobs_visa(category):
 
 @bp.post('/<id>/bookmark')
 def bookmark(id):
+    # Start of Session.
+    if 'saved_jobs' not in session:
+        session['saved_jobs'] = []
+
     id = ObjectId(id)
 
     if id in session['saved_jobs']:
@@ -459,10 +458,12 @@ def visa_ukraine_italy():
 @bp.get('/savedJobs')
 def savedJobs():
 
+    # Return redirect home instead so we don't have to create a session?
     if 'saved_jobs' not in session:
-        session['saved_jobs'] = []
+        return redirect(url_for('main.home'))
 
-    jobs = list(mongo.db.jobs.find(
-        {'_id': {"$in": session['saved_jobs']}}))
+    if 'saved_jobs' in session:
+        jobs = list(mongo.db.jobs.find(
+            {'_id': {"$in": session['saved_jobs']}}))
 
     return render_template('saved_jobs.html', jobs=jobs)
