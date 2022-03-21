@@ -10,7 +10,6 @@ Flask-CKEditor==0.4.6
 Flask-Mail==0.9.1
 Flask-MDE==1.2.1
 Flask-PyMongo==2.3.0
-Flask-Session==0.4.0
 Flask-SimpleMDE==0.3.0
 Flask-Sitemap==0.3.0
 flask-sock==0.4.0
