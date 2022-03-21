@@ -8,21 +8,16 @@ import mistune
 from .database import mongo
 from flask.wrappers import Response
 from flask import request
-from .models import post_job, get_active_jobs, save_email, save_email_test_startups, increment_bookmark_value, id_generator, get_file_extension, find_and_delete_file, allowed_file, increment_value
+from .models import post_job, get_active_jobs, save_email, id_generator, get_file_extension, find_and_delete_file, allowed_file, increment_value
 from flask import render_template, Blueprint, redirect, url_for, session
-from flask_session import Session
-from .forms import NewJobSubmission, NewsletterSubscribe, StartupsTestForm, UploadPicture, NewJobSubmissionUkraine
+from .forms import NewJobSubmission, NewsletterSubscribe, UploadPicture
 from .decorators import login_required
 from .emails import send_email
-import string
 from flask_simplemde import SimpleMDE
 from werkzeug.utils import secure_filename
 
 bp = Blueprint('main', __name__)
 
-# Should I be initatilising sessions here? Maybe I should move this to
-# another place so sessions are only initiailised when needed?
-sess = Session()
 simplemde = SimpleMDE()
 
 
@@ -105,7 +100,7 @@ def htmx_get_jobs(category):
     jobs = get_active_jobs(category=category)
     subscribe_form = NewsletterSubscribe()
 
-    return render_template('fragments/get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
+    return render_template('fragments/get_jobs.html', jobs=jobs, category=category, subscribe_form=subscribe_form)
 
 
 @bp.get('/get_jobs/visa/<category>')
@@ -113,7 +108,7 @@ def htmx_get_jobs_visa(category):
     jobs = get_active_jobs(category=category, visa_sponsor=True)
     subscribe_form = NewsletterSubscribe()
 
-    return render_template('fragments/get_jobs_visa.html', jobs=jobs, category=category, subscribe_form=subscribe_form,)
+    return render_template('fragments/get_jobs_visa.html', jobs=jobs, category=category, subscribe_form=subscribe_form)
 
 
 @bp.post('/<id>/bookmark')
@@ -122,7 +117,7 @@ def bookmark(id):
     if 'saved_jobs' not in session:
         session['saved_jobs'] = []
 
-    id = ObjectId(id)
+    # id = ObjectId(id)
 
     if id in session['saved_jobs']:
         return Response(400)
@@ -135,7 +130,6 @@ def bookmark(id):
 
 @bp.post('/<id>/remove_bookmark')
 def remove_bookmark(id):
-    id = ObjectId(id)
 
     session['saved_jobs'].remove(id)
     session.modified = True
@@ -457,13 +451,11 @@ def visa_ukraine_italy():
 
 @bp.get('/savedJobs')
 def savedJobs():
-
-    # Return redirect home instead so we don't have to create a session?
     if 'saved_jobs' not in session:
         return redirect(url_for('main.home'))
 
     if 'saved_jobs' in session:
-        jobs = list(mongo.db.jobs.find(
-            {'_id': {"$in": session['saved_jobs']}}))
+        saved_jobs = [ObjectId(job) for job in session['saved_jobs']]
+        jobs = list(mongo.db.jobs.find({'_id': {"$in": saved_jobs}}))
 
     return render_template('saved_jobs.html', jobs=jobs)
