@@ -120,12 +120,12 @@ def bookmark(id):
     # id = ObjectId(id)
 
     if id in session['saved_jobs']:
-        return Response(400)
+        return Response(status=400)
 
     session['saved_jobs'].append(id)
     session.modified = True
 
-    return Response(200)
+    return Response(status=200)
 
 
 @bp.post('/<id>/remove_bookmark')
@@ -134,7 +134,7 @@ def remove_bookmark(id):
     session['saved_jobs'].remove(id)
     session.modified = True
 
-    return Response(200)
+    return Response(status=200)
 
 
 @bp.get('/<category>')
@@ -225,7 +225,7 @@ def jobs(slug):
 def increment(id):
     increment_value(id=id, key='stats.num_of_applies')
 
-    return Response(200)
+    return Response(status=200)
 
 
 @ bp.get('/job_submitted')
