@@ -3,7 +3,7 @@ from .decorators import login_required
 from .database import mongo
 from .forms import JobManagement, RefreshJobStatus
 from .models import get_jobs, update_entry_status, check_entry_timelimit, get_users
-from .models import add_stats_to_jobs
+from .models import add_stats_to_jobs, get_active_jobs
 
 admin = Blueprint('admin', __name__)
 
@@ -43,3 +43,20 @@ def dashboard():
         return redirect(url_for('admin.dashboard'))
 
     return render_template('admin.html', form=form, refresh_button=refresh_button, jobs=jobs, users=users)
+
+
+def num_of_applies():
+    jobs = get_active_jobs()
+    total_num = 0
+
+    for job in jobs:
+        num_of_applies = list(job['stats'].values())[0]
+        total_num = total_num + num_of_applies
+    return total_num
+
+
+@admin.route('/dashboard', methods=["GET", "POST"])
+@login_required
+def dashboard_page():
+
+    return render_template('dashboard.html', num_of_applies=num_of_applies())
