@@ -1,3 +1,6 @@
+from datetime import datetime
+from datetime import timedelta
+from itertools import count
 from flask import render_template, Blueprint, redirect, url_for, session
 from .decorators import login_required
 from .database import mongo
@@ -55,8 +58,38 @@ def num_of_applies():
     return total_num
 
 
+def num_of_applies_this_week():
+    # FIX: This function is only counting the number of applies
+    # for jobs added in the last 7 days. That's incorrect.
+    # We're NOT counting properly because we don't
+    # have a timestamp for every 'apply' click.
+    total_num = 0
+    # Counts the number of jobs added in the last 7 days.
+    jobs = mongo.db.jobs.find(
+        {
+            'created_on': {"$gt": datetime.utcnow() - timedelta(days=7)}
+        }
+    )
+
+    for job in jobs:
+        print(job)
+        num_of_applies = list(job['stats'].values())[0]
+        total_num = total_num + num_of_applies
+
+    return total_num
+
+
+def num_of_jobs_added_this_week():
+    # Counts the number of jobs added in the last 7 days.
+    num_of_jobs = mongo.db.jobs.find({
+        'created_on': {"$gt": datetime.utcnow() - timedelta(days=7)}
+    }).count()
+
+    return num_of_jobs
+
+
 @admin.route('/dashboard', methods=["GET", "POST"])
 @login_required
 def dashboard_page():
 
-    return render_template('dashboard.html', num_of_applies=num_of_applies())
+    return render_template('dashboard.html', num_of_applies=num_of_applies(), num_of_jobs=num_of_jobs_added_this_week(), num_of_applies_this_week=num_of_applies_this_week())

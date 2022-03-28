@@ -1,3 +1,45 @@
-<h1>Dashboard</h1>
-<h2>Total Number of Applies: {{ num_of_applies }}</h2>
-<p>Applies = number of clicks in the apply button.</p>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fuzzboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/32x32.png') }}">
+    </head>
+    
+    <div class="preload-transitions">
+
+        <header class="header-admin animate">
+            <div class="header-admin-title-button">
+                <h1 class="m0 admin-header">Dashboard</h1>
+            </div>
+
+            <br/><br/><br/>
+
+<div class="container flex">
+<div class="stat-container">
+    <h1>{{ num_of_applies }}</h1>
+    <h3>Total Number of Applies</h3>
+</div>
+<span></span><span></span>
+<div class="stat-container">
+    <h1>{{ num_of_applies_this_week }}</h1>
+    <h3>Applies this week</h3>
+</div>
+
+<span></span><span></span>
+<div class="stat-container">
+    <h1>{{ num_of_jobs }}</h1>
+    <h3>Jobs added this week</h3>
+</div>
+
+</div>
+
+    <div class="container">
+        <p>*<strong>Applies</strong> = number of clicks in the apply button.</p>
+        <p>*<strong>Applies this week</strong> are not counting jobs added last week. The real number is higher.</p>
+        <p>These numbers can be calculated but they are not currently being stored elsewhere. That's the next step.</p>
+    </div>

@@ -414,6 +414,13 @@ input#submit:hover {
 
 /* ADMIN DASHBOARD */
 
+.stat-container {
+  background: rgba(57, 56, 86, 0.04);
+  width: 300px;
+  border-radius: 8px;
+  padding: 8px;
+}
+
 .header-admin {
   display: grid;
   position: sticky;
