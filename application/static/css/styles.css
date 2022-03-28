@@ -5,6 +5,10 @@
   --primary-text: rgba(38, 62, 89, 0.788);
 }
 
+* {
+  font-family: "Inter", sans-serif;
+}
+
 .primary {
   color: var(--primary-color);
 }
@@ -45,8 +49,7 @@
 
 body {
   font-size: 1.1em;
-  font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
-    sans-serif, apple color emoji, segoe ui emoji;
+  font-family: "Inter", sans-serif;
   line-height: 1.5;
   color: var(--primary-text);
 }
@@ -262,8 +265,7 @@ select:hover {
 
 .button {
   cursor: pointer;
-  font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
-    sans-serif, apple color emoji, segoe ui emoji;
+  font-family: "Inter", sans-serif;
   background-color: #e3e6ea;
   color: #1c1e21;
   font-weight: 600;
@@ -1103,8 +1105,7 @@ p {
 
 #wmd-preview {
   font-size: 1em;
-  font-family: system-ui, -apple-system, segoe ui, Roboto, Helvetica, Arial,
-    sans-serif, apple color emoji, segoe ui emoji;
+  font-family: "Inter", sans-serif;
   color: var(--primary-text);
 }
 
