@@ -165,7 +165,7 @@ def visa_ukraine():
     if len(jobs) == 0:
         return redirect(url_for('main.home'))
 
-    return render_template('visa_sponsor.html', jobs=jobs, user=user)
+    return render_template('ukraine/visa_sponsor.html', jobs=jobs, user=user)
 
 
 @bp.get('/company/<company>')
@@ -292,7 +292,7 @@ def profile(username):
 @ bp.get('/new/ukraine')
 def new_ukraine():
 
-    return render_template('new_ukraine.html')
+    return render_template('ukraine/new_ukraine.html')
 
 
 @bp.get('/cities')
