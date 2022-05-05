@@ -299,14 +299,6 @@ def new_ukraine():
 def get_city():
     if request.args.get('location') == 'portugal':
         return render_template('fragments/cities/portugal.html')
-    if request.args.get('location') == 'italy':
-        return render_template('fragments/cities/italy.html')
-    if request.args.get('location') == 'germany':
-        return render_template('fragments/cities/germany.html')
-    if request.args.get('location') == 'netherlands':
-        return render_template('fragments/cities/netherlands.html')
-    if request.args.get('location') == 'spain':
-        return render_template('fragments/cities/spain.html')
 
     else:
         return print("nothing is being returned")
@@ -344,109 +336,6 @@ def newJobUkraine():
 
 portuguese_cities = ['Açores', 'Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Evora', 'Faro', 'Guarda',
                      'Leiria', 'Lisboa', 'Madeira', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Viana do Castelo', 'Vila Real', 'Viseu']
-german_cities = ['Berlin', 'Bielefeld', 'Bochum', 'Bonn', 'Bremen', 'Cologne', 'Dortmund', 'Dresden', 'Duisburg',
-                 'Düsseldorf', 'Essen', 'Frankfurt', 'Hamburg', 'Hanover', 'Leipzig', 'Munich', 'Nuremberg', 'Stuttgart', 'Wuppertal']
-netherlands_cities = ['Amsterdam', 'Eindhoven',
-                      'Rotterdam', 'The Hague', 'Utrecht']
-spain_cities = ['Alicante', 'Barcelona', 'Bilbao', 'Córdoba', 'Granada', 'Las Palmas', 'Madrid', 'Málaga', 'Murcia',
-                'Ovideo', 'Palma', 'Salamanca', 'San Sebastián', 'Seville', 'Valencia', 'Valladolid', 'Vigo', 'Zaragoza']
-italy_cities = ['Bari', 'Brescia', 'Bologna', 'Catania', 'Florence', 'Genoa', 'Messina',
-                'Milan', 'Naples', 'Padua', 'Palermo', 'Parma', 'Rome', 'Trieste', 'Turin', 'Venice', 'Verona']
-
-
-@bp.get('/ukraine/portugal')
-def visa_ukraine_portugal():
-
-    jobs = []
-
-    for city in portuguese_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/portugal.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/germany')
-def visa_ukraine_germany():
-
-    jobs = []
-
-    for city in german_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/germany.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/netherlands')
-def visa_ukraine_netherlands():
-
-    jobs = []
-
-    for city in netherlands_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/netherlands.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/spain')
-def visa_ukraine_spain():
-
-    jobs = []
-
-    for city in spain_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/spain.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/italy')
-def visa_ukraine_italy():
-
-    jobs = []
-
-    for city in italy_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/italy.html', jobs=jobs, user=user)
 
 
 @bp.get('/savedJobs')
