@@ -346,6 +346,7 @@ def find_and_delete_file(filename):
 
 
 # Allowed extensions for image uploads.
+# TODO: Check for the MIME type
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 
 

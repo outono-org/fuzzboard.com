@@ -1,5 +1,8 @@
 from crypt import methods
+import io
+import gridfs
 import urllib.parse
+from PIL import Image
 import re
 import os
 from bson.objectid import ObjectId
@@ -237,6 +240,8 @@ def job_submitted():
 @ bp.route('/settings', methods=["GET", "POST"])
 @ login_required
 def settings():
+    fs = gridfs.GridFS(mongo.db)
+
     username = session.get("username")
     user = mongo.db.users.find_one_or_404({'email': username})
 
@@ -247,25 +252,30 @@ def settings():
     # file extension is allowed. Should probably check if the file is allowed
     # before letting the user upload a file.
     if form.validate_on_submit() and allowed_file(profile_image.filename):
-
+        # If the upload files, the photo will be deleted.
+        # Delete old file after submission.
         if user["profile_image_name"] != "default.png":
             find_and_delete_file(user["profile_image_name"])
 
         # I'm replacing the file name uploaded by the user
         # by a random string + the original file extension.
+        # TODO: Prefix the file name with something that binds it to the user.
         filename = secure_filename(
             id_generator() + get_file_extension(profile_image.filename))
 
-        """ with Image.open(profile_image) as im:
+        output = io.BytesIO()
+
+        with Image.open(profile_image) as im:
             (left, upper, right, lower) = (0, 0, 300, 300)
             croppedImage = im.crop((left, upper, right, lower))
+            croppedImage.save(output, "JPEG")
 
-            croppedImage.save(profile_image, format='WEBP')
+            # croppedImage.show()
 
-            print(filename, filename, filename)
-        croppedImage.show() """
-
-        mongo.save_file(filename, profile_image)
+        print(output.getbuffer().nbytes)
+        #mongo.save_file(filename, output)
+        # output is not being saved for some reason. but b'hello world' is.
+        fs.put(output.getvalue(), filename=filename)
 
         mongo.db.users.update_one(
             {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
