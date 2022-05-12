@@ -1,6 +1,6 @@
 :root {
-  --primary-color: rgb(0, 173, 239);
-  --secondary-color: rgb(237 250 255);
+  --primary-color: rgb(243, 46, 71);
+  --secondary-color: rgb(255, 237, 239);
   --dark-blue: rgb(1 67 92);
   --primary-text: rgba(38, 62, 89, 0.788);
 }
@@ -762,7 +762,7 @@ details[open] summary ~ * {
 .mobile-navigation {
   display: none;
   width: 100%;
-  height: 70px;
+  height: 60px;
   background-color: #ffffff;
   box-shadow: rgb(0 0 0 / 10%) 0px -2px 4px;
   z-index: 99;
@@ -782,6 +782,10 @@ details[open] summary ~ * {
 }
 
 @media (max-width: 855px) {
+  .mobile-no-display {
+    display: none;
+  }
+
   footer {
     display: none;
   }

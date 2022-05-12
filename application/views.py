@@ -1,5 +1,8 @@
 from crypt import methods
+import io
+import gridfs
 import urllib.parse
+from PIL import Image
 import re
 import os
 from bson.objectid import ObjectId
@@ -237,6 +240,8 @@ def job_submitted():
 @ bp.route('/settings', methods=["GET", "POST"])
 @ login_required
 def settings():
+    fs = gridfs.GridFS(mongo.db)
+
     username = session.get("username")
     user = mongo.db.users.find_one_or_404({'email': username})
 
@@ -247,25 +252,32 @@ def settings():
     # file extension is allowed. Should probably check if the file is allowed
     # before letting the user upload a file.
     if form.validate_on_submit() and allowed_file(profile_image.filename):
-
+        # If the upload files, the photo will be deleted.
+        # Delete old file after submission.
         if user["profile_image_name"] != "default.png":
             find_and_delete_file(user["profile_image_name"])
 
         # I'm replacing the file name uploaded by the user
         # by a random string + the original file extension.
+        # TODO: Prefix the file name with something that binds it to the user.
         filename = secure_filename(
             id_generator() + get_file_extension(profile_image.filename))
 
-        """ with Image.open(profile_image) as im:
+        outfile = io.BytesIO()
+
+        with Image.open(profile_image) as im:
             (left, upper, right, lower) = (0, 0, 300, 300)
             croppedImage = im.crop((left, upper, right, lower))
+            width, height = im.size
 
-            croppedImage.save(profile_image, format='WEBP')
+        # If the photo uploaded is already a square, don't crop it.
+            if width == height:
+                im.save(outfile, "JPEG")
+            else:
+                croppedImage.save(outfile, "JPEG")
 
-            print(filename, filename, filename)
-        croppedImage.show() """
-
-        mongo.save_file(filename, profile_image)
+        # Saving file on MongoDB.
+        fs.put(outfile.getvalue(), filename=filename)
 
         mongo.db.users.update_one(
             {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
@@ -299,14 +311,6 @@ def new_ukraine():
 def get_city():
     if request.args.get('location') == 'portugal':
         return render_template('fragments/cities/portugal.html')
-    if request.args.get('location') == 'italy':
-        return render_template('fragments/cities/italy.html')
-    if request.args.get('location') == 'germany':
-        return render_template('fragments/cities/germany.html')
-    if request.args.get('location') == 'netherlands':
-        return render_template('fragments/cities/netherlands.html')
-    if request.args.get('location') == 'spain':
-        return render_template('fragments/cities/spain.html')
 
     else:
         return print("nothing is being returned")
@@ -344,109 +348,6 @@ def newJobUkraine():
 
 portuguese_cities = ['Açores', 'Aveiro', 'Beja', 'Braga', 'Bragança', 'Castelo Branco', 'Coimbra', 'Evora', 'Faro', 'Guarda',
                      'Leiria', 'Lisboa', 'Madeira', 'Portalegre', 'Porto', 'Santarém', 'Setúbal', 'Viana do Castelo', 'Vila Real', 'Viseu']
-german_cities = ['Berlin', 'Bielefeld', 'Bochum', 'Bonn', 'Bremen', 'Cologne', 'Dortmund', 'Dresden', 'Duisburg',
-                 'Düsseldorf', 'Essen', 'Frankfurt', 'Hamburg', 'Hanover', 'Leipzig', 'Munich', 'Nuremberg', 'Stuttgart', 'Wuppertal']
-netherlands_cities = ['Amsterdam', 'Eindhoven',
-                      'Rotterdam', 'The Hague', 'Utrecht']
-spain_cities = ['Alicante', 'Barcelona', 'Bilbao', 'Córdoba', 'Granada', 'Las Palmas', 'Madrid', 'Málaga', 'Murcia',
-                'Ovideo', 'Palma', 'Salamanca', 'San Sebastián', 'Seville', 'Valencia', 'Valladolid', 'Vigo', 'Zaragoza']
-italy_cities = ['Bari', 'Brescia', 'Bologna', 'Catania', 'Florence', 'Genoa', 'Messina',
-                'Milan', 'Naples', 'Padua', 'Palermo', 'Parma', 'Rome', 'Trieste', 'Turin', 'Venice', 'Verona']
-
-
-@bp.get('/ukraine/portugal')
-def visa_ukraine_portugal():
-
-    jobs = []
-
-    for city in portuguese_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/portugal.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/germany')
-def visa_ukraine_germany():
-
-    jobs = []
-
-    for city in german_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/germany.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/netherlands')
-def visa_ukraine_netherlands():
-
-    jobs = []
-
-    for city in netherlands_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/netherlands.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/spain')
-def visa_ukraine_spain():
-
-    jobs = []
-
-    for city in spain_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/spain.html', jobs=jobs, user=user)
-
-
-@bp.get('/ukraine/italy')
-def visa_ukraine_italy():
-
-    jobs = []
-
-    for city in italy_cities:
-        new_city = get_active_jobs(visa_sponsor=True, location=city)
-        jobs = jobs + new_city
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/italy.html', jobs=jobs, user=user)
 
 
 @bp.get('/savedJobs')
