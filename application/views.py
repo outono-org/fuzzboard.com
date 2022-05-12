@@ -83,7 +83,7 @@ def newJob():
         return job_submitted()
 
 
-@bp.get('/new')
+@bp.get('/new/ukraine')
 def new():
     """     form = NewJobSubmission()
 
@@ -159,16 +159,7 @@ def visa():
 
 @bp.get('/ukraine')
 def visa_ukraine():
-    jobs = get_active_jobs(visa_sponsor=True)
-
-    # Chat contact must be updated in env variables.
-    user = mongo.db.users.find_one_or_404(
-        {'email': os.environ.get('CHAT_CONTACT')})
-
-    if len(jobs) == 0:
-        return redirect(url_for('main.home'))
-
-    return render_template('ukraine/visa_sponsor.html', jobs=jobs, user=user)
+    return redirect(url_for('main.home'))
 
 
 @bp.get('/company/<company>')
@@ -301,7 +292,7 @@ def profile(username):
 # Mission Ukraine
 
 
-@ bp.get('/new/ukraine')
+@ bp.get('/new')
 def new_ukraine():
 
     return render_template('ukraine/new_ukraine.html')

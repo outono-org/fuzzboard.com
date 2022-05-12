@@ -101,11 +101,8 @@ select {
   align-items: center;
 }
 
-.logo-symbol {
-  display: inline;
-  max-width: 52px;
-  height: 52px;
-  border-radius: 50%;
+.logo {
+  font-family: "Poppins";
 }
 
 h1,
@@ -729,7 +726,7 @@ details[open] summary ~ * {
   margin-top: 20px;
   padding: 20px 5px;
   border-radius: 8px;
-  background-color: var(--secondary-color);
+  background-color: #f4f4f3;
 }
 
 .navigation-country {
@@ -784,6 +781,16 @@ details[open] summary ~ * {
 @media (max-width: 855px) {
   .mobile-no-display {
     display: none;
+  }
+
+  .job-categories {
+    overflow: scroll;
+  }
+  .filter-categories {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    width: max-content;
   }
 
   footer {

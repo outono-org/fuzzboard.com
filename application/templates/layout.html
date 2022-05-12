@@ -35,7 +35,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/32x32.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Inter:wght@400;500;800;900&display=swap" rel="stylesheet">
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     
@@ -74,7 +74,7 @@
                 <a href="{{ url_for('main.savedJobs') }}">Saved Jobs</a>
             </span>
             <span class="navigation-item">
-                <a href="{{ url_for('main.visa') }}"><img class="emoji" alt="star emoji" src="{{url_for('static', filename='images/flags/ukraine.png')}}" />&nbsp; Jobs for Anyone Escaping Ukraine</a>
+                <a target="_blank" href="https://employukraine.org/"><img class="emoji" alt="star emoji" src="{{url_for('static', filename='images/flags/ukraine.png')}}" />&nbsp; Employ Ukraine</a>
             </span>
             {% if session.username %}
             <span class="navigation-item">
@@ -84,7 +84,7 @@
         </div>
         <div>
             <a href="{{ url_for('main.new') }}">
-                <button class="button-main button-main-cta">Add a job</button>
+                <button class="button-main">+ Add a job</button>
             </a>
         </div>
     </header>
