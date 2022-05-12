@@ -263,19 +263,21 @@ def settings():
         filename = secure_filename(
             id_generator() + get_file_extension(profile_image.filename))
 
-        output = io.BytesIO()
+        outfile = io.BytesIO()
 
         with Image.open(profile_image) as im:
             (left, upper, right, lower) = (0, 0, 300, 300)
             croppedImage = im.crop((left, upper, right, lower))
-            croppedImage.save(output, "JPEG")
+            width, height = im.size
 
-            # croppedImage.show()
+        # If the photo uploaded is already a square, don't crop it.
+            if width == height:
+                im.save(outfile, "JPEG")
+            else:
+                croppedImage.save(outfile, "JPEG")
 
-        print(output.getbuffer().nbytes)
-        #mongo.save_file(filename, output)
-        # output is not being saved for some reason. but b'hello world' is.
-        fs.put(output.getvalue(), filename=filename)
+        # Saving file on MongoDB.
+        fs.put(outfile.getvalue(), filename=filename)
 
         mongo.db.users.update_one(
             {'_id': user['_id']}, {'$set': {'profile_image_name': filename}})
