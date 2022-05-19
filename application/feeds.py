@@ -7,6 +7,8 @@ feed = Blueprint('feed', __name__)
 
 website = 'https://fuzzboard.com/'
 
+# TODO: Replace feed links with ('url_for') + _external=True
+
 
 @feed.get('/feed')
 def rss():

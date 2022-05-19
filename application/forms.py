@@ -79,6 +79,18 @@ class SignUp(FlaskForm):
             raise ValidationError('Email already registered.')
 
 
+class ResetPasswordRequestForm(FlaskForm):
+    email_address = EmailField("Email", validators=[DataRequired(), Email()])
+    submit = SubmitField("Reset Password")
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('BAM!')
+
+
 class NewsletterSubscribe(FlaskForm):
     MERGE0 = EmailField("Email", validators=[DataRequired(), Email()])
     submit = SubmitField("Keep me posted")

@@ -1,5 +1,7 @@
 import os
 import sys
+import jwt
+from time import time
 import urllib.parse
 from xmlrpc.client import boolean
 from PIL import Image
@@ -282,6 +284,25 @@ def get_jobs():
 # Authentication
 
 
+def set_password(id, password):
+    # TODO: Get user ID and update password for given user.
+
+    password_hash = generate_password_hash(password)
+
+    return mongo.db.users.find_one_and_update(
+        {
+            '_id': ObjectId(id)
+        },
+        {
+            '$set': {'password': password_hash}
+        }
+    )
+
+    """ user = mongo.db.users.find_one_or_404({'_id': ObjectId(id)})
+    if user:
+        password_hash = generate_password_hash(password) """
+
+
 def create_user(email_address, name, password):
     hashed_pass = generate_password_hash(
         password)
@@ -294,6 +315,23 @@ def create_user(email_address, name, password):
             "account_status": "inactive"
         }
     )
+
+
+def get_reset_password_token(user_id, expires_in=3600):
+    # BUG: When the password is reset, the token apparently still works.
+    return jwt.encode(
+        {'reset_password':
+            user_id, 'exp': time() + expires_in},
+        os.environ.get('SECRET_KEY'), algorithm='HS256')
+
+
+def verify_reset_password_token(token):
+    try:
+        id = jwt.decode(token, os.environ.get('SECRET_KEY'),
+                        algorithms=['HS256'])['reset_password']
+    except:
+        return
+    return mongo.db.users.find_one_or_404({'_id': ObjectId(id)})
 
 
 def get_users():
