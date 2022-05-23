@@ -113,10 +113,29 @@ def check_entry_timelimit():
         }
     )
 
+# Below you can find functions that update the DB models.
+
+
+def add_user_types_to_db():
+    # Why am I updating one?
+    # Isn't there a more effective way?
+    for job in mongo.db.users.find({'user_type': {"$exists": False}}):
+
+        mongo.db.users.update_one(
+            {
+                '_id': job["_id"]
+            },
+
+            {
+                '$set':
+                    {
+                        'user_type': 'user'
+                    }
+            }
+        )
+
 
 def add_description_to_db():
-    # Looking for documents without description field and updating them.
-
     for job in mongo.db.jobs.find({'description': {"$exists": False}}):
 
         mongo.db.jobs.update_one(
@@ -304,6 +323,10 @@ def set_password(id, password):
 
 
 def create_user(email_address, name, password):
+    # TODO: Think about the user_type implications.
+    # super_admin: has access to everything.
+    # admin: localised admin privilege.
+    # user: can login.
     hashed_pass = generate_password_hash(
         password)
     mongo.db.users.insert_one(
@@ -312,9 +335,9 @@ def create_user(email_address, name, password):
             "name": name,
             "password": hashed_pass,
             "profile_image_name": "default.png",
-            "account_status": "inactive"
-        }
-    )
+            "account_status": "inactive",
+            "user_type": "user"
+        }, upsert=True)
 
 
 def get_reset_password_token(user_id, expires_in=3600):

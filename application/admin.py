@@ -2,29 +2,32 @@ from datetime import datetime
 from datetime import timedelta
 from itertools import count
 from flask import render_template, Blueprint, redirect, url_for, session
-from .decorators import login_required
+from .decorators import login_required, admin_required
 from .database import mongo
 from .forms import JobManagement, RefreshJobStatus
 from .models import get_jobs, update_entry_status, check_entry_timelimit, get_users
-from .models import add_stats_to_jobs, get_active_jobs
+from .models import add_stats_to_jobs, get_active_jobs, add_user_types_to_db
 
 admin = Blueprint('admin', __name__)
 
 
 @admin.route('/update', methods=["GET", "POST"])
 @login_required
+# @admin_required
 def update_db():
     # important: I'm changing the DB by adding a new field to every entry
     # add_slug_to_db()
     # add_description_to_db()
     # encode_job_urls()
     # add_visa_status_to_db()
-    add_stats_to_jobs()
+    # add_stats_to_jobs()
+    add_user_types_to_db()
     return redirect(url_for('main.home'))
 
 
 @admin.route('/admin', methods=["GET", "POST"])
 @login_required
+@admin_required
 def dashboard():
     user = mongo.db.users.find_one_or_404({'email': session["username"]})
 
@@ -90,6 +93,7 @@ def num_of_jobs_added_this_week():
 
 @admin.route('/dashboard', methods=["GET", "POST"])
 @login_required
+@admin_required
 def dashboard_page():
 
     return render_template('dashboard.html', num_of_applies=num_of_applies(), num_of_jobs=num_of_jobs_added_this_week(), num_of_applies_this_week=num_of_applies_this_week())
