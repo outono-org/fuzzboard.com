@@ -119,11 +119,11 @@ def check_entry_timelimit():
 def add_user_types_to_db():
     # Why am I updating one?
     # Isn't there a more effective way?
-    for job in mongo.db.users.find({'user_type': {"$exists": False}}):
+    for user in mongo.db.users.find({'user_type': {"$exists": False}}):
 
         mongo.db.users.update_one(
             {
-                '_id': job["_id"]
+                '_id': user["_id"]
             },
 
             {
