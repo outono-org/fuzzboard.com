@@ -13,6 +13,7 @@ admin = Blueprint('admin', __name__)
 
 @admin.route('/update', methods=["GET", "POST"])
 @login_required
+@admin_required
 def update_db():
     """ This route enables admins to make structural changes to the DB
     like adding a new field to every document.

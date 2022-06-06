@@ -55,6 +55,7 @@
 
 <body class="preload-transitions">
     {% block header %}
+    <!-- <div class="announcement">Building a better platform that will help you find work you can be proud of. And people you enjoy working with. malik@fuzzboard.com</div> -->
     <header class="header">
         <div id="logo-wrapper">
             <a href="{{ url_for('main.home') }}">
@@ -71,20 +72,28 @@
                 <a href="https://351.community/" target="_blank" rel="noreferrer">Community</a>
             </span> -->
             <span class="navigation-item">
-                <a href="{{ url_for('main.savedJobs') }}">Saved Jobs</a>
-            </span>
-            <span class="navigation-item">
                 <a target="_blank" href="https://employukraine.org/"><img class="emoji" alt="star emoji" src="{{url_for('static', filename='images/flags/ukraine.png')}}" />&nbsp; Employ Ukraine</a>
             </span>
+
+            <span class="navigation-item">
+                <a href="{{ url_for('main.savedJobs') }}">Saved Jobs</a>
+            </span>
+            
             {% if session.username %}
             <span class="navigation-item">
-                <a href="{{ url_for('admin.dashboard') }}" target="_blank" rel="noreferrer">Dashboard</a>
+                <a href="{{ url_for('main.settings') }}">Settings</a>
             </span>
             {% endif %}
         </div>
-        <div>
+        
+        <div class="flex">
+            {% if not session.username %}
+            <span class="navigation-item">
+                <a href="{{ url_for('main.settings') }}">Sign In</a>
+            </span>
+            {% endif %}
             <a href="{{ url_for('main.new') }}">
-                <button class="button-main mobile-no-display">+ Add a job</button>
+                <button class="button-main mobile-no-display">Add a job</button>
             </a>
         </div>
     </header>
@@ -125,6 +134,18 @@
             <strong>Helpful Resources:</strong>
             <a href="https://refugees.casafari.com/" target="_blank" rel="nofollow">Housing for refugees</a>,
             <a href="https://upframed.notion.site/Helpful-Resources-506e62fa55ef40419fbaceb9c8c91695" target="_blank" rel="nofollow">More Jobs</a>.
+
+            {% if session.username %}
+            <br/>
+            <strong>Admin</strong>
+            
+                <a href="{{ url_for('admin.dashboard') }}" target="_blank" rel="noreferrer">Manage Jobs</a>,
+
+                <a href="{{ url_for('admin.dashboard_page') }}" target="_blank" rel="noreferrer">Dashboard</a>,
+
+                <a href="{{ url_for('admin.update_db') }}" target="_blank" rel="noreferrer">Update</a>
+            
+            {% endif %}
         </div>
     </footer>
     {% endblock %}

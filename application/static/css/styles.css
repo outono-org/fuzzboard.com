@@ -748,6 +748,7 @@ details[open] summary ~ * {
 
 .company-logo {
   max-width: 200px;
+  filter: grayscale(1);
 }
 
 #response-div {
@@ -780,6 +781,15 @@ details[open] summary ~ * {
 
 .mobile-navigation [data-active="true"] {
   background-color: red;
+}
+
+.announcement {
+  width:auto;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  margin: -10px;
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
 @media (max-width: 855px) {
