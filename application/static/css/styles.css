@@ -18,6 +18,13 @@
   flex-direction: column;
 }
 
+.logo {
+  max-width: 40px;
+  border-radius: 80px;
+  color: #f42f46 !important;
+  font-size: 24px;
+}
+
 #logo-wrapper {
   display: flex;
   align-items: center;
