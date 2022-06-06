@@ -11,15 +11,15 @@ from .models import add_stats_to_jobs, get_active_jobs, add_user_types_to_db
 admin = Blueprint('admin', __name__)
 
 
-@admin.route('/update', methods=["GET", "POST"])
+@admin.post('/update')
 @login_required
 # @admin_required
 def update_db():
-    # important: I'm changing the DB by adding a new field to every entry
-    # add_slug_to_db()
-    # add_description_to_db()
-    # encode_job_urls()
-    # add_visa_status_to_db()
+    """ This route enables admins to make structural changes to the DB
+    like adding a new field to every document.
+
+    Make sure to comment or remove the function after calling it in production. """
+
     # add_stats_to_jobs()
     add_user_types_to_db()
     return redirect(url_for('main.home'))
@@ -91,7 +91,7 @@ def num_of_jobs_added_this_week():
     return num_of_jobs
 
 
-@admin.route('/dashboard', methods=["GET", "POST"])
+@admin.get('/dashboard')
 @login_required
 @admin_required
 def dashboard_page():
