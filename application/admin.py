@@ -11,17 +11,18 @@ from .models import add_stats_to_jobs, get_active_jobs, add_user_types_to_db
 admin = Blueprint('admin', __name__)
 
 
-@admin.post('/update')
+@admin.route('/update', methods=["GET", "POST"])
 @login_required
-# @admin_required
 def update_db():
     """ This route enables admins to make structural changes to the DB
     like adding a new field to every document.
 
     Make sure to comment or remove the function after calling it in production. """
 
-    # add_stats_to_jobs()
+    print("something")
+
     add_user_types_to_db()
+
     return redirect(url_for('main.home'))
 
 
