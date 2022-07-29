@@ -22,7 +22,7 @@ itsdangerous==2.0.1
 Jinja2==3.0.1
 lxml==4.6.3
 MarkupSafe==2.0.1
-mistune==2.0.2
+mistune==2.0.3
 Pillow==8.4.0
 pycodestyle==2.7.0
 PyJWT==2.4.0
