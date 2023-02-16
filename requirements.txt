@@ -33,6 +33,6 @@ simple-websocket==0.2.0
 six==1.16.0
 toml==0.10.2
 Turbo-Flask==0.6.0
-Werkzeug==2.0.1
+Werkzeug==2.2.3
 wsproto==1.0.0
 WTForms==2.3.3
